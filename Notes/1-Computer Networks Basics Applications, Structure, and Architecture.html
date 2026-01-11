@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Communication and Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Data Communication and Computer Networks</h1>
+          <p class="slide-subtitle">
+            Applications, Structure, and Architecture
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://cdn.pixabay.com/photo/2017/01/22/22/11/cloud-computing-2001090_1280.jpg"
+              alt="Network Architecture"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              In this unit, we explore the fundamental concepts of data
+              communication and computer networks, examining their applications,
+              structure, and architecture to understand how they enable resource
+              sharing, efficient communication, and seamless connectivity across
+              various domains.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of Data Communication and Computer Networks,
+              understanding the applications, structure, and architecture of
+              networks is crucial for leveraging their full potential.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Key Benefits</h3>
+                <ul>
+                  <li>Resource sharing</li>
+                  <li>Efficient communication</li>
+                  <li>Seamless connectivity</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Network Domains</h3>
+                <ul>
+                  <li>Business</li>
+                  <li>Education</li>
+                  <li>Healthcare</li>
+                  <li>Entertainment</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="text-section">
+            <h3>Network Structure & Architecture</h3>
+            <p>
+              The structure of networks, defined by topologies and types,
+              dictates how devices are interconnected and communicate, ranging
+              from local to wide area networks. The architecture, epitomized by
+              models like OSI and TCP/IP, outlines the layers and protocols that
+              govern data transmission, ensuring reliability, security, and
+              efficiency.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://www.swissns.ch/site/wp-content/uploads/2017/06/network-topologies.png"
+              alt="Network Topology"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectives Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Learning Objectives</h1>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <p>
+              After completing this unit, you will have gained the following
+              abilities:
+            </p>
+            <ul>
+              <li>
+                Understand the diverse applications of networks in various
+                sectors such as business, education, healthcare, and
+                entertainment.
+              </li>
+              <li>
+                Explore different network topologies and their impact on
+                communication efficiency and fault tolerance.
+              </li>
+              <li>
+                Analyze the structure of networks, including LANs, MANs, WANs,
+                PANs, and VPNs, and their specific use cases.
+              </li>
+              <li>
+                Examine the roles and functionalities of essential network
+                devices like routers, switches, hubs, bridges, and gateways.
+              </li>
+              <li>
+                Grasp the layers and functions of the OSI and TCP/IP models to
+                understand how data is transmitted across networks.
+              </li>
+              <li>
+                Investigate the principles of client-server and peer-to-peer
+                architectures and their advantages and disadvantages.
+              </li>
+              <li>
+                Delve into cloud architecture models, including IaaS, PaaS, and
+                SaaS, to comprehend the delivery of computing services over the
+                internet.
+              </li>
+              <li>
+                Develop skills to design, implement, and manage network systems
+                that ensure reliability, security, and efficiency.
+              </li>
+            </ul>
+          </div>
+          <div class="image-container">
+            <img
+              src="https://picsum.photos/seed/network-learning/700/350.jpg"
+              alt="Network Learning"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Goals Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Network Goals</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the study of Data Communication and Computer Networks,
+              understanding the goals of networks is fundamental to appreciating
+              their design and functionality. Networks are designed with
+              specific objectives in mind, primarily focused on facilitating
+              resource sharing, enabling efficient communication, ensuring
+              scalability, and providing reliability and security.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://d8it4huxumps7.cloudfront.net/uploads/images/672c92a169c16_client_server_network_topology.png?d=2000x2000"
+              alt="Network Architecture Model"
+            /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 1: Network architecture and application architecture
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              By enabling multiple users to share hardware and software
+              resources, networks optimize resource utilization and reduce
+              costs. Effective communication is another crucial goal, achieved
+              through various services like email, instant messaging, and video
+              conferencing, which enhance collaboration and information exchange
+              across different locations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource Sharing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Resource Sharing</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Resource sharing is a cornerstone of Data Communication and
+              Computer Networks, aimed at optimizing the use of hardware and
+              software resources within an organization.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Benefits</h3>
+                <ul>
+                  <li>Reduced need for redundant equipment</li>
+                  <li>Lower costs</li>
+                  <li>Improved efficiency</li>
+                  <li>Streamlined operations</li>
+                  <li>Collaborative work environment</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Examples</h3>
+                <ul>
+                  <li>Shared printers in corporate environments</li>
+                  <li>Centralized file servers</li>
+                  <li>Database systems</li>
+                  <li>Software applications</li>
+                  <li>Storage devices</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By enabling multiple users to access shared resources, networks
+              reduce the need for redundant equipment, thereby lowering costs
+              and improving efficiency.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://www.lisedunetwork.com/wp-content/uploads/2015/12/Resource-Sharing-in-Library.jpg"
+              alt="Resource Sharing"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Communication -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Communication</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Effective communication is a critical goal of networks, providing
+              the infrastructure for seamless information exchange between users
+              and devices.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Communication Methods</h3>
+            <div class="two-column">
+              <div class="column">
+                <ul>
+                  <li>Email</li>
+                  <li>Instant messaging</li>
+                  <li>Video conferencing</li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul>
+                  <li>Voice over Internet Protocol (VoIP)</li>
+                  <li>File sharing</li>
+                  <li>Collaborative platforms</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              In today's interconnected world, these communication tools are
+              essential for remote work, global collaborations, and quick
+              decision-making.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://images.squarespace-cdn.com/content/v1/678b1f8e72adda580889c414/1737586226020-C3CWW8CU79MOFY4ELPUN/57a9c-10gignetworkdiagramexample2.jpg"
+              alt="Network Communication"
+            /> -->
+          </div>
+          <div class="text-section">
+            <p>
+              By enhancing communication capabilities, networks improve
+              coordination, accelerate workflows, and support more effective
+              teamwork.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scalability -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Scalability</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Scalability is an essential attribute of modern networks, ensuring
+              they can grow and adapt to increasing demands without compromising
+              performance.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://images.squarespace-cdn.com/content/v1/54c2b1afe4b0688a881a6e01/d5dfc804-962c-49b4-b55b-4967e8ddaf4e/Why+network+scalability+is+important+for+your+SME.jpg"
+              alt="Network Scalability"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Aspects of Scalability</h3>
+            <ul>
+              <li>Accommodating growing numbers of users and devices</li>
+              <li>Expanding capacity through modular hardware upgrades</li>
+              <li>Adaptable software configurations</li>
+              <li>Future-proofing infrastructure for new technologies</li>
+              <li>Dynamic resource allocation (cloud-based services)</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By planning for scalability, organizations can avoid costly
+              overhauls and ensure their networks remain robust and efficient as
+              they evolve.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reliability and Redundancy -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Reliability and Redundancy</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Reliability and redundancy are key goals in network design, aimed
+              at ensuring continuous operation and data integrity even in the
+              event of hardware failures or other disruptions.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Redundancy Components</h3>
+                <ul>
+                  <li>Multiple servers</li>
+                  <li>Redundant power supplies</li>
+                  <li>Backup communication links</li>
+                  <li>RAID systems</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Reliability Technologies</h3>
+                <ul>
+                  <li>Fault-tolerant systems</li>
+                  <li>Load-balancing</li>
+                  <li>Failover mechanisms</li>
+                  <li>Continuous monitoring</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These measures are critical for applications that require high
+              availability, such as financial transactions, healthcare systems,
+              and e-commerce platforms.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://www.rd.ntt/e/research/JN202310_23444/JN202310_23444_main.jpg"
+              alt="Network Reliability"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Security is a paramount concern in network management, focused on
+              protecting data from unauthorized access, breaches, and cyber
+              threats.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://eu-images.contentstack.com/v3/assets/blt07f68461ccd75245/blt9a0dbfd66f2496de/6650a07b75c24653285b9978/the_20words_20network_20security_20surrounded_20by_20various_20IT_20icons.jpg?width=1280&auto=webp&quality=80&disable=upscale"
+              alt="Network Security"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Security Measures</h3>
+            <div class="two-column">
+              <div class="column">
+                <ul>
+                  <li>Firewalls</li>
+                  <li>Encryption</li>
+                  <li>Intrusion detection systems</li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul>
+                  <li>Access controls</li>
+                  <li>Regular security updates</li>
+                  <li>Proactive threat management</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              As cyber threats become more sophisticated, continuous monitoring
+              and proactive threat management are essential to safeguard network
+              integrity and maintain trust.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Efficiency -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Efficiency</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Efficiency in networks refers to the optimal use of resources to
+              achieve high performance and throughput.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Efficiency Techniques</h3>
+            <ul>
+              <li>
+                Load balancing - Distributes workloads across multiple servers
+              </li>
+              <li>Traffic shaping - Prioritizes critical data</li>
+              <li>
+                Quality of Service (QoS) - Manages network traffic to reduce
+                delays
+              </li>
+              <li>
+                Bandwidth management - Ensures optimal resource utilization
+              </li>
+            </ul>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/network-efficiency/700/300.jpg"
+              alt="Network Efficiency"
+            /> -->
+          </div>
+          <div class="highlight-box">
+            <p>
+              Efficient network management leads to improved performance,
+              maximized productivity, and a better overall user experience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications of Networks Overview -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Applications of networks span across various domains, each
+              leveraging the power of interconnected systems to enhance
+              functionality, efficiency, and collaboration.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://computerguideonline.com/images/application-of-computer-network.webp"
+              alt="Network Applications"
+            /> -->
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Key Domains</h3>
+                <ul>
+                  <li>Business and Enterprise</li>
+                  <li>Education</li>
+                  <li>Healthcare</li>
+                  <li>Entertainment</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Additional Applications</h3>
+                <ul>
+                  <li>E-government Services</li>
+                  <li>Social Networking</li>
+                  <li>IoT and Smart Systems</li>
+                  <li>Research and Development</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Across these applications, the underlying network infrastructure
+              ensures reliable, secure, and efficient connectivity, driving
+              innovation and improving the quality of services.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Business and Enterprise -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Business and Enterprise Applications</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of business and enterprise, networks are
+              indispensable for enhancing productivity, collaboration, and
+              efficiency.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/business-network/700/300.jpg"
+              alt="Business Network"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Business Network Applications</h3>
+            <ul>
+              <li>Resource sharing (files, applications, databases)</li>
+              <li>Centralized databases for improved decision-making</li>
+              <li>
+                Communication tools (email, instant messaging, video
+                conferencing)
+              </li>
+              <li>Remote work enablement through VPNs and cloud services</li>
+              <li>Streamlined operations and reduced costs</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By leveraging network technologies, businesses can streamline
+              operations, reduce costs, and enhance overall organizational
+              agility.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Education Applications</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In education, networks play a pivotal role in facilitating
+              e-learning platforms, making education more accessible and
+              interactive.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/education-network/700/300.jpg"
+              alt="Education Network"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>E-Learning Benefits</h3>
+            <ul>
+              <li>Virtual classrooms for real-time lessons</li>
+              <li>Access to digital libraries and research databases</li>
+              <li>Interactive educational tools</li>
+              <li>
+                Collaborative platforms (discussion forums, group projects)
+              </li>
+              <li>Flexible and inclusive learning opportunities</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By integrating networks into the educational framework,
+              institutions can offer flexible, inclusive, and innovative
+              learning opportunities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Healthcare -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Healthcare Applications</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In healthcare, networks are integral to improving patient care,
+              operational efficiency, and data management.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/healthcare-network/700/300.jpg"
+              alt="Healthcare Network"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Healthcare Network Applications</h3>
+            <ul>
+              <li>Electronic Health Records (EHRs) integration</li>
+              <li>Telemedicine services for remote consultations</li>
+              <li>Medical device monitoring and data collection</li>
+              <li>Secure communication channels for patient information</li>
+              <li>Real-time access to patient data for coordinated care</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Through these applications, networks enhance the quality and
+              accessibility of healthcare services while maintaining patient
+              confidentiality and regulatory compliance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Entertainment -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Entertainment Applications</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the entertainment industry, networks are crucial for delivering
+              high-quality content and interactive experiences to users.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/entertainment-network/700/300.jpg"
+              alt="Entertainment Network"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Entertainment Network Services</h3>
+            <ul>
+              <li>Streaming services for music, movies, and TV shows</li>
+              <li>
+                Online gaming platforms with real-time multiplayer experiences
+              </li>
+              <li>
+                Social media platforms for content sharing and interaction
+              </li>
+              <li>Live streaming and virtual events</li>
+              <li>Content Delivery Networks (CDNs) for optimal performance</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By leveraging advanced networking technologies, the entertainment
+              industry can continuously innovate, offering new and immersive
+              experiences to audiences globally.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- E-government Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">E-government Services</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Networks support the operation of e-government services, making
+              public administration more efficient, transparent, and accessible.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/egovernment-services/700/300.jpg"
+              alt="E-government Services"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>E-government Applications</h3>
+            <ul>
+              <li>
+                Online access to government services (permits, taxes, records)
+              </li>
+              <li>
+                Digital transformation reducing physical visits to government
+                offices
+              </li>
+              <li>
+                Secure information exchange between government departments
+              </li>
+              <li>Improved coordination and decision-making processes</li>
+              <li>Enhanced transparency through accessible information</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By integrating networks into public administration, governments
+              can deliver more efficient, responsive, and inclusive services to
+              their citizens.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Networking -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Social Networking</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Social networking platforms are underpinned by sophisticated
+              network technologies that enable real-time communication, content
+              sharing, and community building.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/social-networking/700/300.jpg"
+              alt="Social Networking"
+            /> -->
+          </div>
+          <div class="text-section">
+            <h3>Social Network Features</h3>
+            <ul>
+              <li>User profiles and connections</li>
+              <li>Content sharing (updates, images, videos)</li>
+              <li>Real-time messaging and notifications</li>
+              <li>Live streaming capabilities</li>
+              <li>Content Delivery Networks (CDNs) for performance</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By leveraging robust network infrastructure, social networking
+              platforms can offer dynamic, engaging, and interactive experiences
+              that connect people across the globe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Data Communication and Computer Networks &copy; 2026 (Sheikh amir)</p>
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

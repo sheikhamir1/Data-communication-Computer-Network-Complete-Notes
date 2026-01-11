@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Structure - Data Communication and Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .topology-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .topology-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .network-device {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .device-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .device-info {
+        flex: 1;
+      }
+
+      .device-info h4 {
+        color: #1a73e8;
+        margin-bottom: 5px;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .osi-layer {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .layer-number {
+        width: 30px;
+        height: 30px;
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-weight: bold;
+      }
+
+      .layer-info {
+        flex: 1;
+      }
+
+      .layer-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Structure</h1>
+          <p class="slide-subtitle">
+            Topologies, Types, Devices, and Architecture
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://programmingoneonone.com/wp-content/uploads/network-structure.jpeg"
+              alt="Network Structure"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              In this unit, we explore the fundamental concepts of network
+              structure, including various topologies, network types, devices,
+              and architectural models that form the foundation of modern data
+              communication and computer networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Topologies Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Topologies</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of Data Communication and Computer Networks, network
+              topology refers to the arrangement of devices and connections in a
+              network. Various topologies exist, each with its own advantages,
+              disadvantages, and applications.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/network-topologies/700/350.jpg"
+            alt="Network Topologies" /> -->
+          </div>
+          <div class="text-section">
+            <p>
+              The choice of topology affects network performance, fault
+              tolerance, scalability, and cost. Different topologies are suited
+              to different environments and requirements, making the selection
+              of an appropriate topology crucial for network design.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bus Topology -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Bus Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The bus topology is a fundamental network configuration where all
+              devices are connected to a single communication channel, known as
+              the bus. In this topology, data is transmitted sequentially along
+              the bus, and each device receives the transmitted data.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/bus-topology/700/300.jpg" alt="Bus
+            Topology" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 3: Bus Topology
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Advantages</h3>
+                <ul>
+                  <li>Simplicity</li>
+                  <li>Cost-effectiveness</li>
+                  <li>Minimal cabling requirements</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Disadvantages</h3>
+                <ul>
+                  <li>Limited scalability</li>
+                  <li>Poor fault tolerance</li>
+                  <li>Network congestion with more devices</li>
+                  <li>Difficult troubleshooting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The bus topology is still used in small-scale networks or as a
+              backbone for larger networks where simplicity and cost are
+              prioritized over scalability and fault tolerance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Star Topology -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Star Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The star topology is a network configuration where all devices are
+              connected to a central hub or switch, forming a star-shaped
+              structure. In this topology, data is transmitted from one device
+              to another through the central hub, which manages the
+              communication between devices.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/star-topology/700/300.jpg" alt="Star -->
+            <!-- Topology" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 4: Star Topology
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Advantages</h3>
+                <ul>
+                  <li>Easy installation</li>
+                  <li>Centralized management</li>
+                  <li>Fault isolation</li>
+                  <li>Easy troubleshooting</li>
+                  <li>Performance not affected by adding devices</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Disadvantages</h3>
+                <ul>
+                  <li>Dependency on central hub</li>
+                  <li>Single point of failure</li>
+                  <li>Higher cost due to more cabling</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The star topology is widely used in local area networks (LANs) and
+              small to medium-sized networks due to its simplicity and
+              reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ring Topology -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Ring Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The ring topology is a network configuration where each device is
+              connected to two other devices, forming a closed loop or ring. In
+              this topology, data is transmitted sequentially from one device to
+              the next until it reaches its destination.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/ring-topology/700/300.jpg" alt="Ring
+            Topology" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 5: Ring Topology
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Advantages</h3>
+                <ul>
+                  <li>Equal access to resources</li>
+                  <li>Predictable network performance</li>
+                  <li>No data collisions</li>
+                  <li>Easy to add new devices</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Disadvantages</h3>
+                <ul>
+                  <li>Complex troubleshooting</li>
+                  <li>Failure vulnerability</li>
+                  <li>Single point of failure affects entire network</li>
+                  <li>Difficult to isolate faults</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The ring topology is still used in certain applications where
+              predictable performance and simplicity are prioritized over fault
+              tolerance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mesh Topology -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Mesh Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The mesh topology is a network configuration where each device is
+              interconnected with every other device in the network, forming a
+              fully interconnected mesh of connections. In this topology, data
+              can be transmitted along multiple pathways, providing redundancy
+              and fault tolerance.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/mesh-topology/700/300.jpg" alt="Mesh
+            Topology" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 6: Mesh Topology
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Advantages</h3>
+                <ul>
+                  <li>High reliability</li>
+                  <li>Fault tolerance</li>
+                  <li>Scalability</li>
+                  <li>Multiple data paths</li>
+                  <li>Resilience to failures</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Disadvantages</h3>
+                <ul>
+                  <li>High cost</li>
+                  <li>Complexity</li>
+                  <li>Increased infrastructure costs</li>
+                  <li>Management overhead</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The mesh topology is widely used in critical applications such as
+              telecommunications networks, where reliability and fault tolerance
+              are paramount.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hybrid Topology -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hybrid Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Hybrid topologies combine elements of different traditional
+              topologies, offering a flexible and scalable approach to network
+              design. By integrating multiple topologies, hybrid configurations
+              can leverage the strengths of each topology while mitigating their
+              respective weaknesses.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/hybrid-topology/700/300.jpg"
+            alt="Hybrid Topology" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 7: Hybrid Topology
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Applications of Hybrid Topologies</h3>
+            <ul>
+              <li>
+                <strong>Enterprise Networks:</strong> Support complex business
+                operations with different networking requirements across
+                departments
+              </li>
+              <li>
+                <strong>Educational Institutions:</strong> Integrate e-learning
+                platforms, research networks, and administrative systems
+              </li>
+              <li>
+                <strong>Telecommunications:</strong> Ensure high availability
+                and fault tolerance in critical communication networks
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Hybrid topologies provide a versatile and scalable network
+              infrastructure that can be customized to meet specific
+              organizational needs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Types Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network types categorize networks based on their geographic scope
+              and the purpose they serve in facilitating communication and data
+              exchange. Different network types are designed to meet specific
+              requirements in terms of coverage area, data transfer rates, and
+              connectivity options.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/network-types/700/350.jpg"
+            alt="Network Types" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Network Types</h3>
+            <div class="two-column">
+              <div class="column">
+                <ul>
+                  <li>Local Area Network (LAN)</li>
+                  <li>Metropolitan Area Network (MAN)</li>
+                  <li>Wide Area Network (WAN)</li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul>
+                  <li>Personal Area Network (PAN)</li>
+                  <li>Virtual Private Network (VPN)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding these network types is essential for designing and
+              implementing network infrastructure that meets the specific
+              requirements and objectives of organizations and individuals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Local Area Network (LAN)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Local Area Network (LAN) is a network confined to a small
+              geographic area, typically within a single building or campus.
+              LANs connect computers, printers, servers, and other devices,
+              enabling resource sharing and communication.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/local-area-network/700/300.jpg"
+            alt="Local Area Network" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 8: Local Area Network
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>High data transfer rates</li>
+              <li>Low latency</li>
+              <li>Limited geographic coverage</li>
+              <li>Typically owned and managed by a single organization</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Technologies</h3>
+            <ul>
+              <li>Ethernet (wired connectivity)</li>
+              <li>Wi-Fi (wireless connectivity)</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              LANs are suitable for applications such as file sharing, printing,
+              and collaborative work environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Metropolitan Area Network (MAN)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Metropolitan Area Network (MAN) spans a larger geographic area
+              than a LAN but is smaller than a Wide Area Network (WAN). MANs
+              typically cover a city or metropolitan area, connecting multiple
+              LANs and other network segments.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/metropolitan-area-network/700/300.jpg"
+            alt="Metropolitan Area Network" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 9: Metropolitan Area Network
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Covers a city or metropolitan area</li>
+              <li>High-speed connectivity over longer distances</li>
+              <li>Connects multiple LANs</li>
+              <li>
+                Often operated by multiple organizations or service providers
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Technologies</h3>
+            <ul>
+              <li>Fiber-optic cables</li>
+              <li>Microwave links</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              MANs are suitable for interconnecting local networks within a city
+              or across multiple campuses.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WAN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Wide Area Network (WAN)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Wide Area Network (WAN) covers a broad geographic area, such as
+              a country, continent, or even the entire globe. WANs connect
+              multiple LANs and MANs over long distances, often using public or
+              private communication links.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/wide-area-network/700/300.jpg"
+            alt="Wide Area Network" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 10: Wide Area Network
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Covers broad geographic areas</li>
+              <li>Lower data transfer rates compared to LANs</li>
+              <li>Higher latency</li>
+              <li>Utilizes public and private communication infrastructure</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Technologies</h3>
+            <ul>
+              <li>Leased lines</li>
+              <li>Satellite links</li>
+              <li>Internet connections</li>
+              <li>Virtual Private Networks (VPNs)</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              WANs enable organizations to communicate and share resources
+              across remote locations, supporting applications such as online
+              banking, e-commerce, and telecommunication services.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Personal Area Network (PAN)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Personal Area Network (PAN) is a network used for connecting
+              devices within the immediate vicinity of an individual, typically
+              within a range of a few meters. PANs enable communication and data
+              exchange between personal devices.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/personal-area-network/700/300.jpg"
+            alt="Personal Area Network" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Limited to a few meters of range</li>
+              <li>Connects personal devices</li>
+              <li>Low power consumption</li>
+              <li>Ad-hoc connectivity</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Technologies</h3>
+            <ul>
+              <li>Bluetooth</li>
+              <li>Wi-Fi Direct</li>
+              <li>Infrared</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              PANs facilitate applications such as wireless file transfer,
+              device synchronization, and wireless peripherals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- VPN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Virtual Private Network (VPN)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Virtual Private Network (VPN) is a secure network that utilizes
+              encryption and tunneling protocols to create a private
+              communication channel over a public network infrastructure, such
+              as the internet.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/virtual-private-network/700/300.jpg"
+            alt="Virtual Private Network" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 11: Virtual Private Network
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Secure and encrypted connection</li>
+              <li>Uses public network infrastructure</li>
+              <li>Provides privacy and confidentiality</li>
+              <li>Remote access to private networks</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Applications</h3>
+            <ul>
+              <li>Remote work access to corporate resources</li>
+              <li>Securing internet connections on public Wi-Fi</li>
+              <li>Bypassing geo-restrictions</li>
+              <li>Accessing restricted content</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              VPNs provide confidentiality, integrity, and authentication,
+              ensuring that sensitive data remains protected during
+              transmission.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Devices Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Devices</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network devices are hardware components used to facilitate
+              communication and data exchange within a computer network. Each
+              device plays a specific role in managing, transmitting, and
+              receiving data.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/network-devices/700/350.jpg"
+            alt="Network Devices" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Common Network Devices</h3>
+            <div class="two-column">
+              <div class="column">
+                <ul>
+                  <li>Router</li>
+                  <li>Switch</li>
+                  <li>Hub</li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul>
+                  <li>Bridge</li>
+                  <li>Gateway</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding the functions and roles of these network devices is
+              essential for designing, implementing, and managing efficient and
+              reliable network infrastructures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Router -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Router</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A router is a networking device that forwards data packets between
+              computer networks. It operates at the network layer of the OSI
+              model and uses routing tables to determine the best path for
+              forwarding packets.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/router-device/700/300.jpg"
+            alt="Router" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 12: Router
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Connects multiple networks (LANs and WANs)</li>
+              <li>
+                Enables communication between devices in different network
+                segments
+              </li>
+              <li>Performs network address translation (NAT)</li>
+              <li>Provides firewall protection</li>
+              <li>Manages quality of service (QoS)</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Routers play a critical role in directing data traffic across
+              complex network infrastructures and ensuring efficient and secure
+              communication between devices.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switch -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Switch</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A switch is a networking device that connects devices within a
+              single LAN and forwards data packets based on their MAC addresses.
+              It operates at the data link layer of the OSI model and uses MAC
+              address tables to determine the appropriate port for transmitting
+              data.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/switch-device/700/300.jpg"
+            alt="Switch" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 13: Switch
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Connects devices within a LAN</li>
+              <li>Creates dedicated communication channels between devices</li>
+              <li>Reduces network congestion</li>
+              <li>Improves network efficiency</li>
+              <li>Enables simultaneous device communication</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Switches are essential for building scalable and high-performance
+              LANs, where multiple devices need to communicate simultaneously
+              without interference.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hub -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hub</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A hub is a simple networking device that connects multiple devices
+              in a LAN and broadcasts data packets to all connected devices. It
+              operates at the physical layer of the OSI model and functions as a
+              central point of connection for devices within a network segment.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/hub-device/700/300.jpg" alt="Hub in
+            Networking" /> -->
+            <p style="text-align: center; font-style: italic; margin-top: 10px">
+              Figure 14: Hub in Networking
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Operates at the physical layer of the OSI model</li>
+              <li>Broadcasts data to all connected devices</li>
+              <li>Lacks intelligence and packet filtering</li>
+              <li>Prone to network collisions</li>
+              <li>Limited bandwidth availability</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Hubs are mostly obsolete in modern network infrastructures,
+              replaced by switches for better performance and scalability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Bridge</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A bridge is a networking device that connects multiple network
+              segments and forwards data packets between them based on their MAC
+              addresses. It operates at the data link layer of the OSI model and
+              uses MAC address tables to determine the appropriate segment for
+              transmitting data.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/bridge-device/700/300.jpg"
+            alt="Bridge in Networking" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Connects multiple network segments</li>
+              <li>Reduces network congestion</li>
+              <li>Improves performance by dividing large networks</li>
+              <li>Controls data traffic between segments</li>
+              <li>Extends the reach of LANs</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Bridges are commonly used to extend the reach of LANs and segment
+              network traffic for better management and security.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gateway -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Gateway</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A gateway is a networking device or software application that
+              connects different types of networks and facilitates communication
+              between them. It operates at the network layer of the OSI model
+              and performs protocol translation and data format conversion to
+              enable interoperability between disparate networks.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/gateway-device/700/300.jpg"
+            alt="Gateway in Networking" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Connects different types of networks</li>
+              <li>Performs protocol translation</li>
+              <li>Converts data formats</li>
+              <li>Translates between IP addresses</li>
+              <li>Provides firewall protection</li>
+              <li>Offers proxy server functionality</li>
+              <li>Enables VPN access</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Gateways play a crucial role in enabling seamless communication
+              between networks with different architectures and protocols.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Architecture Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network architecture defines the framework and principles upon
+              which a network is built and operates. It encompasses the design,
+              structure, and functioning of a network, ensuring efficient and
+              secure data communication.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/network-architecture/700/350.jpg"
+            alt="Network Architecture" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Concepts and Models</h3>
+            <div class="two-column">
+              <div class="column">
+                <ul>
+                  <li>OSI Model</li>
+                  <li>TCP/IP Model</li>
+                  <li>Client-Server Architecture</li>
+                </ul>
+              </div>
+              <div class="column">
+                <ul>
+                  <li>Peer-to-Peer Architecture</li>
+                  <li>Cloud Architecture</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding these network architectures and models is crucial
+              for designing, implementing, and managing networks that are
+              efficient, scalable, and secure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OSI Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">OSI Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Open Systems Interconnection (OSI) model is a conceptual
+              framework that standardizes the functions of a telecommunication
+              or computing system into seven distinct layers. Each layer
+              performs specific tasks and interacts with the layers directly
+              above and below it.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/osi-model/700/300.jpg" alt="OSI
+            Model" /> -->
+          </div>
+          <div class="text-section">
+            <h3>The Seven Layers of OSI</h3>
+            <div class="osi-layer">
+              <div class="layer-number">7</div>
+              <div class="layer-info">
+                <h4>Application Layer</h4>
+                <p>Provides network services directly to user applications</p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">6</div>
+              <div class="layer-info">
+                <h4>Presentation Layer</h4>
+                <p>Translates data formats and encrypts/decrypts data</p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">5</div>
+              <div class="layer-info">
+                <h4>Session Layer</h4>
+                <p>
+                  Manages sessions and controls dialogues between applications
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">4</div>
+              <div class="layer-info">
+                <h4>Transport Layer</h4>
+                <p>
+                  Ensures complete data transfer with error recovery and flow
+                  control
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">3</div>
+              <div class="layer-info">
+                <h4>Network Layer</h4>
+                <p>
+                  Handles the routing of data packets between devices across
+                  different networks
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">2</div>
+              <div class="layer-info">
+                <h4>Data Link Layer</h4>
+                <p>
+                  Ensures error-free transmission between two devices on the
+                  same network
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">1</div>
+              <div class="layer-info">
+                <h4>Physical Layer</h4>
+                <p>
+                  Manages the transmission and reception of raw data between a
+                  device and a physical medium
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The OSI model helps in understanding and designing a robust
+              network infrastructure by breaking down the network processes into
+              manageable layers.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TCP/IP Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">TCP/IP Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Transmission Control Protocol/Internet Protocol (TCP/IP) model
+              is a more practical framework used to facilitate internet and
+              network communications. It has four layers that work together to
+              enable data transmission across networks.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/tcp-ip-model/700/300.jpg"
+            alt="TCP/IP Model" /> -->
+          </div>
+          <div class="text-section">
+            <h3>The Four Layers of TCP/IP</h3>
+            <div class="osi-layer">
+              <div class="layer-number">4</div>
+              <div class="layer-info">
+                <h4>Application Layer</h4>
+                <p>
+                  Combines the functions of the OSI's Session, Presentation, and
+                  Application layers, providing protocols for end-user services
+                  like HTTP, FTP, and email
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">3</div>
+              <div class="layer-info">
+                <h4>Transport Layer</h4>
+                <p>
+                  Similar to the OSI Transport layer, it provides reliable data
+                  transfer through TCP and connectionless transfer via UDP
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">2</div>
+              <div class="layer-info">
+                <h4>Internet Layer</h4>
+                <p>
+                  Equivalent to the OSI's Network layer, responsible for packet
+                  forwarding and routing through IP addresses
+                </p>
+              </div>
+            </div>
+            <div class="osi-layer">
+              <div class="layer-number">1</div>
+              <div class="layer-info">
+                <h4>Network Interface Layer</h4>
+                <p>
+                  Corresponds to the OSI's Physical and Data Link layers,
+                  handling the physical transmission of data
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The TCP/IP model is widely used in real-world network
+              implementations, underpinning the functionality of the internet
+              and most local and wide area networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client-Server Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client-Server Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Client-server architecture is a network model where client devices
+              request services and resources from a central server. The server
+              processes these requests and returns the appropriate responses.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/client-server-architecture/700/300.jpg"
+            alt="Client-Server Architecture" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>
+                <strong>Centralized Resources:</strong> Servers manage
+                resources, applications, and data, which can be accessed by
+                clients over a network
+              </li>
+              <li>
+                <strong>Scalability:</strong> Clients can be added or removed
+                without affecting the server's functionality
+              </li>
+              <li>
+                <strong>Security:</strong> Centralized control enhances security
+                through controlled access and monitoring
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Applications</h3>
+            <ul>
+              <li>Web servers</li>
+              <li>Database servers</li>
+              <li>Email servers</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Client-server architecture is widely used in enterprise
+              environments where centralized management and security are
+              priorities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Peer-to-Peer Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Peer-to-Peer Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In peer-to-peer (P2P) architecture, each device (peer) in the
+              network can act as both a client and a server. Peers share
+              resources directly with each other without requiring a central
+              server.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+            src="https://picsum.photos/seed/peer-to-peer-architecture/700/300.jpg"
+            alt="Peer-to-Peer Architecture" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>
+                <strong>Decentralization:</strong> There is no central server;
+                all peers are equal
+              </li>
+              <li>
+                <strong>Resource Sharing:</strong> Each peer can offer and
+                request services and resources, such as files or processing
+                power
+              </li>
+              <li>
+                <strong>Scalability:</strong> The network can grow organically
+                as more peers join and contribute resources
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Common Applications</h3>
+            <ul>
+              <li>File sharing</li>
+              <li>Distributed computing</li>
+              <li>Cryptocurrency transactions</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              P2P networks offer resilience and scalability but present
+              challenges in terms of security and management.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Cloud Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Cloud architecture leverages remote servers hosted on the internet
+              to store, manage, and process data. It provides scalable and
+              on-demand access to computing resources and services.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/cloud-architecture/700/300.jpg"
+            alt="Cloud Architecture" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>
+                <strong>Elasticity:</strong> Resources can be scaled up or down
+                based on demand
+              </li>
+              <li>
+                <strong>Cost Efficiency:</strong> Pay-as-you-go pricing models
+                reduce the need for significant upfront investments in hardware
+              </li>
+              <li>
+                <strong>Accessibility:</strong> Services and applications can be
+                accessed from anywhere with an internet connection
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Deployment Models</h3>
+            <ul>
+              <li>Public cloud</li>
+              <li>Private cloud</li>
+              <li>Hybrid cloud</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Cloud architecture is used for applications such as web hosting,
+              data storage, and software as a service (SaaS).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network structure, topologies, types, devices, and architectures
+              form the foundation of modern data communication and computer
+              networks. Understanding these concepts is essential for designing,
+              implementing, and managing efficient, scalable, and secure network
+              infrastructures.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/network-conclusion/700/300.jpg"
+            alt="Network Conclusion" /> -->
+          </div>
+          <div class="text-section">
+            <h3>Key Takeaways</h3>
+            <ul>
+              <li>
+                Different network topologies offer unique advantages and
+                disadvantages suited to specific environments
+              </li>
+              <li>
+                Network types are categorized based on geographic scope and
+                purpose
+              </li>
+              <li>
+                Network devices play specific roles in facilitating
+                communication and data exchange
+              </li>
+              <li>
+                Network architectures provide frameworks for designing and
+                implementing networks
+              </li>
+              <li>
+                Cloud architecture offers elastic, cost-effective, and
+                accessible computing resources
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Each network architecture offers unique benefits and is suited to
+              different types of applications and organizational needs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Review these questions and answers to test your understanding of
+              network structure, topologies, types, devices, and architectures.
+            </p>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q1. What are the primary applications of networks?
+            </div>
+            <div class="answer">
+              A1. Networks are utilized in a wide range of applications,
+              including telecommunications for voice and video calls, the
+              internet for accessing and sharing information globally,
+              enterprise networks for business operations, cloud computing for
+              remote data storage and processing, and IoT (Internet of Things)
+              for connecting smart devices.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q2. How do network structures impact performance and scalability?
+            </div>
+            <div class="answer">
+              A2. Network structures, such as client-server and peer-to-peer
+              models, significantly impact performance and scalability.
+              Client-server networks centralize resources and services, making
+              management easier but potentially creating bottlenecks.
+              Peer-to-peer networks distribute tasks across all nodes, enhancing
+              scalability and fault tolerance but complicating management.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q3. What are the key architectural principles in network design?
+            </div>
+            <div class="answer">
+              A3. Key architectural principles in network design include
+              modularity, layering, and encapsulation. Modularity involves
+              dividing the network into manageable sections. Layering,
+              exemplified by the OSI and TCP/IP models, allows for abstraction
+              and interoperability. Encapsulation ensures that data is properly
+              packaged and transmitted across network layers.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q4. What is the significance of network topologies?
+            </div>
+            <div class="answer">
+              A4. Network topologies define the physical and logical arrangement
+              of network nodes. Each topology has its own advantages and
+              disadvantages. For instance, a star topology is easy to manage but
+              depends on a central hub, while a mesh topology offers high
+              redundancy and reliability but is complex and costly to implement.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- More Unit Based Questions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions (Continued)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q5. How does 5G technology enhance network applications?
+            </div>
+            <div class="answer">
+              A5. 5G technology enhances network applications by providing
+              higher data rates, reduced latency, and greater capacity compared
+              to previous generations. This enables more reliable and faster
+              communication, supports the proliferation of IoT devices, and
+              enhances applications like augmented reality (AR), virtual reality
+              (VR), and autonomous vehicles.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q6. What role does network security play in modern networks?
+            </div>
+            <div class="answer">
+              A6. Network security is crucial for protecting data integrity,
+              confidentiality, and availability. It involves implementing
+              measures such as firewalls, encryption, intrusion detection
+              systems, and secure protocols. Network security protects against
+              various threats, including cyberattacks, data breaches, and
+              unauthorized access.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q7. What are software-defined networking (SDN) and network
+              function virtualization (NFV)?
+            </div>
+            <div class="answer">
+              A7. SDN separates the control plane from the data plane, allowing
+              centralized and programmable network management. NFV replaces
+              traditional network hardware with software-based functions,
+              reducing costs and increasing flexibility. Both technologies
+              enable more agile, scalable, and responsive network architectures.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q8. How do layered network models like OSI and TCP/IP ensure
+              interoperability?
+            </div>
+            <div class="answer">
+              A8. Layered network models ensure interoperability by dividing
+              network communication into distinct layers, each with specific
+              functions and protocols. This abstraction allows different
+              hardware and software systems to communicate effectively, as each
+              layer interacts with its counterpart on other devices.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final Unit Based Questions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions (Final)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q9. What are the challenges in managing enterprise networks?
+            </div>
+            <div class="answer">
+              A9. Managing enterprise networks involves challenges such as
+              ensuring security, maintaining performance, and supporting
+              scalability. Network administrators must protect against cyber
+              threats, manage traffic loads, and ensure reliable connectivity
+              for numerous devices and applications.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q10. How is the Internet of Things (IoT) transforming network
+              applications?
+            </div>
+            <div class="answer">
+              A10. The Internet of Things (IoT) is transforming network
+              applications by connecting a vast array of devices to the
+              internet. This connectivity enables real-time data collection,
+              remote monitoring, and automation, leading to smarter homes,
+              efficient manufacturing, and innovative healthcare solutions.
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These questions cover key concepts from this unit and will help
+              reinforce your understanding of network structure, topologies,
+              types, devices, and architectures.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img -->
+            <!-- src="https://picsum.photos/seed/network-learning-complete/700/300.jpg"
+            alt="Network Learning Complete" /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="footer">
+      <p>Data Communication and Computer Networks &copy; 2023</p>
+    </div> -->
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>
