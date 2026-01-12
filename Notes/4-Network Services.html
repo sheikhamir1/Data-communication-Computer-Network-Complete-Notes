@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Services - Data Communication and Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .service-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .service-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .topology-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .topology-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .topology-info {
+        flex: 1;
+      }
+
+      .topology-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Services</h1>
+          <p class="slide-subtitle">
+            Enabling Seamless Data Communication and Resource Sharing
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://i0.wp.com/zsoftechsolutions.com/wp-content/uploads/2019/11/network-services.jpg?resize=638%2C360&ssl=1"
+              alt="Network Services"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              Network services play a crucial role in data communication and
+              computer networks by enabling the seamless transfer of data
+              between different devices and systems, ensuring security,
+              reliability, and efficient resource sharing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to Network Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Network Services</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network services play a crucial role in data communication and
+              computer networks by enabling the seamless transfer of data
+              between different devices and systems. These services include
+              domain name system (DNS), which translates human-friendly domain
+              names into IP addresses that computers use to identify each other
+              on the network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Another essential service is Dynamic Host Configuration Protocol
+              (DHCP), which automatically assigns IP addresses to devices on a
+              network, ensuring that each device has a unique address. This
+              automation simplifies network management and enhances efficiency
+              by reducing the need for manual IP configuration.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Additionally, network services like email, file transfer, and
+              remote access enable users to share resources and communicate
+              effectively, further enhancing the functionality and usability of
+              computer networks.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Network services also ensure the security and reliability of data
+              transmission through protocols such as SSL/TLS for encryption and
+              network monitoring services that continuously check the health and
+              performance of network components.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Service Fundamentals -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Service Fundamentals</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Definition</h3>
+            <p>
+              Network services refer to a range of functionalities provided by a
+              network to ensure effective data communication and resource
+              sharing among various devices and users. These services include
+              essential operations like data transfer, resource allocation, and
+              security management, all of which are crucial for maintaining
+              seamless connectivity.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              For instance, the Domain Name System (DNS) translates
+              human-readable domain names into IP addresses, facilitating easier
+              access to websites. Similarly, Dynamic Host Configuration Protocol
+              (DHCP) automates the assignment of IP addresses to devices within
+              a network, simplifying network management and reducing the
+              likelihood of configuration errors.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Importance of Network</h3>
+            <p>
+              The importance of network services in data communication and
+              computer networks cannot be overstated. These services ensure that
+              data is transmitted accurately and efficiently between devices,
+              which is vital for both personal and professional use.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Security services such as encryption and authentication protect
+              sensitive information from unauthorized access, while network
+              monitoring services help detect and resolve issues promptly,
+              minimizing downtime and ensuring consistent network performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Network Services Overview -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Key Network Services</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of Data Communication and Computer Networks, key
+              network services are integral to ensuring seamless and efficient
+              data transmission across diverse platforms.
+            </p>
+          </div>
+          <div class="list-section">
+            <h3>Essential Network Services</h3>
+            <ul>
+              <li>
+                <strong>Domain Name System (DNS):</strong> Translates
+                human-friendly domain names to IP addresses
+              </li>
+              <li>
+                <strong>Dynamic Host Configuration Protocol (DHCP):</strong>
+                Dynamically assigns IP addresses to devices
+              </li>
+              <li>
+                <strong>Network Time Protocol (NTP):</strong> Synchronizes
+                clocks of computers over a network
+              </li>
+              <li>
+                <strong>File Transfer Protocol (FTP):</strong> Enables transfer
+                of files between client and server
+              </li>
+              <li>
+                <strong>Simple Mail Transfer Protocol (SMTP):</strong> Used for
+                sending emails
+              </li>
+              <li>
+                <strong>Hyper Text Transfer Protocol (HTTP/HTTPS):</strong>
+                Foundation of data exchange on the web
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These services collectively enhance the functionality and
+              interoperability of networked systems, supporting a wide range of
+              applications from web browsing to enterprise resource planning.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DNS -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Domain Name System (DNS)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Domain Name System (DNS) is an indispensable component of
+              network infrastructure, enabling seamless navigation and
+              connectivity on the internet. DNS servers maintain a directory of
+              domain names and their corresponding IP addresses, allowing users
+              to access websites and online resources easily.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              When a user types a domain name into a web browser, the DNS server
+              processes this request by finding the associated IP address and
+              directing the user's device to the correct location. This system
+              not only simplifies the user experience but also optimizes network
+              efficiency and performance.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>
+                Translates human-readable domain names into machine-readable IP
+                addresses
+              </li>
+              <li>
+                Maintains a distributed database of domain name information
+              </li>
+              <li>Routes data to the correct destinations on the internet</li>
+              <li>
+                Incorporates security measures like DNSSEC to protect against
+                threats
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Without DNS, users would need to remember complex numerical IP
+              addresses for each website, which is impractical and prone to
+              errors.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- DHCP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Dynamic Host Configuration Protocol (DHCP)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Dynamic Host Configuration Protocol (DHCP) plays a pivotal
+              role in modern networking by streamlining the management of IP
+              addresses and other network configurations.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              When a device connects to a network, it sends a request to the
+              DHCP server, which responds by assigning an available IP address
+              along with other necessary network parameters such as the subnet
+              mask, default gateway, and DNS server addresses.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>
+                Automates the assignment of IP addresses to devices on a network
+              </li>
+              <li>
+                Provides network configuration parameters (subnet mask, gateway,
+                DNS)
+              </li>
+              <li>Supports IP address leasing for efficient address reuse</li>
+              <li>
+                Reduces configuration errors and simplifies network management
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This automated process ensures that devices can communicate
+              effectively within the network and adapts quickly to changes, such
+              as new devices joining or existing devices leaving the network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">File Transfer Protocol (FTP)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The File Transfer Protocol (FTP) is specifically designed for
+              transferring files between a client and a server over a network.
+              FTP allows users to upload and download files, making it an
+              invaluable tool for tasks such as website maintenance, software
+              distribution, and data backup.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              FTP operates on a client-server model, where the client initiates
+              a connection to the FTP server to request file transfers. This
+              protocol uses two separate channels: a command channel for
+              controlling the session and a data channel for transferring the
+              files.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Transfers files between client and server over a network</li>
+              <li>
+                Uses separate command and data channels for efficient operation
+              </li>
+              <li>
+                Supports various file operations (upload, download, delete)
+              </li>
+              <li>
+                Can be configured with encryption (FTPS) for enhanced security
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By providing a standard method for file transfers, FTP ensures
+              compatibility and interoperability across different systems and
+              platforms.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Simple Mail Transfer Protocol (SMTP)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Simple Mail Transfer Protocol (SMTP) is the standard protocol
+              for sending emails across networks. SMTP facilitates the reliable
+              transmission of electronic mail by routing messages between mail
+              servers and ensuring they reach the intended recipients.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              SMTP works by establishing a connection between the sender's and
+              recipient's mail servers. When an email is sent, the SMTP server
+              breaks down the message into smaller packets and uses various
+              commands to transmit these packets over the network.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Routes messages between mail servers</li>
+              <li>Breaks down email messages into transmittable packets</li>
+              <li>
+                Uses DNS to resolve recipient's email domain into IP address
+              </li>
+              <li>Includes mechanisms for error checking and handling</li>
+              <li>Supports security extensions like STARTTLS for encryption</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              SMTP operates at the application layer of the TCP/IP model, making
+              it a crucial component for email communication on the internet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- HTTP/HTTPS -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hyper Text Transfer Protocol (HTTP/HTTPS)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Hyper Text Transfer Protocol (HTTP) and its secure counterpart
+              HTTPS stand out as fundamental protocols for transmitting and
+              retrieving web content. HTTP facilitates the transfer of hypertext
+              documents, such as web pages, between clients (such as web
+              browsers) and servers.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              It operates on a request-response model, where clients send
+              requests for specific resources, and servers respond with the
+              requested data. HTTPS, on the other hand, adds an extra layer of
+              security by encrypting the data transmitted between the client and
+              server, safeguarding sensitive information from unauthorized
+              access or interception.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>HTTP forms the backbone of the World Wide Web</li>
+              <li>Operates on a request-response model</li>
+              <li>HTTPS encrypts data transmitted between client and server</li>
+              <li>
+                Protects sensitive information from eavesdropping and tampering
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              With the increasing emphasis on data security and privacy, HTTPS
+              has become the standard for transmitting sensitive information
+              over the internet, such as personal data and financial
+              transactions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Time Protocol (NTP)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Network Time Protocol (NTP) plays a critical role in ensuring
+              accurate timekeeping across networked devices. NTP enables
+              synchronization of clocks between systems by allowing them to
+              exchange time information with high precision.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This synchronization is essential for various network operations,
+              such as logging events, coordinating distributed systems, and
+              ensuring the integrity of time-sensitive transactions. By
+              maintaining consistent time references across devices, NTP helps
+              in avoiding discrepancies and ensuring the reliability and
+              coherence of networked applications.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Synchronizes clocks between systems with high precision</li>
+              <li>Operates on a hierarchical architecture for reliability</li>
+              <li>Provides redundancy and fault tolerance</li>
+              <li>Incorporates error detection and correction mechanisms</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              NTP serves as the backbone for time synchronization in distributed
+              computer systems, offering a reliable and scalable solution for
+              maintaining accurate timekeeping.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Models Overview -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Service Models</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Service models play a crucial role in structuring and delivering
+              various network services in the realm of Data Communication and
+              Computer Networks. Different service models offer distinct
+              approaches to resource sharing and communication.
+            </p>
+          </div>
+          <div class="list-section">
+            <h3>Common Service Models</h3>
+            <ul>
+              <li>
+                <strong>Client-Server Model:</strong> Clients request services
+                or resources from centralized servers
+              </li>
+              <li>
+                <strong>Peer-to-Peer (P2P) Model:</strong> Devices communicate
+                and share resources directly without a central server
+              </li>
+              <li>
+                <strong>Cloud Computing Models:</strong>
+                <ul>
+                  <li>Infrastructure as a Service (IaaS)</li>
+                  <li>Platform as a Service (PaaS)</li>
+                  <li>Software as a Service (SaaS)</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These service models offer on-demand access to resources, allowing
+              organizations to scale their infrastructure according to their
+              needs and reduce capital expenditure on hardware and software.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client-Server Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client-Server Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The client-server model operates on a distributed computing
+              architecture, where clients request services or resources from
+              centralized servers. This model is widely used in various
+              networked applications such as web hosting, email services, and
+              database management systems.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Clients, typically end-user devices or applications, initiate
+              requests to servers, which respond by providing the requested
+              resources or services. The client-server model offers several
+              advantages, including centralized control, efficient resource
+              sharing, and scalability, making it suitable for environments
+              where reliability and centralized management are essential.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>Centralized control and management</li>
+              <li>Efficient resource sharing</li>
+              <li>Scalability to accommodate growing demands</li>
+              <li>Enhanced security through centralized access control</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The client-server model promotes efficient and organized data
+              exchange in networked environments, contributing to seamless
+              communication and resource sharing.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Peer-to-Peer Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Peer-to-Peer Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Unlike the client-server model, which relies on centralized
+              servers to facilitate communication and resource allocation, the
+              P2P model enables devices to communicate directly with each other
+              without the need for intermediaries.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In a P2P network, each device can act as both a client and a
+              server, contributing resources such as processing power, storage,
+              and bandwidth to the network. This decentralized architecture
+              fosters collaborative sharing and distribution of resources,
+              making it suitable for applications like file sharing, video
+              conferencing, and distributed computing.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>Decentralized architecture without central control</li>
+              <li>Each device can act as both client and server</li>
+              <li>Enhanced scalability and fault tolerance</li>
+              <li>Inherent security benefits through data distribution</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The P2P model represents a flexible and resilient approach to
+              networked computing, fostering collaboration and resource sharing
+              in distributed environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud-based Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Cloud-based Services</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Cloud-based services offer on-demand access to a wide range of
+              computing resources, including storage, processing power, and
+              software applications, over the internet. This service model
+              eliminates the need for organizations to maintain costly
+              infrastructure on-premises.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Cloud-based services encompass various deployment models such as
+              Infrastructure as a Service (IaaS), Platform as a Service (PaaS),
+              and Software as a Service (SaaS), each offering distinct levels of
+              abstraction and management responsibilities.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Cloud Service Models</h3>
+            <div class="service-card">
+              <h4>Infrastructure as a Service (IaaS)</h4>
+              <p>
+                Provides virtualized computing resources such as virtual
+                machines, storage, and networking infrastructure
+              </p>
+            </div>
+            <div class="service-card">
+              <h4>Platform as a Service (PaaS)</h4>
+              <p>
+                Offers a complete development and deployment environment for
+                building applications
+              </p>
+            </div>
+            <div class="service-card">
+              <h4>Software as a Service (SaaS)</h4>
+              <p>
+                Delivers software applications over the internet on a
+                subscription basis
+              </p>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By leveraging cloud-based services, organizations can enhance
+              agility, scalability, and cost-effectiveness while focusing on
+              their core business objectives.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Topology Introduction -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Topology</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network topology, the arrangement of nodes and links in a network,
+              is a fundamental aspect of Data Communication and Computer
+              Networks. Different network topologies, such as bus, star, ring,
+              mesh, and hybrid, offer unique advantages and are chosen based on
+              factors like scalability, fault tolerance, and cost-effectiveness.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The bus topology, for instance, employs a linear configuration
+              where all devices connect to a single communication line, making
+              it simple and cost-effective for small-scale deployments like
+              local area networks (LANs). Conversely, the star topology features
+              a central hub or switch to which all devices connect individually,
+              offering ease of management and fault isolation, suitable for
+              medium-sized networks like office environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Virtual Network Topologies</h3>
+            <p>
+              Advancements in technology have led to the emergence of virtual
+              network topologies, where networks are configured and managed
+              through software-defined networking (SDN) and virtualization
+              technologies.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Virtual topologies offer flexibility, scalability, and resource
+              optimization, allowing organizations to adapt quickly to changing
+              business needs and efficiently utilize network resources.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Types of Network Topologies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Types of Network Topologies</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network topology encompasses several models, each with its unique
+              characteristics and applications. Understanding these topologies
+              is essential for designing efficient and reliable network
+              infrastructures.
+            </p>
+          </div>
+
+          <div class="topology-card">
+            <div class="topology-icon">
+              <i class="fas fa-minus"></i>
+            </div>
+            <div class="topology-info">
+              <h4>Bus Topology</h4>
+              <p>
+                All devices connect to a single communication line. Simple and
+                cost-effective for small-scale deployments but lacks scalability
+                and fault tolerance.
+              </p>
+            </div>
+          </div>
+
+          <div class="topology-card">
+            <div class="topology-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="topology-info">
+              <h4>Star Topology</h4>
+              <p>
+                All devices connect to a central hub or switch. Offers
+                centralized control and easy troubleshooting, ideal for
+                medium-sized networks.
+              </p>
+            </div>
+          </div>
+
+          <div class="topology-card">
+            <div class="topology-icon">
+              <i class="fas fa-circle-notch"></i>
+            </div>
+            <div class="topology-info">
+              <h4>Ring Topology</h4>
+              <p>
+                Forms a closed loop of interconnected devices. Provides balanced
+                performance and fault tolerance, suitable for metropolitan area
+                networks.
+              </p>
+            </div>
+          </div>
+
+          <div class="topology-card">
+            <div class="topology-icon">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="topology-info">
+              <h4>Mesh Topology</h4>
+              <p>
+                Each device connects directly to every other device. Offers
+                robustness and redundancy but can be complex and expensive to
+                implement.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Hybrid topologies combine elements of different topologies to
+              leverage their strengths while mitigating their weaknesses,
+              offering organizations flexibility and resilience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparative Analysis of Topologies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Comparative Analysis of Topologies</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Comparative analysis of network topologies is essential to
+              understand the strengths and weaknesses of different
+              configurations. Various factors such as scalability, fault
+              tolerance, cost-effectiveness, and performance must be considered
+              when evaluating topologies.
+            </p>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Topology</th>
+                <th>Advantages</th>
+                <th>Disadvantages</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Star</strong></td>
+                <td>Centralized control, easy troubleshooting</td>
+                <td>Single point of failure at the central hub</td>
+              </tr>
+              <tr>
+                <td><strong>Mesh</strong></td>
+                <td>High fault tolerance and redundancy</td>
+                <td>Complex to manage and expensive to implement</td>
+              </tr>
+              <tr>
+                <td><strong>Bus</strong></td>
+                <td>Simple and cost-effective</td>
+                <td>Lacks scalability and fault tolerance</td>
+              </tr>
+              <tr>
+                <td><strong>Ring</strong></td>
+                <td>Balanced performance and fault tolerance</td>
+                <td>Performance degradation if one device fails</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              By conducting a comparative analysis of topologies, network
+              designers can make informed decisions to design resilient,
+              efficient, and cost-effective network infrastructures that meet
+              specific requirements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications of Topologies in Real-World Networks -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Applications of Topologies in Real-World Networks
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network topologies find extensive application in real-world
+              network design and implementation across various industries.
+              Different topologies are chosen based on specific requirements and
+              constraints.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="service-card">
+                <h4>Star Topology Applications</h4>
+                <p>
+                  Commonly seen in home networks and small to medium-sized
+                  businesses. Favored for its simplicity, scalability, and fault
+                  tolerance.
+                </p>
+              </div>
+
+              <div class="service-card">
+                <h4>Mesh Topology Applications</h4>
+                <p>
+                  Widely used in critical infrastructure sectors such as
+                  telecommunications and banking. Ensures network communication
+                  remains intact even in the event of node failure.
+                </p>
+              </div>
+            </div>
+
+            <div class="column">
+              <div class="service-card">
+                <h4>Bus Topology Applications</h4>
+                <p>
+                  Commonly employed in local area networks (LANs) such as
+                  Ethernet networks. Efficient for small-scale deployments and
+                  easily extended.
+                </p>
+              </div>
+
+              <div class="service-card">
+                <h4>Ring Topology Applications</h4>
+                <p>
+                  Prevalent in metropolitan area networks (MANs) and token ring
+                  networks. Offers balanced performance with data packets
+                  circulating around the ring.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              The diverse applications of network topologies underscore their
+              importance in designing resilient, efficient, and scalable network
+              infrastructures to meet the evolving needs of modern data
+              communication environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Reference Model, with its seven distinct layers, plays a
+              pivotal role in the standardization and organization of network
+              communications, ensuring that different systems can interoperate
+              seamlessly. By breaking down the complex process of data
+              transmission into manageable and specific functions, the OSI model
+              simplifies the design, implementation, and troubleshooting of
+              networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Each layer, from the Physical to the Application, contributes to a
+              robust framework that underpins reliable and efficient
+              communication. This modular approach not only promotes
+              interoperability across diverse hardware and software but also
+              enhances scalability and flexibility, allowing networks to adapt
+              to evolving technological demands.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Network topology, the physical and logical arrangement of network
+              components, is integral to the performance and reliability of the
+              services defined by the OSI model. Different topologies, such as
+              star, mesh, and ring, offer various benefits and challenges in
+              terms of scalability, fault tolerance, and complexity.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding and strategically implementing the OSI model in
+              conjunction with appropriate network topologies is essential for
+              designing and managing networks that are robust, efficient, and
+              capable of meeting modern application demands.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 1) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions / Answers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">Q1. What is the OSI Reference Model?</div>
+            <div class="answer">
+              The OSI (Open Systems Interconnection) Reference Model is a
+              conceptual framework developed by the International Organization
+              for Standardization (ISO) that standardizes the functions of a
+              telecommunication or computing system into seven distinct layers:
+              Physical, Data Link, Network, Transport, Session, Presentation,
+              and Application. Each layer serves a specific purpose and
+              communicates with the layers directly above and below it, ensuring
+              that different network hardware and software can interoperate
+              seamlessly.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q2. What are the primary functions of the Physical layer in the
+              OSI model?
+            </div>
+            <div class="answer">
+              The Physical layer is the lowest layer of the OSI model and is
+              responsible for the physical connection between devices. It deals
+              with the transmission and reception of raw bit streams over a
+              physical medium, such as cables, radio waves, or optical fibers.
+              Functions include defining hardware specifications, such as
+              cables, connectors, and signal types, as well as establishing and
+              terminating the physical connection.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q3. How does the Data Link layer contribute to network
+              communication?
+            </div>
+            <div class="answer">
+              The Data Link layer, the second layer in the OSI model, ensures
+              reliable data transfer between two directly connected nodes. It
+              manages error detection and correction, flow control, and frame
+              synchronization. This layer is divided into two sublayers: the
+              Media Access Control (MAC) layer, which controls access to the
+              physical transmission medium, and the Logical Link Control (LLC)
+              layer, which manages frame synchronization, error checking, and
+              flow control.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q4. What role does the Network layer play in data transmission?
+            </div>
+            <div class="answer">
+              The Network layer, the third layer of the OSI model, is
+              responsible for data routing, forwarding, addressing, and packet
+              switching. It determines the best path for data packets to travel
+              from the source to the destination across multiple interconnected
+              networks. This layer uses logical addressing, such as IP
+              addresses, to identify devices and networks, and it ensures that
+              data reaches its intended destination efficiently.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 2) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Unit Based Questions / Answers (Continued)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q5. What are the responsibilities of the Transport layer?
+            </div>
+            <div class="answer">
+              The Transport layer, the fourth layer of the OSI model, ensures
+              end-to-end communication between devices by providing reliable
+              data transfer services. It manages data flow control, error
+              detection and correction, segmentation and reassembly, and ensures
+              complete data transfer. Key protocols at this layer include
+              Transmission Control Protocol (TCP), which offers reliable,
+              connection-oriented communication, and User Datagram Protocol
+              (UDP), which provides faster, connectionless communication.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q6. How does the Session layer manage interactions between
+              applications?
+            </div>
+            <div class="answer">
+              The Session layer, the fifth layer of the OSI model, establishes,
+              manages, and terminates sessions between two communicating
+              devices. It handles the creation, maintenance, and teardown of
+              communication sessions, ensuring that data streams are properly
+              synchronized and managed. This layer supports dialog control,
+              which determines the direction of data flow, and provides
+              mechanisms for session checkpointing and recovery.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q7. What functions does the Presentation layer perform?
+            </div>
+            <div class="answer">
+              The Presentation layer, the sixth layer of the OSI model, is
+              responsible for data translation, encryption, and compression. It
+              acts as a translator between the application layer and the lower
+              layers, ensuring that data is in a readable format for the
+              application layer. This layer converts data from a format used by
+              the application layer into a common format at the sending device,
+              and vice versa at the receiving device.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 3) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions / Answers (Final)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q8. What is the purpose of the Application layer in the OSI model?
+            </div>
+            <div class="answer">
+              The Application layer is the topmost layer of the OSI model and
+              provides network services directly to end-user applications. It
+              facilitates various network services such as email, file transfer,
+              and network management. This layer interfaces with software
+              applications to implement communication components like SMTP for
+              email, HTTP for web browsing, and FTP for file transfers.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q9. How do different network topologies impact network performance
+              and reliability?
+            </div>
+            <div class="answer">
+              Network topologies significantly influence performance and
+              reliability. For example, a star topology connects all nodes to a
+              central hub, simplifying management but creating a single point of
+              failure. A mesh topology provides multiple paths between nodes,
+              enhancing reliability and fault tolerance at the cost of
+              complexity and expense. A ring topology ensures equal access for
+              all nodes but can be disrupted if any single connection fails.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q10. Why is understanding the OSI model and network topologies
+              important for network design?
+            </div>
+            <div class="answer">
+              Understanding the OSI model and network topologies is crucial for
+              effective network design and management. The OSI model provides a
+              structured framework for developing and troubleshooting network
+              protocols and ensures interoperability between different network
+              technologies. Knowledge of network topologies allows network
+              designers to choose appropriate configurations that meet
+              performance, reliability, and scalability requirements.
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By integrating these concepts, network professionals can design
+              robust, efficient, and adaptable networks that support a wide
+              range of applications and services.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

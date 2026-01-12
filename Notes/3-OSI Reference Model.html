@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      OSI Reference Model - Data Communication and Computer Networks
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .osi-layer {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .layer-number {
+        width: 30px;
+        height: 30px;
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-weight: bold;
+      }
+
+      .layer-info {
+        flex: 1;
+      }
+
+      .layer-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .layer-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .layer-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .process-diagram {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+
+      .process-step {
+        text-align: center;
+        flex: 1;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin: 0 5px;
+      }
+
+      .process-step h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1a73e8;
+        font-size: 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">OSI Reference Model</h1>
+          <p class="slide-subtitle">
+            A Foundational Framework in Network Architecture
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://www.pusr.com/uploads/20240828/1344140ae4284447c8f3b2918969446d.jpg"
+              alt="OSI Reference Model"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              The OSI (Open Systems Interconnection) Reference Model
+              standardizes the functions of telecommunication or computing
+              systems, facilitating interoperability between different products
+              and software through a seven-layer architecture.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI (Open Systems Interconnection) Reference Model is a
+              foundational framework in network architecture, designed to
+              standardize the functions of a telecommunication or computing
+              system without regard to its underlying internal structure and
+              technology.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Developed by the International Organization for Standardization
+              (ISO) in 1984, the OSI model facilitates interoperability between
+              different products and software by segmenting communication
+              processes into seven distinct layers: Physical, Data Link,
+              Network, Transport, Session, Presentation, and Application.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Network topology, the arrangement of various elements in a
+              computer network, is closely related to the OSI model as it
+              provides the physical and logical layout of the network structure.
+              Topologies can significantly affect the performance and
+              reliability of network services, which are defined within the OSI
+              layers.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding the OSI model and its services in conjunction with
+              network topologies is crucial for designing, implementing, and
+              managing robust and efficient networks that meet the diverse needs
+              of modern applications and services.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectives Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Objectives</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              After completing this unit, you will have gained the following
+              abilities:
+            </p>
+          </div>
+          <div class="list-section">
+            <ul>
+              <li>
+                Ensure interoperable communication across diverse systems
+                through a standardized framework.
+              </li>
+              <li>
+                Facilitate modular engineering and ease of troubleshooting via
+                distinct functional layers.
+              </li>
+              <li>
+                Optimize and regulate data transmission processes within network
+                systems.
+              </li>
+              <li>
+                Define specific services at each OSI layer to ensure clear
+                responsibilities and efficient data handling.
+              </li>
+              <li>
+                Promote compatibility between various hardware and software
+                technologies.
+              </li>
+              <li>
+                Analyze how different network topologies influence performance,
+                reliability, and scalability.
+              </li>
+              <li>
+                Enable network scalability and adaptability through structured
+                design principles.
+              </li>
+              <li>
+                Enhance network reliability and fault tolerance by choosing
+                appropriate topologies and maintaining robust OSI layer
+                functions.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to OSI Reference Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to OSI Reference Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Reference Model, established by the International
+              Organization for Standardization (ISO), is a conceptual framework
+              used to understand and implement network protocols in seven
+              distinct layers.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This model helps in standardizing networking functions to allow
+              diverse communication systems to communicate using standard
+              protocols. Each layer in the OSI model has its own specific
+              functions and protocols, which enable the transfer of data from
+              one computer to another through a network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The layers range from physical transmission of data to
+              application-specific services, ensuring a comprehensive approach
+              to network communication.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The seven layers of the OSI model include the Physical Layer, Data
+              Link Layer, Network Layer, Transport Layer, Session Layer,
+              Presentation Layer, and Application Layer. Each of these layers
+              serves a unique purpose and communicates with the layers directly
+              above and below it.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By breaking down network communication into these layers, the OSI
+              model simplifies troubleshooting and enhances interoperability
+              between different network devices and technologies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conceptual Framework -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conceptual Framework</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Reference Model serves as a conceptual framework that
+              breaks down the complex process of network communication into
+              manageable layers.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This stratified approach allows developers and network engineers
+              to focus on individual layers without getting bogged down by the
+              intricacies of the entire networking process. Each layer in the
+              OSI model has specific functions and protocols, enabling a
+              structured and methodical approach to the design and
+              implementation of network systems.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              By dividing network functions into seven distinct layers, the OSI
+              model promotes a clear understanding of how different networking
+              tasks are handled and ensures that changes in one layer do not
+              directly impact others.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This layered approach enhances the flexibility and
+              interoperability of networking technologies. Since each layer is
+              independent, it is possible to use different protocols and
+              technologies at different layers without causing compatibility
+              issues.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standardized Seven-Layer Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Standardized Seven-Layer Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Reference Model is renowned for its standardized
+              seven-layer structure, which provides a clear and organized
+              approach to networking. These seven layers are Physical, Data
+              Link, Network, Transport, Session, Presentation, and Application.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Each layer serves a distinct purpose and operates independently
+              from the others, yet they work together to facilitate seamless
+              communication across diverse network systems. The Physical Layer
+              is concerned with the raw transmission of data over physical
+              media, while the Application Layer is focused on delivering
+              network services directly to end-users.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This standardized seven-layer model offers numerous advantages in
+              terms of network design and troubleshooting. By clearly
+              delineating responsibilities across different layers, the OSI
+              model simplifies the process of diagnosing and resolving network
+              issues, as problems can be isolated to a specific layer.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This structure promotes interoperability between different
+              hardware and software vendors, as each layer adheres to
+              established protocols and standards, allowing for a diverse range
+              of networking products to work together harmoniously.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layers of the OSI Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Layers of the OSI Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Model is composed of seven distinct layers, each playing a
+              critical role in the process of network communication:
+            </p>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">7</div>
+            <div class="layer-info">
+              <h4>Application Layer</h4>
+              <p>
+                Provides network services directly to end-users, such as email,
+                file transfer, and web browsing
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">6</div>
+            <div class="layer-info">
+              <h4>Presentation Layer</h4>
+              <p>
+                Translates data formats between the network and application,
+                ensuring data readability
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">5</div>
+            <div class="layer-info">
+              <h4>Session Layer</h4>
+              <p>
+                Manages and controls connections between computers, maintaining
+                sessions
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">4</div>
+            <div class="layer-info">
+              <h4>Transport Layer</h4>
+              <p>
+                Provides reliable data transfer services and ensures complete
+                data integrity
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">3</div>
+            <div class="layer-info">
+              <h4>Network Layer</h4>
+              <p>
+                Manages the routing of data packets between devices across
+                different networks
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">2</div>
+            <div class="layer-info">
+              <h4>Data Link Layer</h4>
+              <p>
+                Responsible for node-to-node data transfer and error detection
+                and correction
+              </p>
+            </div>
+          </div>
+          <div class="osi-layer">
+            <div class="layer-number">1</div>
+            <div class="layer-info">
+              <h4>Physical Layer</h4>
+              <p>
+                Deals with the physical connection between devices, including
+                cables and hardware
+              </p>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Each of these layers works in conjunction with the others,
+              creating a comprehensive framework that facilitates effective and
+              efficient network communication.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Physical Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Physical Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Physical Layer is the foundational layer of the OSI Model,
+              primarily concerned with the transmission and reception of raw bit
+              streams over a physical medium.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer includes the hardware elements involved in networking,
+              such as cables, switches, and network interface cards. It defines
+              the electrical, mechanical, and procedural specifications for
+              activating, maintaining, and deactivating the physical link
+              between communicating network systems.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Signal encoding and bit rate control</li>
+              <li>Defining physical characteristics of transmission media</li>
+              <li>
+                Specifying data rates, voltage levels, and physical connectors
+              </li>
+              <li>
+                Determining how devices are connected to the network topology
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Proper functioning of the Physical Layer is essential for the
+              reliable transfer of data across a network. Any issues at this
+              layer, such as faulty cables or incorrect hardware configurations,
+              can lead to significant network communication problems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Link Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Data Link Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Data Link Layer is the second layer in the OSI Model, and it
+              is essential for node-to-node data transfer. This layer is
+              responsible for establishing, maintaining, and terminating links
+              between two directly connected nodes.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              It ensures that data frames are reliably transferred across the
+              physical network by providing error detection and correction
+              mechanisms. The Data Link Layer is divided into two sublayers:
+            </p>
+            <ul>
+              <li>
+                <strong>Logical Link Control (LLC) sublayer:</strong> Manages
+                communication between devices
+              </li>
+              <li>
+                <strong>Media Access Control (MAC) sublayer:</strong> Controls
+                how devices on the network gain access to the medium and
+                permission to transmit data
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Framing of data packets with headers and trailers</li>
+              <li>Managing source and destination MAC addresses</li>
+              <li>Flow control to prevent congestion</li>
+              <li>Error detection and correction</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By ensuring that data is transmitted accurately and efficiently,
+              the Data Link Layer plays a vital role in maintaining the
+              integrity and performance of the network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Network Layer, the third layer in the OSI Model, is crucial
+              for determining the best physical path for data to travel from the
+              source to the destination.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              It handles logical addressing through IP addresses, allowing data
+              packets to traverse across multiple networks. The primary
+              functions of the Network Layer include routing, forwarding, packet
+              switching, and congestion control.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Path determination using routing algorithms</li>
+              <li>Packet fragmentation and reassembly</li>
+              <li>Traffic management through policies and controls</li>
+              <li>Logical addressing (IP addresses)</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer ensures that each data packet reaches its intended
+              destination efficiently by selecting optimal paths based on
+              various routing algorithms. When data packets are too large to be
+              transmitted over a network segment, the Network Layer divides them
+              into smaller fragments.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By providing these essential services, the Network Layer ensures
+              reliable and efficient data transmission across diverse and
+              complex network topologies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transport Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Transport Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Transport Layer, the fourth layer in the OSI Model, is pivotal
+              in ensuring reliable data transfer between end systems.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer is responsible for providing end-to-end communication
+              services, establishing a logical connection between the source and
+              destination. Key functions of the Transport Layer include
+              segmentation, flow control, error detection, and error correction.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Breaking down large data streams into smaller segments</li>
+              <li>Reassembling segments at the receiving end</li>
+              <li>Flow control to prevent overwhelming the receiver</li>
+              <li>Error detection and recovery through retransmission</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <p>
+              Protocols such as TCP (Transmission Control Protocol) and UDP
+              (User Datagram Protocol) operate at this layer, providing both
+              reliable and connectionless services.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By ensuring data integrity and managing the complete data transfer
+              process, the Transport Layer plays a crucial role in maintaining
+              the reliability and efficiency of network communication.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Session Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Session Layer, the fifth layer in the OSI Model, is
+              responsible for establishing, managing, and terminating sessions
+              between applications.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              A session refers to a semi-permanent interactive information
+              interchange between two communicating devices. This layer sets up,
+              coordinates, and terminates conversations, exchanges, and dialogs
+              between the applications at each end.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Dialogue control to track whose turn it is to transmit</li>
+              <li>Synchronization through checkpoints in the data stream</li>
+              <li>Support for full-duplex or half-duplex operations</li>
+              <li>Managing data recovery in case of disruptions</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <p>
+              The Session Layer enhances the reliability of the data exchange by
+              offering mechanisms for organizing and structuring communication.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By managing these critical interactions, the Session Layer plays a
+              vital role in maintaining a stable and organized flow of data
+              between networked applications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presentation Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Presentation Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Presentation Layer, the sixth layer in the OSI Model, serves
+              as the translator for the network, ensuring that data sent from
+              the application layer of one system can be read by the application
+              layer of another.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer is responsible for translating data between the
+              application layer and the lower layers, converting data formats,
+              and performing data encryption and decryption.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Data format translation (e.g., ASCII to EBCDIC)</li>
+              <li>Data compression and decompression</li>
+              <li>Data encryption and decryption</li>
+              <li>Managing data syntax and semantics</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <p>
+              It ensures that data is presented in a consistent and universally
+              recognizable format, handling tasks such as text encoding, data
+              compression, and encryption, which enhances both the efficiency
+              and security of data transmission.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By performing these functions, the Presentation Layer ensures that
+              data is appropriately formatted, compressed, and encrypted,
+              facilitating seamless and secure communication between diverse
+              networked systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Application Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Application Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Application Layer, the seventh and topmost layer of the OSI
+              Model, serves as the interface between the end users and the
+              network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer provides various network services directly to user
+              applications, facilitating processes such as email, file transfer,
+              web browsing, and remote login.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Functions</h3>
+            <ul>
+              <li>Identifying communication partners</li>
+              <li>Ensuring availability of communication resources</li>
+              <li>Synchronizing communication</li>
+              <li>Formatting and presenting data to applications</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <p>
+              The Application Layer encompasses a wide range of protocols that
+              support specific user activities:
+            </p>
+            <ul>
+              <li>
+                <strong>HTTP (Hypertext Transfer Protocol):</strong> Used for
+                web browsing
+              </li>
+              <li>
+                <strong>FTP (File Transfer Protocol):</strong> Used for file
+                transfers
+              </li>
+              <li>
+                <strong>SMTP (Simple Mail Transfer Protocol):</strong> Used for
+                email transmission
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By providing these critical services, the Application Layer plays
+              a vital role in delivering user-centric functionalities and
+              enabling effective communication over the network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Function and Interaction of OSI Layers -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Function and Interaction of OSI Layers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The OSI Model functions as a hierarchical framework that
+              standardizes network communication by dividing it into seven
+              distinct layers. Each layer has specific responsibilities and
+              interacts with the layers directly above and below it to
+              facilitate seamless data transfer.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The lower layers (Physical, Data Link, and Network) focus on data
+              transport and routing, ensuring that data packets travel from the
+              source to the destination efficiently. The upper layers
+              (Transport, Session, Presentation, and Application) are
+              responsible for managing data transfer, session control, data
+              formatting, and providing network services directly to end-users.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This division allows for clear separation of functions, making it
+              easier to develop, troubleshoot, and maintain network systems.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The interaction between OSI layers is crucial for the model's
+              effectiveness. Each layer communicates with its adjacent layers
+              through a set of protocols that define how data is packaged,
+              transmitted, received, and processed, allowing for flexibility and
+              scalability in network design.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adjacent Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Adjacent Layer Interaction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the OSI Model, each layer interacts closely with its adjacent
+              layers to ensure seamless data communication across the network.
+              This interaction involves passing data and control information up
+              and down the stack of layers.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              For instance, the Data Link Layer receives raw bits from the
+              Physical Layer and organizes them into frames for error-free
+              transmission. It then hands these frames off to the Network Layer,
+              which determines the best path to route the data.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This structured handoff ensures that each layer can focus on its
+              specific role without needing to understand the complexities of
+              the entire communication process.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Benefits of Adjacent Layer Interaction</h3>
+            <ul>
+              <li>
+                Simplified troubleshooting by isolating problems to specific
+                layers
+              </li>
+              <li>Enhanced network reliability and scalability</li>
+              <li>Efficient problem-solving without affecting other layers</li>
+              <li>Clear definition of responsibilities and interactions</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By clearly defining the responsibilities and interactions of each
+              layer, the OSI Model facilitates better design, implementation,
+              and maintenance of complex network systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Encapsulation and Decapsulation Processes -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Encapsulation and Decapsulation Processes</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encapsulation and decapsulation are fundamental processes in the
+              OSI Model that enable data to be transmitted across a network
+              efficiently and accurately.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Encapsulation Process</h3>
+            <p>
+              Encapsulation occurs when data is passed down from the Application
+              Layer to the Physical Layer. At each layer, specific headers (and
+              sometimes trailers) are added to the data, wrapping it in the
+              necessary protocol information.
+            </p>
+            <ul>
+              <li>Transport Layer adds a TCP header</li>
+              <li>Network Layer adds an IP header</li>
+              <li>Data Link Layer adds a frame header and trailer</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Decapsulation Process</h3>
+            <p>
+              Decapsulation is the process that occurs at the receiving end,
+              where the data moves up from the Physical Layer to the Application
+              Layer. As the data ascends through the layers, each layer removes
+              its corresponding header and processes the necessary information
+              before passing the data to the next higher layer.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These processes of encapsulation and decapsulation are critical
+              for maintaining the integrity and functionality of network
+              communication, allowing complex data exchanges to occur seamlessly
+              across diverse network systems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>
