@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error Control and Flow Control Mechanisms</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Error Control and Flow Control Mechanisms</h1>
+          <p class="slide-subtitle">
+            Ensuring Reliability and Efficiency in the Transport Layer
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20200722235856/cvf1.png"
+              alt="Error Control and Flow Control"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              The transport layer employs two fundamental mechanisms—error
+              control and flow control—to maintain the integrity and efficiency
+              of data transfer across networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Objectives -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Learning Objectives</h2>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <ul>
+              <li>
+                Ensure data integrity through effective error detection and
+                correction mechanisms
+              </li>
+              <li>
+                Maintain efficient data transmission by regulating the flow of
+                packets
+              </li>
+              <li>
+                Prevent buffer overflow and data loss with robust flow control
+                techniques
+              </li>
+              <li>
+                Implement reliable retransmission strategies to handle lost or
+                corrupted packets
+              </li>
+              <li>
+                Optimize network performance by dynamically adjusting the
+                transmission rate
+              </li>
+              <li>
+                Utilize sliding window protocols to manage unacknowledged packet
+                transmission
+              </li>
+              <li>
+                Employ acknowledgment messages to confirm successful data
+                receipt
+              </li>
+              <li>
+                Enhance communication reliability by addressing network
+                congestion and interference
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Introduction to Managing Reliability and Efficiency -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">
+            Introduction to Managing Reliability and Efficiency
+          </h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The transport layer of the OSI model plays a pivotal role in
+              ensuring reliable and efficient communication between devices over
+              a network. Two key mechanisms integral to this layer are error
+              control and flow control.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Error Control</h4>
+                <p>
+                  Focuses on detecting and correcting errors that occur during
+                  data transmission, ensuring the accuracy and completeness of
+                  the data received.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Flow Control</h4>
+                <p>
+                  Manages the rate of data transfer between the sender and
+                  receiver to prevent network congestion and data loss.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Together, these mechanisms enhance the reliability and efficiency
+              of network communications, which is essential for the smooth
+              functioning of various applications and services.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Error Control Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Error Control Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Error control mechanisms are essential in the transport layer to
+              ensure the accuracy and reliability of data transmission. These
+              mechanisms detect and correct errors that may occur due to various
+              factors such as signal degradation, interference, and network
+              congestion.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Error Control Techniques</h4>
+            <ul>
+              <li>
+                <strong>Checksums:</strong> Numerical values calculated based on
+                data being sent to detect errors
+              </li>
+              <li>
+                <strong>Cyclic Redundancy Checks (CRC):</strong> Polynomial
+                division method to detect changes to raw data
+              </li>
+              <li>
+                <strong>Acknowledgment (ACK) Messages:</strong> Confirm
+                successful reception of packets
+              </li>
+              <li>
+                <strong>Negative Acknowledgment (NACK) Messages:</strong>
+                Indicate packet loss or corruption
+              </li>
+              <li>
+                <strong>Retransmission Strategies:</strong> Resend lost or
+                corrupted packets
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These techniques ensure that errors introduced during transmission
+              are identified and addressed before the data is processed further,
+              maintaining the integrity of network communication.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Checksums -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Checksums</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Checksums are a simple yet effective method to detect errors in
+              data transmission. They involve the sender computing a numerical
+              value based on the data packet using a specific algorithm.
+            </p>
+          </div>
+          <div class="process-flow">
+            <div class="process-step">Sender calculates checksum</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">Checksum appended to packet</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">Receiver recalculates checksum</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">Values compared</div>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Advantages</h4>
+                <ul>
+                  <li>Simple to implement</li>
+                  <li>Low computational overhead</li>
+                  <li>Widely used in network protocols</li>
+                  <li>Effective for common transmission errors</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Limitations</h4>
+                <ul>
+                  <li>Not foolproof</li>
+                  <li>Can miss certain error types</li>
+                  <li>Often used with other techniques</li>
+                  <li>Cannot correct errors, only detect them</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              While checksums are effective for detecting errors, they are not
+              foolproof and can occasionally miss certain types of errors,
+              especially those that result in multiple, compensating changes in
+              the data.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Acknowledgment (ACK) Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Acknowledgment (ACK) Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Acknowledgment (ACK) mechanisms are a cornerstone of error control
+              in the transport layer, playing a crucial role in ensuring
+              reliable data transmission across networks.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>How ACK Mechanisms Work</h4>
+            <ol>
+              <li>Sender transmits data packet to receiver</li>
+              <li>Receiver successfully receives and processes the packet</li>
+              <li>Receiver sends ACK message back to sender</li>
+              <li>Sender receives ACK and proceeds with next packet</li>
+              <li>If no ACK is received within timeout, sender retransmits</li>
+            </ol>
+          </div>
+          <div class="highlight-box">
+            <p>
+              ACK mechanisms are integral to various error control protocols,
+              such as Automatic Repeat reQuest (ARQ), including Stop-and-Wait
+              ARQ, Go-Back-N ARQ, and Selective Repeat ARQ.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Benefits of ACK Mechanisms</h4>
+            <ul>
+              <li>Ensures data delivery confirmation</li>
+              <li>Helps maintain controlled flow of data</li>
+              <li>Prevents sender from overwhelming receiver</li>
+              <li>Provides basis for retransmission strategies</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Retransmission Strategies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Retransmission Strategies</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Retransmission strategies are a fundamental component of error
+              control mechanisms in the transport layer, designed to ensure
+              reliable data delivery across networks.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Stop-and-Wait Protocol</h4>
+                <ul>
+                  <li>Transmits one packet at a time</li>
+                  <li>Waits for ACK before sending next</li>
+                  <li>Simple but inefficient for high-latency networks</li>
+                  <li>Low bandwidth utilization</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Go-Back-N Protocol</h4>
+                <ul>
+                  <li>Sends multiple packets before waiting for ACKs</li>
+                  <li>
+                    If error detected, retransmits that packet and all
+                    subsequent
+                  </li>
+                  <li>More efficient than Stop-and-Wait</li>
+                  <li>Can lead to unnecessary retransmissions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="info-card">
+            <h4>Selective Repeat Protocol</h4>
+            <p>
+              Only retransmits the specific packets that were lost or corrupted,
+              based on selective acknowledgments from the receiver. This
+              approach reduces unnecessary data transmission and enhances
+              overall network efficiency.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By employing these retransmission strategies, the transport layer
+              can effectively manage errors, ensuring that data integrity is
+              maintained and communication remains reliable even in the presence
+              of transmission errors.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Flow Control Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Flow Control Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Flow control mechanisms are essential in the transport layer to
+              ensure efficient and reliable data transmission between senders
+              and receivers. These mechanisms regulate the pace at which data
+              packets are sent to prevent overwhelming the receiver and to
+              manage the network's available bandwidth effectively.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Flow Control Techniques</h4>
+            <ul>
+              <li>
+                <strong>Sliding Window Protocol:</strong> Allows sender to send
+                multiple packets before needing acknowledgment
+              </li>
+              <li>
+                <strong>Credit-Based Flow Control:</strong> Receiver provides
+                "credits" indicating data it can accept
+              </li>
+              <li>
+                <strong>Rate-Based Flow Control:</strong> Sets predefined
+                transmission rates based on network conditions
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              These flow control mechanisms play a vital role in maintaining the
+              stability and efficiency of data transmission in networks,
+              ensuring that data flows smoothly without causing congestion or
+              data loss.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Sliding Window Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Sliding Window Protocols</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Sliding window protocols are a fundamental flow control mechanism
+              in the transport layer, designed to manage the rate of data
+              transmission between senders and receivers.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>How Sliding Window Works</h4>
+            <p>
+              The "window" refers to the range of sequence numbers that the
+              sender is allowed to transmit before needing an acknowledgment
+              from the receiver. This window size can dynamically adjust based
+              on network conditions and receiver capacity.
+            </p>
+          </div>
+          <div class="frame-structure">
+            <div class="frame-field">Sent & ACKed</div>
+            <div class="frame-field primary">Window (Sent, not ACKed)</div>
+            <div class="frame-field">Not yet sent</div>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Go-Back-N</h4>
+                <p>
+                  If an error is detected in a packet, the sender must
+                  retransmit that packet and all subsequent packets.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Selective Repeat</h4>
+                <p>
+                  Only retransmits the specific packets that were lost or
+                  corrupted, based on selective acknowledgments from the
+                  receiver.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By dynamically adjusting the flow of data, sliding window
+              protocols contribute significantly to the robustness and
+              efficiency of network communications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Credit-Based Flow Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Credit-Based Flow Control</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Credit-based flow control is a crucial mechanism within the
+              transport layer that ensures data transmission remains efficient
+              and manageable between senders and receivers.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>How Credit-Based Flow Control Works</h4>
+            <ol>
+              <li>
+                Receiver sends credits to sender indicating available buffer
+                space
+              </li>
+              <li>
+                Each credit corresponds to specific number of bytes or packets
+              </li>
+              <li>Sender transmits only up to the credit limit</li>
+              <li>As receiver processes data, it sends updated credits</li>
+              <li>
+                Sender adjusts transmission rate based on available credits
+              </li>
+            </ol>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This method helps to prevent buffer overflow at the receiver's end
+              by ensuring that the sender does not send more data than the
+              receiver can handle at any given time.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Advantages</h4>
+            <ul>
+              <li>Adaptable to varying network conditions</li>
+              <li>Accommodates different receiver processing speeds</li>
+              <li>Minimizes risk of data loss</li>
+              <li>Ensures efficient use of network resources</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Rate-Based Flow Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Rate-Based Flow Control</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Rate-based flow control is a sophisticated mechanism used in the
+              transport layer to manage the pace of data transmission between
+              senders and receivers.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>How Rate-Based Flow Control Works</h4>
+            <p>
+              Unlike window-based or credit-based systems that rely on feedback
+              from the receiver, rate-based flow control sets a predefined
+              transmission rate for the sender. This rate can be adjusted based
+              on network conditions, ensuring that the sender transmits data at
+              a pace that the network can handle without causing congestion or
+              packet loss.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By controlling the data transmission rate, this mechanism helps to
+              maintain a steady flow of data, minimizing delays and maximizing
+              throughput, which is especially important in high-speed networks
+              and real-time applications.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Applications</h4>
+            <ul>
+              <li>Wide-area networks (WANs)</li>
+              <li>Internet communications</li>
+              <li>Real-time video streaming</li>
+              <li>High-speed data transfers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Conclusion</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of modern networking, error control and flow control
+              mechanisms within the transport layer are indispensable for
+              ensuring reliable and efficient data transmission.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Error Control</h4>
+                <ul>
+                  <li>Detects and corrects transmission errors</li>
+                  <li>Maintains data integrity</li>
+                  <li>Uses checksums, ACKs, and retransmission</li>
+                  <li>Ensures accuracy of received data</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Flow Control</h4>
+                <ul>
+                  <li>Manages transmission rate</li>
+                  <li>Prevents buffer overflow</li>
+                  <li>
+                    Uses sliding window, credit-based, and rate-based methods
+                  </li>
+                  <li>Optimizes network performance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The integration of these error control and flow control mechanisms
+              is essential for the robustness of transport layer protocols such
+              as TCP and UDP, enabling a wide range of applications from simple
+              data transfers to complex, real-time communications.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              As networks continue to evolve, the importance of these mechanisms
+              will only grow, necessitating ongoing advancements and refinements
+              to meet the demands of increasingly sophisticated and high-speed
+              communication environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Questions and Answers -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Questions and Answers</h2>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q1. What is the primary function of error control mechanisms in
+              the transport layer?
+            </div>
+            <div class="answer">
+              A1. Error control mechanisms in the transport layer are designed
+              to detect and correct errors that occur during data transmission.
+              They ensure the accuracy and integrity of the data received by the
+              receiver.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q2. How do sliding window protocols contribute to efficient data
+              transmission?
+            </div>
+            <div class="answer">
+              A2. Sliding window protocols allow the sender to transmit multiple
+              packets before receiving an acknowledgment for each one. This
+              helps in optimizing the use of available bandwidth and preventing
+              congestion, thereby improving the efficiency of data transmission.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q3. What is the role of acknowledgment (ACK) mechanisms in flow
+              control?
+            </div>
+            <div class="answer">
+              A3. ACK mechanisms are used to acknowledge the successful receipt
+              of data packets by the receiver. They help in regulating the flow
+              of data by allowing the sender to transmit new packets only after
+              receiving acknowledgment for the previous ones.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q4. How does credit-based flow control prevent buffer overflow?
+            </div>
+            <div class="answer">
+              A4. Credit-based flow control involves the receiver sending
+              credits to the sender, indicating the amount of data it can accept
+              without risking overflow. This ensures that the sender does not
+              send more data than the receiver can handle, thereby preventing
+              buffer overflow.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q5. What are the advantages of rate-based flow control over other
+              flow control mechanisms?
+            </div>
+            <div class="answer">
+              A5. Rate-based flow control sets a predefined transmission rate
+              for the sender, which can be adjusted based on network conditions.
+              This helps in maintaining a steady flow of data, minimizing
+              delays, and maximizing throughput, especially in high-speed
+              networks.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q6. How do error control and flow control mechanisms work together
+              to ensure reliable data transmission?
+            </div>
+            <div class="answer">
+              A6. Error control mechanisms detect and correct errors in data
+              transmission, while flow control mechanisms regulate the flow of
+              data to prevent congestion and buffer overflow. Together, they
+              ensure reliable and efficient data transmission in the transport
+              layer.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Error Control and Flow Control Mechanisms - Ensuring Reliability and
+        Efficiency in Network Communication
+      </p>
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

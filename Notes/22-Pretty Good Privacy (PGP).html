@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pretty Good Privacy (PGP)</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .step-flow {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .step {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .step-number {
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .pgp-component {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .component-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .component-info {
+        flex: 1;
+      }
+
+      .component-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .algorithm-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .algorithm-table th,
+      .algorithm-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .algorithm-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .algorithm-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .benefit-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .benefit-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .benefit-info {
+        flex: 1;
+      }
+
+      .benefit-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .disadvantage-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .disadvantage-icon {
+        font-size: 1.5rem;
+        color: #e53935;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .disadvantage-info {
+        flex: 1;
+      }
+
+      .disadvantage-info h4 {
+        margin-bottom: 5px;
+        color: #e53935;
+      }
+
+      .application-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .app-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .app-info {
+        flex: 1;
+      }
+
+      .app-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .practice-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .practice-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .practice-info {
+        flex: 1;
+      }
+
+      .practice-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Pretty Good Privacy (PGP)</h1>
+          <p class="slide-subtitle">
+            Encryption System for Secure Data and Communications
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://uipath.com/cdn-cgi/image/format=auto/https://marketplace-cdn.uipath.com/files/component_media/a7b9a5b6-1f80-4b49-8bcf-9ee7cc6a1f78.png"
+              alt="PGP Encryption"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              Pretty Good Privacy (PGP) is an encryption system used to secure
+              data, emails, files, and digital communications. It ensures that
+              only the intended recipient can read the message and that the
+              message has not been interfered with.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Introduction to PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              PGP stands for Pretty Good Privacy which was invented by Phil
+              Zimmermann. Some key points about PGP:
+            </p>
+          </div>
+
+          <div class="list-section">
+            <ul>
+              <li>
+                PGP was designed to provide all four aspects of security:
+                privacy, integrity, authentication, and non-repudiation in email
+                sending
+              </li>
+              <li>
+                PGP is an open source and freely available software package for
+                email security
+              </li>
+              <li>
+                PGP provides authentication through the use of Digital Signature
+              </li>
+              <li>
+                It provides confidentiality through the use of symmetric block
+                encryption
+              </li>
+              <li>
+                It provides compression by using the ZIP algorithm, and EMAIL
+                compatibility using the radix-64 encoding scheme
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              PGP combines multiple cryptographic techniques to create a
+              comprehensive security solution for digital communications,
+              particularly email.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: PGP at the Sender Site -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP at the Sender Site</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Following are the steps taken by PGP to create secure e-mail at
+              the sender site:
+            </p>
+          </div>
+
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Hashing the Message</h4>
+                <p>
+                  The e-mail message is hashed by using a hashing function to
+                  create a digest.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Creating a Digital Signature</h4>
+                <p>
+                  The digest is then encrypted to form a signed digest by using
+                  the sender's private key, and then signed digest is added to
+                  the original email message.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Encrypting the Message</h4>
+                <p>
+                  The original message and signed digest are encrypted by using
+                  a one-time secret key created by the sender.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Encrypting the Session Key</h4>
+                <p>
+                  The secret key is encrypted by using a receiver's public key.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Sending the Message</h4>
+                <p>
+                  Both the encrypted secret key and the encrypted combination of
+                  message and digest are sent together.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: PGP at the Receiver Site -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP at the Receiver Site</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Following are the steps taken to show how PGP uses hashing and a
+              combination of three keys to generate the original message:
+            </p>
+          </div>
+
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Receiving the Message</h4>
+                <p>
+                  The receiver receives the combination of encrypted secret key
+                  and message digest.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Decrypting the Secret Key</h4>
+                <p>
+                  The encrypted secret key is decrypted by using the receiver's
+                  private key to get the one-time secret key.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Decrypting the Message</h4>
+                <p>
+                  The secret key is then used to decrypt the combination of
+                  message and digest.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Verifying the Digest</h4>
+                <p>
+                  The digest is decrypted by using the sender's public key, and
+                  the original message is hashed by using a hash function to
+                  create a digest.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Comparing Digests</h4>
+                <p>
+                  Both the digests are compared if both of them are equal means
+                  that all the aspects of security are preserved.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Working of PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Working of PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              To have a better grasp of the functioning of PGP, it is necessary
+              to analyze how every process of the cryptographic system operates
+              internally. PGP employs a hybrid model that incorporates methods
+              of symmetric and asymmetric encryption, hashing, and encoding.
+            </p>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🔐</div>
+            <div class="component-info">
+              <h4>1. Hashing Function</h4>
+              <p>
+                PGP employs a hash function to produce a unique fixed-length
+                digest for every email message. The most popular hashing
+                algorithms that PGP uses are SHA (Secure Hash Algorithm) and MD5
+                (Message Digest 5). Data integrity is the main objective of
+                hashing: if a single bit of a message is modified, the hash
+                output will be completely different.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">✍️</div>
+            <div class="component-info">
+              <h4>2. Digital Signature Generation</h4>
+              <p>
+                PGP, after hashing, makes a digital signature to verify the
+                sender's identity and to guarantee that there is no repudiation.
+                The hash value (digest) is encrypted with the sender's private
+                key, and this becomes the digital signature.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🔒</div>
+            <div class="component-info">
+              <h4>3. Message Encryption (Confidentiality)</h4>
+              <p>
+                When the message and its digital signature are complete, PGP
+                uses symmetric encryption to encrypt the message as a whole. PGP
+                uses a one-time session key (randomly generated symmetric key)
+                to encrypt each message.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🔑</div>
+            <div class="component-info">
+              <h4>4. Encrypting the Session Key (Key Management)</h4>
+              <p>
+                PGP gives the session key to the recipient by encrypting the
+                session key using the recipient's public key. This means that
+                only the intended recipient, who has the associated private key,
+                can access the session key.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">📦</div>
+            <div class="component-info">
+              <h4>5. Compression and Encoding</h4>
+              <p>
+                PGP uses the ZIP algorithm to compress the data after it has
+                been encrypted, to allow faster transmission and reduce the size
+                of the message. Lastly, to make the compressed message usable in
+                email systems, the message is encoded using Radix-64 (Base64)
+                encoding.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: PGP Decryption Process -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP Decryption Process</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              PGP reverses the whole process at the receiver end to access and
+              authenticate the message.
+            </p>
+          </div>
+
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Decrypting the Session Key</h4>
+                <p>
+                  The receiver is able to use their private key to unlock the
+                  encrypted session key, which accompanies the message. This
+                  action retrieves the one and only symmetric key, which is
+                  temporary and is aimed at encrypting the original message.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Decrypting the Message</h4>
+                <p>
+                  The message can then be decrypted using the symmetric session
+                  key as well as the digital signature, which is in the message.
+                  This process restores who the original sender is in plain
+                  text, as well as the signed digest and the message.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Authenticating the Sender and Verifying Integrity</h4>
+                <p>
+                  PGP takes the public key of the sender and uses it to unlock
+                  the digest that was signed. The receiver generates a new hash
+                  using the same function that was used by the sender and the
+                  receiver's system, on the plain text, to create a new hash
+                  from the received plain text message.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Comparing Hash Values</h4>
+                <p>
+                  It is then confirmed that the two hash values are equivalent,
+                  and if this is true, then: the message is original and was not
+                  tampered with (Integrity), the message was sent by the sender
+                  (Authentication), and the sender cannot repudiate having sent
+                  it (Non-repudiation).
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Decompression and Decoding</h4>
+                <p>
+                  The compressed ZIP file is decompressed, and the original
+                  text, encoded in Radix-64, is recovered.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: PGP Key Management -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP Key Management</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Key management is the most important part of PGP. This is how
+              users create, keep, and share their crypto keys.
+            </p>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🔑</div>
+            <div class="component-info">
+              <h4>1. Key Pair Generation</h4>
+              <p>
+                Each PGP user creates a pair of keys: Public Key (to be shared
+                with everyone) and a Private Key (to be kept secret). The key
+                pair is mathematically related-data encrypted with one can only
+                be decrypted with the other. Keys are usually generated using
+                one of these algorithms: RSA, El Gamal, or DSA.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">📤</div>
+            <div class="component-info">
+              <h4>2. Key Distribution</h4>
+              <p>
+                PGP provides users with the ability to distribute their public
+                keys through key servers, email, or in person. A public key is
+                linked to their owner's identity with a name, email, and a key
+                ID. To prevent impersonation, users are required to sign one
+                another's public keys.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🌐</div>
+            <div class="component-info">
+              <h4>3. Web of Trust</h4>
+              <p>
+                PGP uses a decentralized trust model, unlike other centralized
+                systems, which is built around a certificate authority (CA). In
+                the Web of Trust, users authenticate each other's public keys by
+                confirming the identity of the key holder and signing the public
+                key. This adds value to the PGP democratization and flexibility.
+              </p>
+            </div>
+          </div>
+
+          <div class="pgp-component">
+            <div class="component-icon">🔄</div>
+            <div class="component-info">
+              <h4>4. Key Revocation and Expiration</h4>
+              <p>
+                Where there is a loss or compromise of a private key, users can
+                issue a key revocation certificate to nullify the key. Long-term
+                risks can be mitigated by PGP keys, also by giving them
+                expiration dates.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Algorithms Used in PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Algorithms Used in PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              PGP employs several algorithms for different functions, ensuring
+              robust multi-layer security:
+            </p>
+          </div>
+
+          <table class="algorithm-table">
+            <thead>
+              <tr>
+                <th>Function</th>
+                <th>Algorithm Examples</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Symmetric Encryption</td>
+                <td>AES, IDEA, CAST-128, Triple DES</td>
+                <td>Encrypts message content</td>
+              </tr>
+              <tr>
+                <td>Asymmetric Encryption</td>
+                <td>RSA, DSA, ElGamal</td>
+                <td>Encrypts session key and digital signature</td>
+              </tr>
+              <tr>
+                <td>Hashing</td>
+                <td>SHA-256, SHA-1, MD5</td>
+                <td>Creates message digest for integrity</td>
+              </tr>
+              <tr>
+                <td>Compression</td>
+                <td>ZIP</td>
+                <td>Reduces message size</td>
+              </tr>
+              <tr>
+                <td>Encoding</td>
+                <td>Radix-64 (Base64)</td>
+                <td>Converts binary to text for email compatibility</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              By combining these different algorithms, PGP provides a
+              comprehensive security solution that addresses confidentiality,
+              integrity, authentication, and non-repudiation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Applications of PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>There are numerous uses of PGP:</p>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">📧</div>
+            <div class="app-info">
+              <h4>1. Secure Email Communication</h4>
+              <p>
+                PGP's primary usage is email message protection through privacy
+                and authentication. PGP assures that only the expected receiver
+                can access the message, and that the message sender is not
+                allowed to refute having sent the message.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">📁</div>
+            <div class="app-info">
+              <h4>2. File and Disk Encryption</h4>
+              <p>
+                PGP can be used to encrypt files, protect data that is sensitive
+                data stored on local or shared systems.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💻</div>
+            <div class="app-info">
+              <h4>3. Digital Signatures for Software Distribution</h4>
+              <p>
+                To prove authenticity and protect against unauthorized updates,
+                developers sign software packages with PGP. PGP-signed packages
+                are often provided by Linux distributions and other open-source
+                projects.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💾</div>
+            <div class="app-info">
+              <h4>4. Secure Backup and Storage</h4>
+              <p>
+                PGP encrypts backup files, ensuring that even if the backup is
+                stolen, the data remains unreadable without the correct key.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🌐</div>
+            <div class="app-info">
+              <h4>5. Authentication in Cloud and Network Systems</h4>
+              <p>
+                PGP keys can also be used in authentication systems for
+                verifying users in secure networks or cloud-based environments.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Advantages of PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advantages of PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="benefit-card">
+            <div class="benefit-icon">🔒</div>
+            <div class="benefit-info">
+              <h4>Strong Security</h4>
+              <p>
+                It combines symmetric and asymmetric encryption to provide
+                maximum protection. Also, it offers end-to-end encryption,
+                making it nearly impossible for intermediaries to read or modify
+                data.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">✅</div>
+            <div class="benefit-info">
+              <h4>Integrity Verification</h4>
+              <p>
+                Hash functions and digital signatures ensure that the data has
+                not been modified.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📝</div>
+            <div class="benefit-info">
+              <h4>Non-Repudiation</h4>
+              <p>
+                Since messages are digitally signed, the sender cannot later
+                deny having sent them.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">🌐</div>
+            <div class="benefit-info">
+              <h4>Decentralized Trust Model</h4>
+              <p>
+                The Web of Trust allows users to control their own key
+                validation without depending on a centralized authority.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📖</div>
+            <div class="benefit-info">
+              <h4>Open Source Availability</h4>
+              <p>
+                PGP, as well as PGP's open-source version, is GPG (GNU Privacy
+                Guard) for use and modification, freely available.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">💻</div>
+            <div class="benefit-info">
+              <h4>Cross-Platform Compatibility</h4>
+              <p>
+                Works on numerous operating systems such as Windows, macOS, and
+                Linux.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📦</div>
+            <div class="benefit-info">
+              <h4>Compression and Encoding Support</h4>
+              <p>
+                Reduces the size of messages and makes them compatible with
+                email systems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Disadvantages of PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Disadvantages of PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="disadvantage-card">
+            <div class="disadvantage-icon">⚙️</div>
+            <div class="disadvantage-info">
+              <h4>Administration is Difficult</h4>
+              <p>
+                The different versions of PGP complicate the administration.
+              </p>
+            </div>
+          </div>
+
+          <div class="disadvantage-card">
+            <div class="disadvantage-icon">🔄</div>
+            <div class="disadvantage-info">
+              <h4>Compatibility Issues</h4>
+              <p>
+                Both the sender and the receiver must have compatible versions
+                of PGP. For example, if you encrypt an email by using PGP with
+                one of the encryption techniques, the receiver has a different
+                version of PGP that cannot read the data.
+              </p>
+            </div>
+          </div>
+
+          <div class="disadvantage-card">
+            <div class="disadvantage-icon">🧩</div>
+            <div class="disadvantage-info">
+              <h4>Complexity</h4>
+              <p>
+                PGP is a complex technique. Other security schemes use symmetric
+                encryption, which uses one key, or asymmetric encryption, which
+                uses two different keys. PGP uses a hybrid approach that
+                implements symmetric encryption with two keys. PGP is more
+                complex, and it is less familiar than the traditional symmetric
+                or asymmetric methods.
+              </p>
+            </div>
+          </div>
+
+          <div class="disadvantage-card">
+            <div class="disadvantage-icon">🔐</div>
+            <div class="disadvantage-info">
+              <h4>No Recovery</h4>
+              <p>
+                Computer administrators face the problem of losing their
+                passwords. In such situations, an administrator should use a
+                special program to retrieve passwords. However, PGP does not
+                offer such a special program for recovery; encryption methods
+                are very strong, so it does not retrieve the forgotten
+                passwords, resulting in lost messages or lost files.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: PGP vs. S/MIME -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP vs. S/MIME</h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>PGP</th>
+                <th>S/MIME</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Trust Model</td>
+                <td>Web of Trust (decentralized)</td>
+                <td>Hierarchical (uses Certificate Authorities)</td>
+              </tr>
+              <tr>
+                <td>Key Storage</td>
+                <td>User-managed key pairs</td>
+                <td>Certificates managed by organizations</td>
+              </tr>
+              <tr>
+                <td>Cost</td>
+                <td>Free and open-source</td>
+                <td>May require paid digital certificates</td>
+              </tr>
+              <tr>
+                <td>Flexibility</td>
+                <td>High (user control)</td>
+                <td>Lower (dependent on CA)</td>
+              </tr>
+              <tr>
+                <td>Ease of Use</td>
+                <td>Moderate to complex</td>
+                <td>Easier for enterprise use</td>
+              </tr>
+              <tr>
+                <td>Recovery Options</td>
+                <td>No built-in recovery</td>
+                <td>Recovery through CA possible</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              While both PGP and S/MIME provide email security, they differ
+              significantly in their trust models and implementation approaches.
+              PGP's decentralized Web of Trust gives users more control but
+              requires more user management, while S/MIME's hierarchical
+              CA-based model is easier to manage in enterprise environments but
+              relies on centralized authorities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: PGP in Modern Use -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">PGP in Modern Use</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Although originally created to safeguard professionals' electronic
+              messages, Pretty Good Privacy (PGP) continues to impact modern
+              implementations of cryptography because of its remarkable mixing
+              of multiple functionalities.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The OpenPGP standard (RFC 4880), which regulates these techniques,
+              provides an overall system ensuring interoperability of
+              PGP-compatible products and services. This standard has become a
+              common point of reference for multiple industries to safeguard
+              data and ensure authenticated communication.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              GPG (GNU Privacy Guard) is one of such tools that provides
+              additional open-source and customizable functionalities designed
+              around PGP, such as digital signing, encrypted file communication
+              and storage, and other means of private communication, as well as
+              software verification through signing.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              GPG is widely used for email encryption as well as on
+              privacy-oriented email services, such as ProtonMail and Tutanota.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              PGP-style key pairs have become standard features of commercial
+              services designed to enhance data privacy, confidentiality, and
+              reliable, trustless authentication in contemporary digital spaces.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Best Practices for Using PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Best Practices for Using PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="practice-card">
+            <div class="practice-icon">🔑</div>
+            <div class="practice-info">
+              <h4>Use Strong Passphrases</h4>
+              <p>
+                For optimum security of your encryptions, use a long, complex,
+                unique, and random passphrase to protect your private key from
+                brute-force attacks and unauthorized access.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">🔄</div>
+            <div class="practice-info">
+              <h4>Regularly Update Software</h4>
+              <p>
+                Update your PGP or GPG tools to the most current version to
+                protect yourself against recently discovered vulnerabilities and
+                to keep the software performing security tasks at the highest
+                level possible.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">💾</div>
+            <div class="practice-info">
+              <h4>Backup Keys Securely</h4>
+              <p>
+                Make secure offline copies of your private key and your
+                revocation certificate (needed to disable an active key) to
+                prevent yourself from irretrievably losing access to the data in
+                an encrypted file or losing the ability to revoke active keys.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">✅</div>
+            <div class="practice-info">
+              <h4>Verify Public Keys Before Use</h4>
+              <p>
+                Always validate any public key of the intended recipient by
+                using a secure and trusted communications channel before you
+                encrypt and send any sensitive data.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">🌐</div>
+            <div class="practice-info">
+              <h4>Use Trusted Key Servers</h4>
+              <p>
+                To prevent the possibility of using a public key that is
+                maliciously or fraudulently created, you should only use key
+                servers that you have good reason to trust.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">📜</div>
+            <div class="practice-info">
+              <h4>Revocation Certificates</h4>
+              <p>
+                As soon as you generate your key pair, create and keep a
+                revocation certificate that you can use if you have to revoke
+                your key, and keep it secure until you need it.
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-card">
+            <div class="practice-icon">🎓</div>
+            <div class="practice-info">
+              <h4>Educate Users</h4>
+              <p>
+                Users need to be trained on effective encryption, how to check
+                keys, and the need to protect their private keys.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Future of PGP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Future of PGP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              With growing concerns over privacy, PGP and its derivatives will
+              continue to be a core technology for authentication and encrypted
+              communication.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Evolving PGP-based modern cryptographic tools implement PGP's
+              fundamental concepts and principles in greater user-friendly
+              designs.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              PGP is expected to influence automatic key management systems and
+              blockchain based identity verification, manual Web of Trust
+              systems, in the future.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Trust without a central authority. This principle is what PGP is
+              built on and is similarly adopted in contemporary security
+              mechanisms, such as in decentralized messaging and digital
+              identity systems.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              As privacy concerns continue to grow in the digital age, PGP's
+              decentralized trust model and comprehensive security features will
+              likely see increased adoption and integration with newer
+              technologies.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              PGP is a strong and efficient cryptographic system that utilizes a
+              combination of hashing and encryption, digital signatures, and a
+              decentralized trust mechanism to secure users' communications.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              PGP provides a hybrid system that effectively blends
+              confidentiality, integrity, authentication, and non-repudiation
+              and is thus especially useful for securing emails, protecting
+              files, and verifying software.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Despite its complexity and some limitations, PGP remains one of
+              the most robust and widely used encryption systems, with its
+              principles continuing to influence modern cryptographic solutions.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              The OpenPGP standard ensures interoperability between different
+              implementations, while tools like GPG make PGP accessible to a
+              wide range of users, from individuals to enterprises.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Frequently Asked Questions (FAQs)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">1. What is PGP, and why is it used?</div>
+            <div class="answer">
+              PGP is an encryption system designed by Phil Zimmermann that is
+              designed to secure the communication of emails. PGP aims to
+              provide privacy, integrity, authentication, and non-repudiability.
+              PGP ensures that the messages will not be accessed by unauthorized
+              users and, therefore, cannot be modified without detection.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. How does PGP ensure the confidentiality and integrity of
+              messages?
+            </div>
+            <div class="answer">
+              PGP guarantees confidentiality through the use of a symmetric
+              session key and the recipient's public key; the session key is
+              also used to encrypt messages. A hash function is used for
+              integrity. After the sender's private key encrypts the hash of the
+              message, the hash is used to create a unique digital signature.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              3. What is the role of the Web of Trust in PGP?
+            </div>
+            <div class="answer">
+              Within PGP, the Web of Trust is the decentralized trust model. PGP
+              users do not use a centralized certificate authority. Instead,
+              users cross-validate one another's public keys by signing them.
+              This forms a network of trust relationships. This allows users to
+              authenticate identities without a central authority.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. What are the main disadvantages of using PGP?
+            </div>
+            <div class="answer">
+              PGP differs from other systems by having some cons, such as admin
+              complications because of the differing PGP versions from other
+              users, as well as having differing PGP versions, which can cause
+              compatibility problems. Additionally, PGP offers no recovery
+              mechanism for lost keys, making key management critical.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">5. Where is PGP commonly used today?</div>
+            <div class="answer">
+              PGP is used today as a standard in professional environments to
+              encrypt emails as well as data and files, software signing, and in
+              certain PGP-compatible systems to allow authentication to a cloud
+              service. Services like ProtonMail and Tutanota have incorporated
+              PGP in advanced privacy offerings from implementations of OpenPGP
+              like GPG.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Pretty Good Privacy (PGP) - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

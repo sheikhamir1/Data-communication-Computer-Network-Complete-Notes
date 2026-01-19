@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Layer & Addressing - Professional Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 15px;
+        }
+        
+        .slide-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #5f6368;
+        }
+        
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .text-section {
+            margin-bottom: 20px;
+        }
+        
+        .text-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .text-section p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .list-section {
+            margin-bottom: 20px;
+        }
+        
+        .list-section ul {
+            padding-left: 25px;
+        }
+        
+        .list-section li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .highlight-box {
+            background-color: #e8f0fe;
+            border-left: 4px solid #1a73e8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: #0d47a1;
+            transform: scale(1.1);
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: #1a73e8;
+            z-index: 101;
+            transition: width 0.3s ease;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+        
+        .info-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-card h4 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #e1e8ed;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .qa-pair {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .question {
+            font-weight: 500;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .answer {
+            padding-left: 20px;
+        }
+        
+        .protocol-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .protocol-icon {
+            font-size: 2rem;
+            color: #1a73e8;
+            margin-right: 15px;
+            width: 60px;
+            text-align: center;
+        }
+        
+        .protocol-info {
+            flex: 1;
+        }
+        
+        .protocol-info h4 {
+            margin-bottom: 5px;
+            color: #1a73e8;
+        }
+        
+        .frame-structure {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .frame-field {
+            background-color: #e8f0fe;
+            border: 1px solid #1a73e8;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            flex-grow: 1;
+            min-width: 100px;
+        }
+        
+        .frame-field.primary {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .process-step {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            width: 150px;
+        }
+        
+        .process-arrow {
+            color: #1a73e8;
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+        
+        .bit-position {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .bit-position-number {
+            width: 30px;
+            height: 30px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .bit-position-value {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 5px 10px;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .bit-position.parity {
+            background-color: #e8f0fe;
+        }
+        
+        .bit-position.data {
+            background-color: #f8f9fa;
+        }
+        
+        .byte-stuffing-example {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .byte {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 0 5px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .byte.flag {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .byte.esc {
+            background-color: #f1c40f;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .byte.stuffed {
+            background-color: #e8f0fe;
+            border: 1px dashed #1a73e8;
+        }
+        
+        .error-types {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .error-type {
+            text-align: center;
+            width: 200px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .error-type img {
+            max-width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .error-type h4 {
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                bottom: 20px;
+                top: auto;
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator" id="progressBar"></div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="topBtn" title="Go to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="nav-btn" id="downBtn" title="Go to Bottom">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+    
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Network Layer & Addressing</h1>
+                <p class="slide-subtitle">Comprehensive Guide to OSI Layer 3 and Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="image-container">
+                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20230810165711/osi.jpg" alt="Network Layer Concept" style="max-height: 400px;">
+                </div>
+                <div class="highlight-box">
+                    <!-- <p><strong>Last Updated:</strong> 17 Mar 2025</p> -->
+                    <p><strong>The Network Layer (Layer 3)</strong> is the third layer of the OSI model, responsible for handling the delivery of data packets from source to destination across multiple networks.</p>
+                </div>
+                <p>This presentation covers the fundamental concepts of network layer operations, protocols, and addressing schemes that form the backbone of modern computer networks.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Network Layer Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Layer Overview</h2>
+                <p class="slide-subtitle">The Third Layer of the OSI Model</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is the Network Layer?</h3>
+                    <p>The Network Layer is the third layer of the OSI (Open Systems Interconnection) model. Its main role is to handle the delivery of data packets from the source device to the destination device across multiple networks.</p>
+                    <p>Unlike the Data Link Layer, which deals with communication between directly connected nodes, the Network Layer ensures end-to-end delivery even if the devices are located in different networks.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>It is responsible for logical addressing, routing, and path determination so that data can travel efficiently through intermediate devices like routers.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Key Differentiator</h3>
+                    <p>The Data Link Layer handles communication between directly connected nodes, while the Network Layer enables communication across different networks, regardless of their physical infrastructure.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Logical Addressing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Logical Addressing</h2>
+                <p class="slide-subtitle">Hierarchical Addressing for Network Communication</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Logical Addressing</h3>
+                    <p>Unlike the data link layer, which uses MAC addresses that are unique and hardwired within the local area network, these addresses will not suffice for communication between different networks.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>IP Address Format</h3>
+                    <p>The network layer comes up with logical addressing, which is expressed in IP address format (e.g., IPv4 or IPv6). Logical addresses are hierarchical, which is advantageous as one is able to pinpoint not only the particular device but the network to which it is attached.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Examples of IP Addresses:</h4>
+                    <ul>
+                        <li><strong>IPv4 address:</strong> 192.168.1.10</li>
+                        <li><strong>IPv6 address:</strong> 2001:0db8:85a3:0000:0000:8a2e:0370:7334</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Logical addressing enables subnetting, supernetting, and routing across different and interrelated networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Routing</h2>
+                <p class="slide-subtitle">Finding the Optimal Path for Data Transmission</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Routing?</h3>
+                    <p>Routing determines the optimal route that a packet should take from the source to the destination. Since there is more than one path available for a packet to take to the destination, routers will have to choose which path to take based on cost, distance, congestion, and even administrative policies.</p>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Static Routing</h4>
+                            <p>The routes are more often than not set manually, and the network administrators have to ensure that they are maintained. It is the most simplistic approach, but very rigid, as the set routes do not take into consideration the possibility of network failure or the changes that may occur to the network topology.</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Dynamic Routing</h4>
+                            <p>Utilizes specific routing protocols so that routers learn and update routes automatically, maintaining adaptability and efficiency. Dynamic routing lessens the administrative burden and improves fault tolerance.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Examples of Dynamic Routing Protocols:</h3>
+                    <ul>
+                        <li>RIP (Routing Information Protocol)</li>
+                        <li>OSPF (Open Shortest Path First)</li>
+                        <li>BGP (Border Gateway Protocol)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Forwarding -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Forwarding</h2>
+                <p class="slide-subtitle">Actual Movement of Packets Through the Network</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Forwarding</h3>
+                    <p>Forwarding is the actual movement of packets from one interface of a router to the designated interface for the packet based on the router's table. Unlike routing, which is the determination of the path, forwarding is the actual sending of packets to the path that the packet is supposed to travel.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Example:</h4>
+                    <p>When a router receives a packet that is addressed to 172.16.10.5, the router goes to its forwarding table. This table could indicate that packets that are addressed to the 172.16.0.0/16 network should be sent through the interface GigabitEthernet0/1. The router, therefore, sends the packet to the user.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Forwarding Table Construction</h3>
+                    <p>Forwarding tables are constructed using:</p>
+                    <ul>
+                        <li><strong>Longest Prefix Match (LPM):</strong> Having absolute clarity on what route to take is essential.</li>
+                        <li><strong>Next-Hop Information:</strong> The address of the subsequent router on the route.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Fragmentation and Reassembly -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Fragmentation and Reassembly</h2>
+                <p class="slide-subtitle">Handling Variable Packet Sizes Across Networks</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Maximum Transmission Unit (MTU)</h3>
+                    <p>Networks have different maximum Transmission Units (MTU) - the largest packets that can be sent. When a package is greater than the MTU of the network it passes through, it has to be fragmented into units.</p>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Fragmentation</h4>
+                            <p>Begins from the sender or through the routers. The packets are divided into small fragments, each of which contains a piece of the original payload with headers that have sequential and reassembly identification.</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Reassembly</h4>
+                            <p>Takes place on the destination host, where fragmented packets are collected to form the initial packet.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>An illustration is a 4000-byte packet that can be sent through a link that has an MTU of 1500 bytes. That packet is fragmented into smaller packets to be sent.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Internetworking -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Internetworking</h2>
+                <p class="slide-subtitle">Connecting Different Networks Together</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Internetworking?</h3>
+                    <p>The internet is a network made of numerous networks. The third layer is the most critical when it comes to tying different networks together that have varying physical and data link technologies. Internetworking permits seamless connectivity to different network types such as Ethernet, Wi-Fi, MPLS, and cellular.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The IP protocol also forms the backbone of internetworking, where it is used to facilitate inter-device communication irrespective of the devices' underlying structural frameworks.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Benefits of Internetworking</h3>
+                    <ul>
+                        <li>Enables communication between devices on different networks</li>
+                        <li>Provides a unified addressing scheme across heterogeneous networks</li>
+                        <li>Allows for seamless data transmission across network boundaries</li>
+                        <li>Supports the global infrastructure of the internet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Traffic Control and Congestion Management -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Core Responsibilities: Traffic Control</h2>
+                <p class="slide-subtitle">Managing Network Congestion</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Network Congestion</h3>
+                    <p>Network Congestion is the result of bandwidth demand exceeding available capacity, which can result in packet loss, delays, and decreased network performance.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Congestion Management Techniques</h3>
+                    <p>Congestion is managed at the network layer using the following techniques:</p>
+                    <ul>
+                        <li><strong>Queuing:</strong> Saving packets in buffers within the router.</li>
+                        <li><strong>Traffic Shaping:</strong> Monitoring and control of data packet flows to control abrupt flows of packets.</li>
+                        <li><strong>Priority Handling:</strong> Assigning varying degrees of importance to traffic, for example, voice data and bulk data traffic.</li>
+                        <li><strong>Congestion Notification:</strong> Notification sent to endpoints by routers to lower the transmission rate, e.g., ECN - Explicit Congestion Notification.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Effective congestion management ensures optimal network performance and quality of service for different types of traffic.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Forwarding & Routing Mechanism -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Forwarding & Routing Mechanism</h2>
+                <p class="slide-subtitle">How Routers Process Packets</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Router Forwarding Process</h3>
+                    <p>In Network layer, a router is used to forward the packets. Every router has a forwarding table. A router forwards a packet by examining a packet's header field and then using the header field value to index into the forwarding table.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Example:</h4>
+                    <p>The router with a header field value of 0111 arrives at a router, and then router indexes this header value into the forwarding table that determines the output link interface is 2. The router forwards the packet to the interface 2.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Routing Algorithm Role</h3>
+                    <p>The routing algorithm determines the values that are inserted in the forwarding table. The routing algorithm can be centralized or decentralized.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The value stored in the forwarding table corresponding to the header field value indicates the router's outgoing interface link to which the packet is to be forwarded.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Network Layer Services -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Services Provided by the Network Layer</h2>
+                <p class="slide-subtitle">Essential Services for Network Communication</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Key Network Layer Services</h3>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Guaranteed Delivery</h4>
+                    <p>This layer provides the service which guarantees that the packet will arrive at its destination.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Guaranteed Delivery with Bounded Delay</h4>
+                    <p>This service guarantees that the packet will be delivered within a specified host-to-host delay bound.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>In-Order Packets</h4>
+                    <p>This service ensures that the packet arrives at the destination in the order in which they are sent.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Guaranteed Max Jitter</h4>
+                    <p>This service ensures that the amount of time taken between two successive transmissions at the sender is equal to the time between their receipt at the destination.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Security Services</h4>
+                    <p>The network layer provides security by using a session key between the source and destination host. The network layer in the source host encrypts the payloads of datagrams being sent to the destination host. The network layer in the destination host would then decrypt the payload. In such a way, the network layer maintains the data integrity and source authentication services.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Network Layer Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Protocols of the Network Layer</h2>
+                <p class="slide-subtitle">Protocols that Power Network Communication</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Numerous protocols operate at the network layer, and each of them is intended for specific functions that facilitate communication across networks:</p>
+                </div>
+                
+                <div class="protocol-card">
+                    <div class="protocol-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="protocol-info">
+                        <h4>Internet Protocol (IP)</h4>
+                        <p><strong>IPv4:</strong> A globally used 32-bit addressing framework. It offers logical addressing and routing, but suffers from address space exhaustion.</p>
+                        <p><strong>IPv6:</strong> A 128-bit addressing scheme aimed to replace IPv4 exhaustion. It offers enhanced routing and security with a vast address space.</p>
+                    </div>
+                </div>
+                
+                <div class="protocol-card">
+                    <div class="protocol-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="protocol-info">
+                        <h4>ICMP (Internet Control Message Protocol)</h4>
+                        <p>Used mainly for diagnostics and reporting errors. Tools like ping and traceroute use ICMP to monitor network connections and find possible routing problems.</p>
+                    </div>
+                </div>
+                
+                <div class="protocol-card">
+                    <div class="protocol-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="protocol-info">
+                        <h4>IGMP (Internet Group Management Protocol)</h4>
+                        <p>Manages hosts' memberships to multicast groups for efficient streaming and other multicast data.</p>
+                    </div>
+                </div>
+                
+                <div class="protocol-card">
+                    <div class="protocol-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="protocol-info">
+                        <h4>IPsec (Internet Protocol Security)</h4>
+                        <p>Contacts and manages a network by encrypting, authenticating, and checking for communication integrity at a lower level. Commonly used in VPNs.</p>
+                    </div>
+                </div>
+                
+                <div class="protocol-card">
+                    <div class="protocol-icon">
+                        <i class="fas fa-map-signs"></i>
+                    </div>
+                    <div class="protocol-info">
+                        <h4>ARP (Address Resolution Protocol)</h4>
+                        <p>Used in local networks, translates a logical IP address to a physical MAC address to allow smooth communication on a network.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Routing Algorithms -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing Algorithms</h2>
+                <p class="slide-subtitle">Finding Efficient Paths for Data Transmission</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Algorithms are in charge of finding efficient routes for data packets to and from a source and a destination. While each has its own different method, all of them aim to enhance the network's performance and reliability. Major categories include:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>1. Distance Vector Routing</h4>
+                    <p><strong>Example: RIP (Routing Information Protocol)</strong></p>
+                    <p>Routers, at intervals, share distance vectors with their immediate neighbours. Each vector tells of the number of hops needed to get to a network. Distance vector routing is simple and easy to use, but can suffer from slow convergence and/or routing loops.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2. Link State Routing</h4>
+                    <p><strong>Example: OSPF (Open Shortest Path First)</strong></p>
+                    <p>All the routers in the network communicate defined states of the links, where each router constructs a complete topology and for each performs the shortest-path algorithm using the Dijkstra method. This method is more precise and converges faster than the distance vector method.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3. Path Vector Routing</h4>
+                    <p><strong>Example: BGP (Border Gateway Protocol)</strong></p>
+                    <p>Used for inter-domain routing on the Internet, BGP, unlike other routing protocols, maintains a path vector that goes beyond distance and contains a sequence of autonomous systems (ASes), which helps avoid routing loops and execute defined routing control.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>4. Hybrid Routing</h4>
+                    <p><strong>Example: EIGRP (Enhanced Interior Gateway Routing Protocol)</strong></p>
+                    <p>Merges the distance vector and link state routing, maintaining quick convergence and extensibility.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Real-World Applications -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Layer in Real-World Applications</h2>
+                <p class="slide-subtitle">Practical Applications of Network Layer Technologies</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>The network layer is vital in modern digital communication, supporting a variety of real-world applications being utilized every single day.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Internet Connectivity</h4>
+                    <p>When a user browses a site, sends emails, or watches videos, the network layer is constantly forwarding packets to and from their devices to the appropriate remote servers. The Layer prevents the data from getting lost as it travels through numerous infrastructures and ensures data is delivered from the source to the appropriate endpoint.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Virtual Private Networks (VPNs)</h4>
+                    <p>VPNs implement network layer tunnelling protocols. VPNs create secure remote connections to corporate private networks. VPNs use encrypted traffic with masked IP addresses, assuring confidentiality and integrity of data, secure connection, and protection from eavesdropping safeguards while on the public internet.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Cloud Services</h4>
+                    <p>Accessing Google Drive, Microsoft Azure, or AWS is made possible through efficient and effective routing and congestion control at the network layer. This layer helps in the rapid transfer of data between end users and dispersed cloud servers, increasing availability and promoting scalability.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Mobile Networks</h4>
+                    <p>Smartphones switch from Wi-Fi to Mobile Data Network with ease. The network layer controls this process, allowing users to transition between different communication network systems without losing connection.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Future of the Network Layer -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Future of the Network Layer</h2>
+                <p class="slide-subtitle">Evolving Technologies and Trends</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>The Network Layer is consistently evolving to cater to the infrastructure of the so-called domains of the digital world. To enumerate the recent trends that are expected to project its growth are as follows:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>IPv6 Adoption</h4>
+                    <p>Due to the Continuing crises of exhausted IPv4 addresses, IPV6 deployment is becoming fundamental. With a simpler address management scheme, its 128-bit addressing system is able to accommodate trillions of IoT devices, which provides long-term sustainability to global networks.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Software-Defined Networking (SDN)</h4>
+                    <p>The introduction of SDN shifts the paradigm where the control plane is handled separately from the data plane, which enhances routing, streamlining, and overall effectiveness and flexibility of complex networks. "Ease of Optimization features".</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>5G and Beyond</h4>
+                    <p>With the introduction of the 5G networks with ultra-low latency, high-bandwidth, and dependable services, the requirement for QoS becomes paramount for the apps of autonomous mechanics and smart cities.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Network Function Virtualization (NFV)</h4>
+                    <p>The need for rigid network appliances is undermined as NFV virtualizes the network services, which economizes and promotes rapid service deployment.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Enhanced Security Protocols</h4>
+                    <p>With each passing day, the network layer is expected to incorporate greater levels of authentication alongside encryption to preserve data integrity and confidentiality.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Network Layer FAQs -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Frequently Asked Questions (FAQs)</h2>
+                <p class="slide-subtitle">Common Questions About Network Layer</p>
+            </div>
+            <div class="slide-content">
+                <div class="qa-pair">
+                    <div class="question">Q1. What is the network layer's main responsibility in the OSI model?</div>
+                    <div class="answer">The network layer, which is the third layer in the OSI model, is tasked with cross-network delivery of packets from one host to another host. It encodes logical addresses to physical addresses, finds the best route for the data, and solves a number of problems. The main objective of the network layer is to facilitate reliable data transmission from the sender side to the receiving side.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">Q2. What is the difference between a network layer and a data link layer?</div>
+                    <div class="answer">The data link layer works with the physical layer. It covers addressing (MAC), and it also guarantees data delivery on a single network segment. The network layer works with logical addressing (IP) and facilitates communications across different networks. This enables data interchange between remote locations with varied and complex infrastructures.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">Q3. What are the key protocols that operate at the network layer?</div>
+                    <div class="answer">On this layer, some functions include: IP (IPv4 and IPv6) for addressing and routing, ICMP for error reporting and diagnostics, IGMP for managing multicast groups, IPsec for secure communication, and ARP for mapping IP addresses to MAC addresses.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">Q4. Why is routing important at the network layer?</div>
+                    <div class="answer">Each packet of data is sent and received along the most efficient and fastest route. This is done across different networks. Each network serves as a mini-internet. Readers with different routing algorithms (Distance Vector (RIP), Link State (OSPF), Path Vector (BGP), and Hybrid (EIGRP). They mainly determine the best route based on provided metrics (cost, hops, and policy).</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">Q5. How is the network layer evolving with future technologies?</div>
+                    <div class="answer">The network layer is evolving to the current requirements of the economy by implementing SDN for specialization and management, 5G for low latency, NFV for scalable and flexible servicing, and security protocols to meet the adoption of IPv6, SDN, 5G, and NFV.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 16: Network Addressing Introduction -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Addressing</h2>
+                <p class="slide-subtitle">Introduction to Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Network Addressing?</h3>
+                    <p>In computer network, a logical or physical address used to uniquely identify a host or machine in a telecommunications network is called a network address. Additionally, nodes in a network may contain hierarchical and structural information, and a network may not be unique.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Types of Network Addresses</h3>
+                    <p>Phone numbers, Media Access Control (MAC) addresses, and Internet Protocol (IP) addresses are a few fundamental types of network addresses. It may be symbolic, numeric, or in certain situations, both.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <!-- <p><strong>Last Updated:</strong> 17 Mar 2025</p> -->
+                    <p>Network Addressing is one of the major responsibilities of the network layer.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Key Characteristics</h3>
+                    <ul>
+                        <li>Network addresses are always logical, i.e., software-based addresses.</li>
+                        <li>A host is also known as end system that has one link to the network.</li>
+                        <li>The boundary between the host and link is known as an interface.</li>
+                        <li>A router has two or more links that connect to it and can have multiple interfaces.</li>
+                        <li>Each interface is capable of sending and receiving IP packets, so IP requires each interface to have an address.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 17: IP Address Structure -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IP Address Structure</h2>
+                <p class="slide-subtitle">Understanding IP Address Format</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>IP Address Format</h3>
+                    <p>Each IP address is 32 bits long, and they are represented in the form of "dot-decimal notation" where each byte is written in the decimal form, and they are separated by the period.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Example:</h4>
+                    <p>An IP address would look like 193.32.216.9 where 193 represents the decimal notation of first 8 bits of an address, 32 represents the decimal notation of second 8 bits of an address.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Network Addressing Example</h3>
+                    <p>In the above figure, a router has three interfaces labeled as 1, 2 & 3 and each router interface contains its own IP address.</p>
+                    <ul>
+                        <li>Each host contains its own interface and IP address.</li>
+                        <li>All the interfaces attached to the LAN 1 is having an IP address in the form of 223.1.1.xxx</li>
+                        <li>The interfaces attached to the LAN 2 and LAN 3 have an IP address in the form of 223.1.2.xxx and 223.1.3.xxx respectively.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Each IP address consists of two parts. The first part (first three bytes in IP address) specifies the network and second part (last byte of an IP address) specifies the host in the network.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 18: Network Addressing Types -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Addressing Types</h2>
+                <p class="slide-subtitle">Unicast, Multicast, and Broadcast</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>There are various types of networks addressing, just as there are various dialects of languages. Each of these types-broadcast, multicast, and unicast addressing-has a distinct function in the complex realm of network communication.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>1) Unicast Addressing</h4>
+                    <p><strong>One-to-One System:</strong> The most widely used type of network addressing is unicast addressing. The system is one-to-one; every device connected to the network has a distinct address. The information is sent to a single destination with unicast addressing, which is like sending a letter to a specific person at a specific address. In normal internet traffic, data packets are sent from a single source to a single destination using unicast addressing.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2) Multicast Addressing</h4>
+                    <p><strong>One-to-Many System:</strong> Multicast addressing simulates sending out invitations to many people simultaneously. In a one-to-many system, data is sent to many devices using a single address. This kind of addressing is especially useful for sending software updates, live video and audio streams, or any other kind of data that needs to be received by several users at once.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3) Broadcast Address</h4>
+                    <p><strong>One-to-All System:</strong> Conversely, broadcast addressing is the digital counterpart of a public announcement. All the network devices receive data in this one-to-all system. In local area networks (LANs), broadcast addressing usually sends announcements or network requests to every device.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Classful Addressing Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Classful Addressing</h2>
+                <p class="slide-subtitle">IP Address Classes</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>IP Address Classes</h3>
+                    <p>An IP address is 32-bit long. An IP address is divided into sub-classes:</p>
+                    <ul>
+                        <li>Class A</li>
+                        <li>Class B</li>
+                        <li>Class C</li>
+                        <li>Class D</li>
+                        <li>Class E</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>IP Address Structure</h3>
+                    <p>An IP address is divided into two parts:</p>
+                    <ul>
+                        <li><strong>Network ID:</strong> It represents the number of networks.</li>
+                        <li><strong>Host ID:</strong> It represents the number of hosts.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>In the above diagram, we observe that each class have a specific range of IP addresses. The class of IP address is used to determine the number of bits used in a class and number of networks and hosts available in the class.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Class Determination</h3>
+                    <p>The class of an IP address is determined by the first few bits of the address, which define how many bits are used for the network ID and how many are used for the host ID.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 20: Class A Addressing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Class A Addressing</h2>
+                <p class="slide-subtitle">Large Networks with Many Hosts</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Class A Characteristics</h3>
+                    <p>In Class A, an IP address is assigned to those networks that contain a large number of hosts.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Address Structure</h4>
+                    <ul>
+                        <li>The network ID is 8 bits long.</li>
+                        <li>The host ID is 24 bits long.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Bit Pattern</h3>
+                    <p>In Class A, the first bit in higher order bits of the first octet is always set to 0 and the remaining 7 bits determine the network ID. The 24 bits determine the host ID in any network.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The total number of networks in Class A = 2^7 = 128 network address</p>
+                    <p>The total number of hosts in Class A = 2^24 - 2 = 16,777,214 host address</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Range</h4>
+                    <p>Class A IP addresses range from 0.0.0.0 to 127.255.255.255</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 21: Class B Addressing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Class B Addressing</h2>
+                <p class="slide-subtitle">Medium to Large Networks</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Class B Characteristics</h3>
+                    <p>In Class B, an IP address is assigned to those networks that range from small-sized to large-sized networks.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Address Structure</h4>
+                    <ul>
+                        <li>The Network ID is 16 bits long.</li>
+                        <li>The Host ID is 16 bits long.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Bit Pattern</h3>
+                    <p>In Class B, the higher order bits of the first octet is always set to 10, and the remaining 14 bits determine the network ID. The other 16 bits determine the Host ID.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The total number of networks in Class B = 2^14 = 16384 network address</p>
+                    <p>The total number of hosts in Class B = 2^16 - 2 = 65534 host address</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Range</h4>
+                    <p>Class B IP addresses range from 128.0.0.0 to 191.255.255.255</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 22: Class C Addressing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Class C Addressing</h2>
+                <p class="slide-subtitle">Small Networks</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Class C Characteristics</h3>
+                    <p>In Class C, an IP address is assigned to only small-sized networks.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Address Structure</h4>
+                    <ul>
+                        <li>The Network ID is 24 bits long.</li>
+                        <li>The host ID is 8 bits long.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Bit Pattern</h3>
+                    <p>In Class C, the higher order bits of the first octet is always set to 110, and the remaining 21 bits determine the network ID. The 8 bits of the host ID determine the host in a network.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The total number of networks = 2^21 = 2097152 network address</p>
+                    <p>The total number of hosts = 2^8 - 2 = 254 host address</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Range</h4>
+                    <p>Class C IP addresses range from 192.0.0.0 to 223.255.255.255</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 23: Class D and E Addressing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Class D and E Addressing</h2>
+                <p class="slide-subtitle">Special Purpose Address Classes</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <h4>Class D</h4>
+                    <p>In Class D, an IP address is reserved for multicast addresses. It does not possess subnetting. The higher order bits of the first octet is always set to 1110, and the remaining bits determines the host ID in any network.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Class E</h4>
+                    <p>In Class E, an IP address is used for the future use or for the research and development purposes. It does not possess any subnetting. The higher order bits of the first octet is always set to 1111, and the remaining bits determines the host ID in any network.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Class D IP addresses range from 224.0.0.0 to 239.255.255.255</p>
+                    <p>Class E IP addresses range from 240.0.0.0 to 255.255.255.255</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Special Uses</h3>
+                    <ul>
+                        <li>Class D addresses are used for multicast applications like video conferencing</li>
+                        <li>Class E addresses are reserved for experimental purposes and future use</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 24: Address Assignment Rules -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Address Assignment Rules</h2>
+                <p class="slide-subtitle">Guidelines for Host and Network ID Assignment</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Rules for assigning Host ID:</h3>
+                    <p>The Host ID is used to determine the host within any network. The Host ID is assigned based on the following rules:</p>
+                    <ul>
+                        <li>The Host ID must be unique within any network.</li>
+                        <li>The Host ID in which all the bits are set to 0 cannot be assigned as it is used to represent the network ID of the IP address.</li>
+                        <li>The Host ID in which all the bits are set to 1 cannot be assigned as it is reserved for the multicast address.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Rules for assigning Network ID:</h3>
+                    <p>When the hosts are located within the same local network, they share the same network ID, which helps identify the specific network that has devices. Proper assignment of a network ID is important to avoid conflict and ensure smooth communication.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Network ID Assignment Guidelines:</h3>
+                    <ul>
+                        <li><strong>Reserved category A range (127.x.x.x):</strong> No network ID starting with 127 can be assigned, as it is reserved for the limit testing and loopback address used for troubleshooting.</li>
+                        <li><strong>Set on all bits 0:</strong> A network ID where all bits cannot be assigned to 0 because it reflects a specific host within the local network rather than a valid network.</li>
+                        <li><strong>Set on all bits 1:</strong> A network ID where all bits 1 are invalid, as this range is reserved for multicast communication, which allows the same packet to be transported to several hosts.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>By following these rules, network administrators ensure valid addresses, avoid conflicts, and maintain network stability.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 25: Network Addressing Applications -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Addressing Applications</h2>
+                <p class="slide-subtitle">Real-World Applications of Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Network addressing is the foundation of communication in modern computer networks. This ensures that each tool, service or user can be specifically identified and reached the local and global network. Without proper address, the Internet and enterprise network will not be able to work firmly. Some major applications include:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>E-commerce</h4>
+                    <p>Online businesses such as Amazon, Flipkart, or eBay depend a lot more on addressing the network to provide uninterrupted user experiences. Each transaction - from buzzing products to completion of payment - requires an accurate routing of data between the customer's device and the company's server.</p>
+                    <p>Network addressing not only ensures the correct delivery of web pages and transaction requests but also supports secure connections through encrypted IP-based communication. It makes e-commerce scalable, reliable, and secure.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>One-to-One Communication</h4>
+                    <p>Communication equipment such as email, WhatsApp, or Zoom relies on IP addresses to establish a direct route between two endpoints. For example, when you send an email, your system identifies the recipient's mail server through its network address, ensuring that the message reaches the correct destination.</p>
+                    <p>Similarly, video calls depend on real-time address mapping to maintain uninterrupted voice and video transmission between two users.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Server-Client Model</h4>
+                    <p>This model is the backbone of most internet services. A client (eg, a web browser) sends a request to a server (such as Google's web server), and the server reacts with essential resources. Without an address, it would be impossible to maintain services such as web browsing, online banking, and cloud storage.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Resource Sharing</h4>
+                    <p>In the organizational environment, many users often share resources such as printers, storage drives, or databases. Network addressing ensures that these shared resources are searched and accessible only to authorized users. For example, when many employees in an office send print jobs to the same network printer.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 26: Benefits of Network Address -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Benefits of a Network Address</h2>
+                <p class="slide-subtitle">Advantages of Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>One of the major benefits of network addresses is that they ensure the unique identity of each device connected to the network. This specificity guarantees that data is always transported to the right destination without confusion or repetition.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Scalability</h4>
+                    <p>Another important benefit is scalability. By assigning structured addresses, the network can easily expand to support the increasing number of equipment. This feature has been important for the global development of the Internet, allowing billions of devices to remain connected.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Efficient Routing</h4>
+                    <p>Network addresses also contribute to efficient routing. With a well-organized address, the data packets can be transmitted along the best available path, to reduce delays, reduce the crowd, and improve the overall performance of communication systems.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Service Discrimination</h4>
+                    <p>In addition, the network supports service discrimination through port numbers. This capacity makes it possible to run together on the same device for many applications and services - such as web browsing, sending emails, and streaming materials - without intervention.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>By enabling these applications, network addressing supports not only personal and business communication but also the global digital economy. It plays a critical role in ensuring that data flows securely, efficiently, and to the right destination every time.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 27: Disadvantages of Network Address -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Disadvantages of Network Address</h2>
+                <p class="slide-subtitle">Challenges in Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Despite their importance, network addresses also present some challenges. A major issue is the limited address location of IPV4. Lack of available IPV4 addresses caused exhaustion problems, which in turn created a requirement for IPV6, introducing a large pool of addresses.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Management Complexity</h4>
+                    <p>Another defect addressed is the complexity of the management. Addressing and maintaining addresses becomes rapidly difficult in large or dynamic environments, especially when using protocols such as DHCP to automate the process. Mismanagement can result in conflict or connectivity issues.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Security Risks</h4>
+                    <p>Because network addresses can be targeted for malicious activities such as IP unauthorized infiltration, the network must be applied to protect the network and ensure data integrity.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>These challenges require careful planning, proper network design, and implementation of security measures to ensure reliable and secure network operations.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 28: Network Addressing Problems -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Addressing Problems</h2>
+                <p class="slide-subtitle">Common Issues in Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Network addressing plays an important role in ensuring smooth communication, but it often comes with challenges. Some of the most frequent issues include:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>IP Address Conflict</h4>
+                    <p>These occur when two or more devices share the same IP address, causing connectivity failures. Proper DHCP configurations and stable IP assignment of important systems can prevent such conflicts.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>DNS Failures</h4>
+                    <p>Inaccurate or incorrect DNS can prevent settings from resolving domain names. Troubleshooting with tools such as NSLOOKUP or switching on reliable DNS servers (eg, Google DNS or Cloudflare) helps maintain stability.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Subnetting Complexity</h4>
+                    <p>While subnet improves performance and safety, poor planning can complicate network design and management. Careful configurations and documentation are important to avoid issues.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>IP Address Exhaustion</h4>
+                    <p>With a limited address pool of IPV4, exhaustion is a risk, especially in large networks. Migration to IPV6 and efficient IP management strategies can reduce this problem.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Security Risk</h4>
+                    <p>Weak network configurations highlight the system for unauthorized access and data violations. Regular safety audits, encryption (IPSEC, SSL/TLS), and updated patches are essential for safety.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 29: Solutions for Security Issues -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Solutions for Security Issues</h2>
+                <p class="slide-subtitle">Addressing Network Security Challenges</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Using secure protocols, installing firewalls, and conducting routine network monitoring are all necessary to address security issues with network addressing.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Firewalls</h4>
+                    <p>By regulating incoming and outgoing network traffic according to pre-established security rules, firewalls protect the network from unauthorized access and potential threats.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Secure Protocols</h4>
+                    <p>Protocols like Transport Layer Security (TLS) and Secure Sockets Layer (SSL) help in securing network communications by encrypting data in transit.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Network Monitoring</h4>
+                    <p>Frequent network monitoring enables prompt security risk mitigation by assisting in the identification of possible threats or irregularities in network traffic.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Implementing a comprehensive security strategy that combines these solutions helps protect network addressing infrastructure from various threats and vulnerabilities.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 30: Classful Network Architecture -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Classful Network Architecture</h2>
+                <p class="slide-subtitle">Summary of IP Address Classes</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>The following table summarizes the classful network architecture, showing the characteristics of each IP address class:</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Higher bits</th>
+                                <th>NET ID bits</th>
+                                <th>HOST ID bits</th>
+                                <th>No.of networks</th>
+                                <th>No.of hosts per network</th>
+                                <th>Range</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>0</td>
+                                <td>8</td>
+                                <td>24</td>
+                                <td>2^7</td>
+                                <td>2^24</td>
+                                <td>0.0.0.0 to 127.255.255.255</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>10</td>
+                                <td>16</td>
+                                <td>16</td>
+                                <td>2^14</td>
+                                <td>2^16</td>
+                                <td>128.0.0.0 to 191.255.255.255</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>110</td>
+                                <td>24</td>
+                                <td>8</td>
+                                <td>2^21</td>
+                                <td>2^8</td>
+                                <td>192.0.0.0 to 223.255.255.255</td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td>1110</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>224.0.0.0 to 239.255.255.255</td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td>1111</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>Not Defined</td>
+                                <td>240.0.0.0 to 255.255.255.255</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Class A addresses are for large networks, Class B for medium to large networks, Class C for small networks, Class D for multicast, and Class E for experimental use.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 31: Network Addressing FAQs -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Addressing FAQs</h2>
+                <p class="slide-subtitle">Common Questions About Network Addressing</p>
+            </div>
+            <div class="slide-content">
+                <div class="qa-pair">
+                    <div class="question">1) What is network addressing?</div>
+                    <div class="answer">Network addressing is a way to uniquely identify devices, services, or applications in a network so they can communicate with each other.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">2) What are the main types of network addresses?</div>
+                    <div class="answer">The types of network addressing are as follows:
+                        <ul>
+                            <li>MAC Address: Physical address of a device.</li>
+                            <li>Application Address: Human-readable names (like, URLs, emails).</li>
+                            <li>Port Address: Identifies specific processes or services.</li>
+                            <li>IP Address: Logical address used across networks.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">3) What is the difference between a MAC address and an IP address?</div>
+                    <div class="answer">MAC Address is hardware-based, permanent, and used inside a local network. IP Address is logical, changeable, and used to identify devices across different networks.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">4) What Distinguishes Network IP Addresses from Other Forms of Network Addresses?</div>
+                    <div class="answer">Network IP addresses are unique because they serve as a logical, global identifier that enables communication between different networks, not just inside one.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">5) What is the difference between IPV4 and IPV6 addresses?</div>
+                    <div class="answer">The IPV4 uses a 32-bit address format, which allows about 4.3 billion unique addresses, while the IPV6 uses a 128-bit format, providing an almost unlimited address space to address the IPV4 exhaustion.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 32: Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Summary</h2>
+                <p class="slide-subtitle">Key Takeaways</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Network Layer Essentials</h3>
+                    <ul>
+                        <li>The Network Layer (Layer 3) enables inter-network communication through logical addressing and routing</li>
+                        <li>Core responsibilities include logical addressing, routing, forwarding, fragmentation, and congestion management</li>
+                        <li>Key protocols: IP, ICMP, IGMP, IPsec, and ARP</li>
+                        <li>Routing algorithms determine optimal paths for data transmission</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Network Addressing Fundamentals</h3>
+                    <ul>
+                        <li>Network addresses uniquely identify devices on networks</li>
+                        <li>IPv4 uses 32-bit addresses in dot-decimal notation</li>
+                        <li>Classful addressing divides address space into classes A-E</li>
+                        <li>Three addressing types: Unicast, Multicast, and Broadcast</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Future Trends</h3>
+                    <ul>
+                        <li>IPv6 adoption to address IPv4 exhaustion</li>
+                        <li>Software-Defined Networking (SDN) for flexibility</li>
+                        <li>5G networks enabling new applications</li>
+                        <li>Network Function Virtualization (NFV) for efficiency</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Final Thought:</strong> The Network Layer and addressing schemes form the backbone of modern digital communication, enabling seamless connectivity across the global internet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <!-- <p>Professional Presentation on Network Layer & Addressing | Last Updated: 17 Mar 2025</p> -->
+    </div>
+    
+    <script>
+        // Navigation functionality
+        document.getElementById('topBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        document.getElementById('downBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Progress bar functionality
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+        
+        // Add fade-in animation to slides when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(20px)';
+            slide.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(slide);
+        });
+    </script>
+</body>
+</html>

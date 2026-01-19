@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced LAN Protocols and Standards</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advanced LAN Protocols and Standards</h1>
+          <p class="slide-subtitle">
+            CSMA Protocols, Collision-Free Protocols, IEEE Standards, and FDDI
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Home_LAN_local_area_network_example_diagram.png"
+              alt="Advanced LAN Protocols and Standards"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              The realm of networking is governed by a myriad of protocols and
+              standards designed to facilitate efficient communication among
+              devices. This unit explores Carrier Sense Multiple Access (CSMA)
+              protocols, collision-free protocols, IEEE standards, and Fiber
+              Distributed Data Interface (FDDI).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access (CSMA) protocols play a pivotal role
+              in regulating access to shared communication channels. CSMA
+              protocols, such as CSMA/CD (Carrier Sense Multiple Access with
+              Collision Detection) and CSMA/CA (Carrier Sense Multiple Access
+              with Collision Avoidance), allow multiple devices to share a
+              common transmission medium by sensing the carrier to avoid
+              collisions during transmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Collision-free protocols provide alternative approaches to
+              mitigate collision occurrences, ensuring smoother communication.
+              Additionally, adherence to IEEE standards ensures interoperability
+              and compatibility among network devices, defining the rules and
+              specifications for various networking technologies.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Among the diverse array of LAN technologies, Fiber Distributed
+              Data Interface (FDDI) stands as a notable example, offering
+              high-speed communication over fiber optic cables and robust
+              network redundancy features.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding these protocols and standards is increasingly vital
+              for network engineers and IT professionals to optimize network
+              performance, troubleshoot connectivity issues, and implement
+              robust network architectures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectives Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Objectives</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              After completing this unit, you will have gained the following
+              abilities:
+            </p>
+          </div>
+          <div class="list-section">
+            <ul>
+              <li>
+                Understand the principles of Carrier Sense Multiple Access
+                Protocols and their role in regulating shared communication
+                channels.
+              </li>
+              <li>
+                Explore the operation of CSMA/CD and CSMA/CA protocols and their
+                implementations in Ethernet and Wi-Fi networks.
+              </li>
+              <li>
+                Examine collision-free protocols such as Token Passing and
+                Reservation-based protocols and their applications in network
+                environments.
+              </li>
+              <li>
+                Familiarize with IEEE standards governing various LAN
+                technologies, including Ethernet, Wi-Fi, Bluetooth, and WiMAX.
+              </li>
+              <li>
+                Investigate the features and functionalities of Fiber
+                Distributed Data Interface (FDDI) and its advantages in
+                high-speed networking.
+              </li>
+              <li>
+                Develop skills in configuring, troubleshooting, and optimizing
+                network infrastructures based on CSMA protocols, collision-free
+                protocols, IEEE standards, and FDDI technology.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced LAN Protocols and Standards -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advanced LAN Protocols and Standards</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The main topic of Advanced LAN Protocols and Standards encompasses
+              a wide array of concepts vital for understanding and implementing
+              modern networking infrastructures.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access (CSMA) Protocols, including CSMA
+              with Collision Detection, form the cornerstone of shared medium
+              access methods, regulating how devices communicate over Ethernet
+              and Wi-Fi networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Collision-Free Protocols offer alternative approaches to mitigate
+              collision occurrences, providing smoother communication
+              experiences in shared network environments. These protocols, such
+              as Token Passing and Reservation-based protocols, offer
+              deterministic methods for accessing the network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              IEEE standards are essential for ensuring interoperability and
+              compatibility among network devices and technologies. IEEE
+              standards, such as IEEE 802.3 for Ethernet and IEEE 802.11 for
+              Wi-Fi, define the rules and specifications for various networking
+              technologies.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Fiber Distributed Data Interface (FDDI) stands as a notable
+              example of high-speed networking technology, offering robust
+              communication over fiber optic cables and ensuring network
+              redundancy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carrier Sense Multiple Access Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Carrier Sense Multiple Access Protocols (CSMA)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In the realm of networking, Carrier Sense Multiple Access (CSMA)
+              protocols represent a fundamental approach to regulating access to
+              shared communication channels.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              CSMA protocols enable multiple devices to contend for access to
+              the transmission medium by sensing the carrier signal before
+              initiating transmission.
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>CSMA/CD (Collision Detection)</h4>
+              <p>
+                Prominent in Ethernet networks. Devices can detect collisions
+                during transmission and implement collision resolution
+                mechanisms, such as retransmission.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>CSMA/CA (Collision Avoidance)</h4>
+              <p>
+                Prevalent in wireless networks like Wi-Fi. Devices contend for
+                access while avoiding interference and collisions by
+                implementing backoff algorithms and contention windows.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding CSMA protocols is essential for network engineers
+              and IT professionals involved in designing and managing network
+              infrastructures, as they influence factors such as network
+              performance, throughput, and latency.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to CSMA -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to CSMA</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Introduction to Carrier Sense Multiple Access (CSMA) provides a
+              foundational understanding of the principles governing shared
+              communication channels in networking environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              CSMA protocols allow multiple devices to access a common
+              transmission medium by first sensing the carrier signal to
+              determine if it is idle. If the medium is idle, the device
+              initiates transmission; otherwise, it defers transmission to avoid
+              collisions.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This approach ensures fair access to the transmission medium and
+              minimizes the likelihood of data collisions, thereby optimizing
+              network efficiency.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>CSMA/CD</h4>
+                <p>
+                  Prevalent in wired Ethernet networks, where devices can detect
+                  collisions during transmission and employ collision resolution
+                  mechanisms.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>CSMA/CA</h4>
+                <p>
+                  Commonly used in wireless networks like Wi-Fi, where devices
+                  contend for access while avoiding interference and collisions.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By comprehensively exploring the intricacies of CSMA protocols,
+              network professionals can effectively design and manage network
+              infrastructures that prioritize reliability, efficiency, and
+              scalability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSMA/CD -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            CSMA/CD (Carrier Sense Multiple Access with Collision Detection)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access with Collision Detection (CSMA/CD)
+              is a pivotal protocol commonly employed in Ethernet networks to
+              regulate access to shared communication channels.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In CSMA/CD, devices contend for access to the transmission medium
+              by first sensing the carrier signal. If the medium is idle, the
+              device initiates transmission; however, if a collision is detected
+              during transmission, the device halts transmission and implements
+              collision detection mechanisms to resolve the contention.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>CSMA/CD Process</h3>
+            <ul>
+              <li>Device senses the carrier to check if medium is idle</li>
+              <li>If idle, device begins transmission</li>
+              <li>
+                Device continues to monitor for collisions during transmission
+              </li>
+              <li>If collision detected, device stops transmission</li>
+              <li>
+                Device waits for a random backoff period before reattempting
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Applications</h3>
+            <ul>
+              <li>Traditional Ethernet networks (10BASE-T, 100BASE-TX)</li>
+              <li>Half-duplex communication modes</li>
+              <li>Legacy network infrastructure</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              CSMA/CD serves as a foundational concept in network design,
+              providing insights into collision detection mechanisms and
+              collision resolution strategies that are instrumental in
+              maintaining network integrity and performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSMA/CA -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA)
+              is a crucial protocol widely used in wireless networks, such as
+              Wi-Fi, to regulate access to shared communication channels.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In CSMA/CA, devices contend for access to the wireless medium by
+              first sensing the carrier signal. However, unlike CSMA/CD used in
+              wired networks, CSMA/CA implements collision avoidance mechanisms
+              to minimize the occurrence of collisions.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>CSMA/CA Process</h3>
+            <ul>
+              <li>
+                Device performs Clear Channel Assessment (CCA) to check if
+                medium is idle
+              </li>
+              <li>If medium is busy, device defers transmission</li>
+              <li>
+                If medium is idle, device may still wait a random backoff period
+              </li>
+              <li>Device transmits data and waits for acknowledgment</li>
+              <li>
+                If no acknowledgment received, device assumes collision and
+                retransmits
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>Backoff algorithms and contention windows</li>
+              <li>Request to Send/Clear to Send (RTS/CTS) mechanism</li>
+              <li>Acknowledgment-based reliability</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              CSMA/CA plays a pivotal role in enhancing the performance and
+              reliability of wireless communication, enabling devices to share
+              the medium efficiently while minimizing the impact of contention
+              and interference.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSMA/CR -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            CSMA/CR (Carrier Sense Multiple Access with Collision Resolution)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access with Collision Resolution (CSMA/CR)
+              is a variant of the CSMA protocol that aims to address the
+              challenges associated with collisions in shared communication
+              channels.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In CSMA/CR, devices contend for access to the transmission medium
+              by first sensing the carrier signal. If the medium is idle, the
+              device initiates transmission; however, if a collision is detected
+              during transmission, CSMA/CR employs collision resolution
+              mechanisms to manage contention.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Collision Resolution Strategies</h3>
+            <ul>
+              <li>Random retransmission delays</li>
+              <li>Prioritization schemes</li>
+              <li>Arbitration mechanisms</li>
+              <li>Binary exponential backoff algorithms</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Differences from CSMA/CD</h3>
+            <ul>
+              <li>CSMA/CD halts transmission upon collision detection</li>
+              <li>
+                CSMA/CR implements strategies to resolve collisions without
+                halting
+              </li>
+              <li>
+                CSMA/CR may continue transmission while implementing resolution
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              CSMA/CR serves as a valuable tool in mitigating the effects of
+              contention and collisions in shared communication channels,
+              contributing to the overall efficiency and performance of
+              networked systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collision-Free Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Collision-Free Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Collision-Free Protocols represent a class of networking protocols
+              designed to eliminate the occurrence of collisions in shared
+              communication channels, thereby ensuring efficient and reliable
+              data transmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Unlike Carrier Sense Multiple Access (CSMA) protocols, which rely
+              on carrier sensing and collision detection mechanisms,
+              collision-free protocols employ deterministic methods to allocate
+              communication resources among devices.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              These protocols typically divide the transmission medium into
+              discrete time slots or assign dedicated resources to each device,
+              allowing devices to transmit data without contention or
+              interference.
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-circle-notch"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Token Passing Protocols</h4>
+              <p>
+                A unique data packet called a "token" circulates among network
+                nodes. Only the node holding the token can transmit data,
+                eliminating collisions.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Reservation-based Protocols</h4>
+              <p>
+                Nodes explicitly reserve the right to transmit during specific
+                time slots, preventing collisions through coordinated
+                scheduling.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By eliminating the risk of collisions, collision-free protocols
+              maximize the utilization of the transmission medium and minimize
+              delays, resulting in improved network performance and throughput.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Token Passing Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Token Passing Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Token Passing Protocols are a significant subset of collision-free
+              protocols, designed to prevent collisions in network
+              communications by regulating access to the transmission medium.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In token passing protocols, a unique data packet called a "token"
+              circulates continuously among network nodes. Only the node that
+              holds the token is granted permission to transmit data, ensuring
+              that no two nodes can send data simultaneously, thereby
+              eliminating the possibility of collisions.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Once the transmission is complete, the token is passed to the next
+              node in the sequence, which then gains the right to transmit. This
+              orderly process ensures that each node has an equal opportunity to
+              access the medium, making token passing protocols highly efficient
+              and predictable.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Applications</h3>
+            <ul>
+              <li>Token Ring networks</li>
+              <li>Fiber Distributed Data Interface (FDDI)</li>
+              <li>Industrial networks requiring deterministic performance</li>
+              <li>Real-time systems with strict timing requirements</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Token passing protocols are particularly useful in environments
+              where predictable performance and high reliability are required,
+              such as in industrial networks and real-time systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reservation-based Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Reservation-based Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Reservation-based protocols are another essential category of
+              collision-free protocols designed to manage access to a shared
+              communication medium efficiently.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In reservation-based protocols, nodes explicitly reserve the right
+              to transmit data during specific time slots, thereby preventing
+              collisions. This is typically achieved through a centralized or
+              distributed scheduling mechanism where each node requests a
+              transmission slot, and the allocation is managed to ensure that no
+              two nodes attempt to transmit simultaneously.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Reservation Methods</h3>
+            <ul>
+              <li>
+                Centralized scheduling: A controller assigns transmission slots
+              </li>
+              <li>
+                Distributed scheduling: Nodes negotiate and reserve slots among
+                themselves
+              </li>
+              <li>
+                Contention-free periods: Specific time intervals reserved for
+                certain traffic types
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Applications</h3>
+            <ul>
+              <li>Telecommunications networks</li>
+              <li>Satellite communications</li>
+              <li>Multimedia streaming applications</li>
+              <li>Systems requiring guaranteed bandwidth allocation</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By coordinating the transmission schedule in advance,
+              reservation-based protocols ensure orderly access to the medium,
+              leading to predictable network performance and efficient
+              utilization of bandwidth.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demand Priority Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Demand Priority Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Demand Priority Protocol is another approach to collision-free
+              communication in networks, designed to manage access to shared
+              communication resources efficiently.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In this protocol, nodes request transmission opportunities based
+              on their priority levels and the current demand for network
+              resources. A centralized controller or arbiter manages these
+              requests and allocates transmission time slots accordingly,
+              ensuring that higher priority traffic is given precedence while
+              still providing fair access to all nodes.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>Priority-based access to network resources</li>
+              <li>Dynamic allocation based on current demand</li>
+              <li>Centralized arbitration mechanism</li>
+              <li>Support for different traffic classes</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Applications</h3>
+            <ul>
+              <li>100VG-AnyLAN networks</li>
+              <li>Industrial automation systems</li>
+              <li>Real-time control networks</li>
+              <li>Environments requiring differentiated service levels</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Demand Priority Protocol provides a flexible approach to managing
+              network resources, allowing for efficient handling of diverse
+              traffic types and ensuring that critical applications receive the
+              necessary bandwidth.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fiber Distributed Data Interface (FDDI) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Fiber Distributed Data Interface (FDDI)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Fiber Distributed Data Interface (FDDI) is a high-speed networking
+              standard designed to facilitate data transmission over fiber optic
+              cables.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Developed in the 1980s, FDDI provides robust and efficient
+              communication for local area networks (LANs) and is particularly
+              suited for backbone network infrastructure due to its high
+              bandwidth capacity and long-distance capabilities.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              FDDI employs a dual-ring architecture, consisting of a primary and
+              a secondary ring. This dual-ring configuration enhances network
+              reliability and fault tolerance; if the primary ring fails, data
+              transmission can continue seamlessly on the secondary ring.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features</h3>
+            <ul>
+              <li>Standard data rate of 100 Mbps</li>
+              <li>Dual-ring topology for redundancy</li>
+              <li>Token passing protocol for collision-free communication</li>
+              <li>Support for up to 500 stations over 200 km</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              FDDI was a significant improvement over earlier Ethernet
+              technologies, making it an ideal solution for organizations
+              requiring high-speed data transfer and minimal network downtime.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to FDDI -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to FDDI</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Fiber Distributed Data Interface (FDDI) is a set of ANSI and ISO
+              standards for data transmission on fiber optic lines in a local
+              area network (LAN) that can extend in range up to 200 kilometers
+              (124 miles).
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              FDDI was designed to provide high-speed data transfer rates,
+              specifically 100 Mbps, which was significantly faster than the
+              prevalent Ethernet and Token Ring standards at the time of its
+              development in the late 1980s.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The primary purpose of FDDI was to serve as a backbone network for
+              wide-area and metropolitan area networks, facilitating the
+              interconnection of lower-speed networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Dual-ring topology with primary and secondary rings</li>
+              <li>Token passing protocol for collision-free communication</li>
+              <li>
+                Use of fiber optic cables for high data rates and reduced
+                interference
+              </li>
+              <li>Counter-rotating rings for fault tolerance</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              FDDI became a popular choice for critical network applications,
+              such as connecting data centers and supporting high-speed LAN
+              backbones, offering both performance and reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FDDI Topologies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FDDI Topologies</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Fiber Distributed Data Interface (FDDI) topologies primarily
+              employ a dual-ring architecture, which significantly enhances
+              network reliability and fault tolerance.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In an FDDI network, two counter-rotating rings, known as the
+              primary and secondary rings, are used. The primary ring is the
+              main data path, while the secondary ring acts as a backup in case
+              of a failure in the primary ring.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This dual-ring setup allows FDDI to maintain network operation
+              even if a single ring fails or if there is a break in the fiber
+              optic cable. This redundancy is particularly valuable in
+              mission-critical applications where uninterrupted network service
+              is essential.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Network Configurations</h3>
+            <ul>
+              <li>Tree structures using concentrators or hubs</li>
+              <li>Star configurations with centralized management</li>
+              <li>Connection of multiple FDDI rings or nodes</li>
+              <li>Integration with existing Ethernet systems</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The flexibility in topology design allows FDDI networks to be
+              scalable and adaptable to different organizational needs, making
+              it a versatile solution for large-scale and high-performance
+              network environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FDDI Frame Structure -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FDDI Frame Structure</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Fiber Distributed Data Interface (FDDI) frame structure is
+              designed to support efficient and reliable data transmission over
+              fiber optic networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              An FDDI frame consists of several distinct fields that ensure
+              proper data encapsulation, delivery, and error checking.
+            </p>
+          </div>
+
+          <div class="frame-structure">
+            <div class="frame-field">Preamble</div>
+            <div class="frame-field">Start Delimiter (SD)</div>
+            <div class="frame-field">Frame Control</div>
+            <div class="frame-field">Destination Address</div>
+            <div class="frame-field">Source Address</div>
+            <div class="frame-field primary">Payload (up to 4,478 bytes)</div>
+            <div class="frame-field">Frame Check Sequence (FCS)</div>
+            <div class="frame-field">End Delimiter (ED)</div>
+            <div class="frame-field">Frame Status (FS)</div>
+          </div>
+
+          <div class="text-section">
+            <h3>Key Components</h3>
+            <ul>
+              <li>
+                <strong>Preamble:</strong> Synchronizes the receiver with the
+                incoming data stream
+              </li>
+              <li>
+                <strong>Frame Control:</strong> Indicates the type of frame and
+                priority
+              </li>
+              <li>
+                <strong>Addresses:</strong> Specify the intended recipient and
+                origin of the frame
+              </li>
+              <li>
+                <strong>FCS:</strong> Provides error detection using a cyclic
+                redundancy check (CRC)
+              </li>
+              <li>
+                <strong>Frame Status:</strong> Contains information about the
+                frame's reception
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This comprehensive frame structure allows FDDI to achieve high
+              levels of data integrity and reliability, making it suitable for
+              critical applications that require robust error checking.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FDDI Maintenance and Troubleshooting -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FDDI Maintenance and Troubleshooting</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Fiber Distributed Data Interface (FDDI) maintenance and
+              troubleshooting are critical aspects of ensuring the network's
+              reliability and performance.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Regular maintenance of FDDI networks involves monitoring the
+              dual-ring topology to detect any potential issues before they lead
+              to network failures. This includes checking the integrity of the
+              fiber optic cables, ensuring that all connections are secure, and
+              verifying that both the primary and secondary rings are
+              operational.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Maintenance Tasks</h3>
+            <ul>
+              <li>Regular monitoring of network traffic and performance</li>
+              <li>Checking fiber optic cable integrity and connections</li>
+              <li>Verifying operation of both primary and secondary rings</li>
+              <li>
+                Testing latency and throughput to ensure performance
+                requirements are met
+              </li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Troubleshooting Tools</h3>
+            <ul>
+              <li>
+                Optical Time Domain Reflectometers (OTDR) for locating cable
+                faults
+              </li>
+              <li>
+                Network analyzers for monitoring traffic and identifying errors
+              </li>
+              <li>
+                Network management software for logging errors and providing
+                reports
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By implementing a comprehensive maintenance and troubleshooting
+              strategy, network administrators can ensure the longevity and
+              reliability of FDDI networks, minimizing downtime and maintaining
+              optimal performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In conclusion, the study of Carrier Sense Multiple Access
+              Protocols, Collision Detection and Collision-Free Protocols, IEEE
+              standards, and Fiber Distributed Data Interface (FDDI) provides a
+              comprehensive understanding of the foundational elements of
+              networking protocols and standards.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              These concepts form the backbone of modern networking
+              infrastructures, governing how devices communicate and share
+              resources within networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Carrier Sense Multiple Access Protocols, including CSMA/CD and
+              CSMA/CA, play a crucial role in regulating access to shared
+              communication channels, ensuring efficient and fair transmission
+              of data.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Collision-Free Protocols offer alternative approaches to mitigate
+              collision occurrences, providing smoother communication
+              experiences in network environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Furthermore, adherence to IEEE standards ensures interoperability
+              and compatibility among network devices, fostering seamless
+              communication across diverse networking technologies.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Through the study of these concepts, network engineers and IT
+              professionals gain the knowledge and skills necessary to design,
+              deploy, and manage robust and efficient network infrastructures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 1) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions / Answers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 1. What is Carrier Sense Multiple Access (CSMA)?
+            </div>
+            <div class="answer">
+              Answer. CSMA is a network protocol that listens for a carrier
+              signal before trying to transmit data on a shared network medium.
+              If the medium is clear, the device sends the data. If the medium
+              is busy, the device waits for a random period before retrying.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 2. How does CSMA with Collision Detection (CSMA/CD) work?
+            </div>
+            <div class="answer">
+              Answer. CSMA/CD is an extension of CSMA used in Ethernet networks.
+              It listens for a carrier signal, transmits data if the medium is
+              clear, and monitors the medium for collisions during transmission.
+              If a collision is detected, it stops sending data and waits a
+              random backoff time before retrying.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 3. What is the main difference between CSMA/CD and
+              CSMA/CA?
+            </div>
+            <div class="answer">
+              Answer. CSMA/CD is used primarily in wired networks and detects
+              collisions during data transmission. In contrast, CSMA/CA is used
+              in wireless networks and tries to avoid collisions by waiting for
+              an acknowledgment before sending data.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 4. What are Collision-Free Protocols?
+            </div>
+            <div class="answer">
+              Answer. Collision-Free Protocols are network protocols designed to
+              prevent data collisions on a network medium. Examples include
+              Token Ring and FDDI, where a token or permission to transmit data
+              circulates through the network, ensuring that only one device
+              transmits at a time.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 5. What is the purpose of IEEE 802.3 standard?
+            </div>
+            <div class="answer">
+              Answer. The IEEE 802.3 standard defines the specifications for
+              Ethernet, which includes both physical and data link layers for
+              wired LANs, ensuring interoperability and standardization across
+              Ethernet devices.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 2) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Unit Based Questions / Answers (Continued)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 6. How does FDDI maintain network reliability?
+            </div>
+            <div class="answer">
+              Answer. FDDI maintains network reliability using a dual-ring
+              topology, where one ring acts as the primary data path and the
+              other as a secondary backup. This redundancy ensures continuous
+              network operation even if one ring fails.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 7. What are the main components of an FDDI frame?
+            </div>
+            <div class="answer">
+              Answer. FDDI frame includes several fields: preamble, Start
+              Delimiter (SD), frame control, destination address, source
+              address, payload, Frame Check Sequence (FCS), End Delimiter (ED),
+              and Frame Status (FS).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 8. What is the role of the Frame Check Sequence (FCS) in
+              an FDDI frame?
+            </div>
+            <div class="answer">
+              Answer. The Frame Check Sequence (FCS) in an FDDI frame is used
+              for error detection. It employs a cyclic redundancy check (CRC) to
+              ensure the integrity of the transmitted data, allowing the
+              detection of any corrupted bits.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 9. What is a Token Ring Protocol?
+            </div>
+            <div class="answer">
+              Answer. The Token Ring Protocol is a type of collision-free
+              protocol where a token circulates around the network nodes. A
+              device can transmit data only when it holds the token, preventing
+              collisions and ensuring orderly access to the network medium.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 10. What tools are commonly used for FDDI network
+              troubleshooting?
+            </div>
+            <div class="answer">
+              Answer. Tools commonly used for FDDI network troubleshooting
+              include Optical Time Domain Reflectometers (OTDR) for locating
+              faults in fiber optic cables, network analyzers for monitoring
+              traffic, and management software for logging errors and providing
+              detailed diagnostic reports.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

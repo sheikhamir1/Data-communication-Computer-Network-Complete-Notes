@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telnet and SMTP in Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .command-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .command-table th,
+      .command-table td {
+        border: 1px solid #e1e8ed;
+        padding: 10px;
+        text-align: left;
+      }
+
+      .command-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .command-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .step-flow {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .step {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .step-number {
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .mode-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .mode-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .smtp-component {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .component-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .component-info {
+        flex: 1;
+      }
+
+      .component-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .port-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .port-table th,
+      .port-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .port-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .port-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Telnet Section -->
+
+      <!-- Slide 1: Telnet Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Telnet in Computer Network</h1>
+          <p class="slide-subtitle">Remote Terminal Access Protocol</p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://www.ssh.com/hubfs/Imported_Blog_Media/Telnet_is_vulnerable_to_eavesdropping-2.png"
+              alt="Telnet Network Connection"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              Telnet is a client-server protocol used to establish text-based
+              communication between a remote device (client) and a server. It
+              operates over TCP/IP networks, usually on port 23.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Introduction to Telnet -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Telnet</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The main task of the internet is to provide services to users. For
+              example, users want to run different application programs at the
+              remote site and transfer a result to the local site. This requires
+              a client-server program such as FTP, SMTP. But this would not
+              allow us to create a specific program for each demand.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The better solution is to provide a general client-server program
+              that lets the user access any application program on a remote
+              computer. Therefore, a program that allows a user to log on to a
+              remote computer. A popular client-server program Telnet is used to
+              meet such demands. Telnet is an abbreviation for Terminal Network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Telnet provides a connection to the remote computer in such a way
+              that a local terminal appears to be at the remote side.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Local vs. Remote Login -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Types of Login</h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Local Login</h4>
+                <p>
+                  In a local login, the user sits at the terminal directly
+                  connected to the computer. The terminal driver passes the
+                  characters to the operating system, which interprets the
+                  characters and invokes the desired application program.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Remote Login</h4>
+                <p>
+                  When the user wants to access an application program on a
+                  remote computer, the user must perform remote login. The
+                  user's terminal is connected to the local terminal driver,
+                  which then sends the characters to the TELNET client.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Remote login allows users to access and control a remote computer
+              as if they were sitting directly in front of it, enabling remote
+              administration and access to resources from anywhere in the world.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Step-by-Step Procedure of Remote Login -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Step-by-Step Procedure of Remote Login</h1>
+        </div>
+        <div class="slide-content">
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Local Input Capture</h4>
+                <p>
+                  The process begins when a user types a command or text on
+                  their local computer's keyboard. The local machine's operating
+                  system accepts these individual keystrokes.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Client Handoff</h4>
+                <p>
+                  Instead of interpreting the characters itself, the local
+                  operating system immediately sends them to a TELNET client
+                  software application running on the same machine.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Universal Translation by the Client</h4>
+                <p>
+                  The TELNET client performs an important translation function.
+                  It converts locally formatted characters into a universal,
+                  standardized character set known as the Network Virtual
+                  Terminal (NVT) format.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Network Dispatch</h4>
+                <p>
+                  The newly translated NVT characters are passed to the local
+                  computer's TCP/IP protocol stack. This software packages data
+                  into TCP segments and IP packets, preparing them for travel
+                  across the network.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Remote Login Steps (Continued) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Step-by-Step Procedure of Remote Login (Continued)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Network Transit and Reception</h4>
+                <p>
+                  NVT-formatted commands travel over the Internet (or local
+                  network) and arrive at the remote computer, where they are
+                  received by its TCP/IP protocol stack.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">6</div>
+              <div class="step-content">
+                <h4>Server-Side Delivery</h4>
+                <p>
+                  The remote computer's TCP/IP stack reassembles the data and
+                  delivers the stream of NVT characters to its operating system.
+                  The operating system then forwards this data to the TELNET
+                  server process.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">7</div>
+              <div class="step-content">
+                <h4>Remote System Translation</h4>
+                <p>
+                  The TELNET server does the reverse translation for the client.
+                  It converts universal NVT characters into a format that the
+                  specific remote computer's operating system and applications
+                  can natively understand and process.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">8</div>
+              <div class="step-content">
+                <h4>Terminal Emulation</h4>
+                <p>
+                  Translated characters are passed through a pseudo-terminal
+                  driver. This software tricks the remote operating system into
+                  believing that the characters are coming from a physically
+                  connected terminal.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">9</div>
+              <div class="step-content">
+                <h4>Application Execution</h4>
+                <p>
+                  The remote operating system passes the characters to the
+                  appropriate application program, which processes the command
+                  as if it were entered locally. The output begins its journey
+                  back to the user along the same path in the opposite
+                  direction.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Network Virtual Terminal (NVT) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Virtual Terminal (NVT)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The network virtual terminal is an interface that defines how data
+              and commands are sent across the network.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              In today's world, systems are heterogeneous. For example, the
+              operating system accepts a special combination of characters, such
+              as end-of-file token running a DOS operating system, Ctrl-Z, while
+              the token running a UNIX operating system is Ctrl-D.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              TELNET solves this issue by defining a universal interface known
+              as a network virtual interface.
+            </p>
+            <p>
+              The TELNET client translates the characters that come from the
+              local terminal into NVT form and then delivers them to the
+              network. The Telnet server then translates the data from NVT form
+              into a form that can be understood by a remote computer.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Advantages of Telnet -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advantages of Telnet</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Simple, Bidirectional Communication</h4>
+            <p>
+              At its core, Telnet is a straightforward tool for sending and
+              receiving information. It creates a text-based, two-way
+              communication channel between the client and the server.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Centralized Network Administration</h4>
+            <p>
+              Telnet allows remote management of network elements such as
+              routers, switches, and servers. Instead of requiring physical
+              access, an administrator can simply open a Telnet session to
+              configure and troubleshoot.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Built-in User Authentication</h4>
+            <p>
+              The protocol includes a framework for user authentication, which
+              requires a valid username and password to gain access. It provided
+              a basic level of access control.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Universal Compatibility with NVT</h4>
+            <p>
+              The key to Telnet's success was the Network Virtual Terminal
+              (NVT). It was a brilliant software solution that acted as a
+              universal translator, ensuring seamless interaction between
+              different types of computers.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Cost-effective Resource Sharing</h4>
+            <p>
+              Telnet enabled shared use of expensive, centralized resources. For
+              example, a powerful mainframe computer can be housed in a single
+              location and accessed by authorized users worldwide.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Disadvantages of Telnet -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Disadvantages of Telnet</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Serious Security Vulnerability</h4>
+            <p>
+              This is the most famous and serious disadvantage of Telnet. All
+              data, including user ID and password, is transmitted in plain
+              text. There is no encryption of any kind, making it vulnerable to
+              packet sniffing.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Limited to Text Interface Only</h4>
+            <p>
+              Telnet is a character-based communication tool. It is
+              fundamentally incapable of transmitting graphical information. You
+              cannot run any graphical user interface (GUI) applications over a
+              Telnet connection.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Protocol Inefficiency</h4>
+            <p>
+              From a technical perspective, Telnet is a relatively inefficient
+              protocol. It was designed for a different era of networking and
+              can be chatty and slow compared to modern alternatives.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>High Overhead for Simple Tasks</h4>
+            <p>
+              The design of the protocol means that each keystroke you type
+              generates network traffic and requires multiple internal context
+              switches, leading to noticeable lag and a less responsive
+              experience.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Hidden Costs of Low Speed</h4>
+            <p>
+              A combination of slow data transmission and inability to use
+              modern graphical tools often results in slow completion of work,
+              which can translate into higher labor costs and inefficiencies for
+              businesses.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: TELNET Commands and Options -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">TELNET Commands and Options</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Telnet operates using a specific command language that allows
+              clients and servers to negotiate features and manage connections.
+              These commands are separated from regular data by a special
+              prefix.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <h4>Command Identifier: IAC</h4>
+            <p>
+              All TELNET commands are identified by a unique prefix character
+              known as Interpret as Command (IAC). The decimal code of IAC is
+              255. When this byte appears in the data stream, it signals that
+              the following byte is not regular data but a command or option
+              interaction.
+            </p>
+            <p>
+              The basic format is a sequence of at least two bytes: IAC,
+              followed by the command code.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The protocol uses a series of commands for option negotiation,
+              where the client and server agree on how the connection will
+              behave. The most important commands form a symmetric
+              request/response system.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Core Telnet Negotiation Commands -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Core Telnet Negotiation Commands</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>1. WILL (decimal 251)</h4>
+            <p>This command is used in two ways:</p>
+            <ul>
+              <li>A party may send a "WILL" to enable a specific feature</li>
+              <li>
+                It is also used to accept a request from the other party to
+                enable a feature
+              </li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>2. WILL NOT (decimal 252)</h4>
+            <p>This command is used to:</p>
+            <ul>
+              <li>Reject the other party's request to enable a feature</li>
+              <li>Proposing to disable a feature</li>
+              <li>Accept the request to disable a feature</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>3. DO (decimal 253)</h4>
+            <p>This command is used to:</p>
+            <ul>
+              <li>
+                Approve the other party's proposal to enable a feature ("WILL"
+                command)
+              </li>
+              <li>Request that the other party enable a specific feature</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>4. DO NOT (decimal 254)</h4>
+            <p>This command is used to:</p>
+            <ul>
+              <li>Reject the other party's offer to enable a feature</li>
+              <li>Approve the proposal to disable a feature</li>
+              <li>Request that the other party disable a feature</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Common TELNET Options -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Common TELNET Options</h1>
+        </div>
+        <div class="slide-content">
+          <p>
+            These negotiation commands are used to enable or disable specific
+            options that modify the behavior of the connection. The option is
+            specified by a third byte in the sequence.
+          </p>
+          <table class="command-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Option</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0</td>
+                <td>Binary</td>
+                <td>Switches the connection to 8-bit binary transmission</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Echo</td>
+                <td>
+                  Configures one side to echo back the data it receives from the
+                  other
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Suppress Go Ahead</td>
+                <td>Stops the transmission of "go ahead" signals after data</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Status</td>
+                <td>
+                  Requests the status of a TELNET option from the remote party
+                </td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Timing Mark</td>
+                <td>
+                  Used to insert a synchronization point in the data stream
+                </td>
+              </tr>
+              <tr>
+                <td>24</td>
+                <td>Terminal Type</td>
+                <td>
+                  Allows the server to request and learn the type of the
+                  client's terminal
+                </td>
+              </tr>
+              <tr>
+                <td>34</td>
+                <td>Line Mode</td>
+                <td>
+                  Switches the connection from character-at-a-time to full-line
+                  mode
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 12: TELNET Modes of Operation -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">TELNET Modes of Operation</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              TELNET supports various modes of operation that define how user
+              input is managed and transmitted between the client and the
+              server. Each mode provides different features for data processing
+              and echo control.
+            </p>
+          </div>
+
+          <div class="mode-card">
+            <h4>Default Mode</h4>
+            <p>
+              The default mode serves as the fundamental operating state when no
+              specific mode is activated:
+            </p>
+            <ul>
+              <li>Character echo is completely managed by client software</li>
+              <li>
+                When a user types characters, they appear immediately on the
+                local screen due to client-side echoing
+              </li>
+              <li>
+                The actual transmission to the server is delayed until the
+                entire line is completed
+              </li>
+              <li>
+                This mode provides a responsive typing experience while reducing
+                network traffic
+              </li>
+            </ul>
+          </div>
+
+          <div class="mode-card">
+            <h4>Character Mode</h4>
+            <p>
+              Also known as character-at-a-time mode, this approach provides
+              instant transmission:
+            </p>
+            <ul>
+              <li>Each character is sent to the server as it is typed</li>
+              <li>The server typically handles the echoing function</li>
+              <li>
+                This creates a continuous conversation where each keystroke
+                generates a round-trip
+              </li>
+              <li>
+                Can generate significant network overhead due to frequent
+                transmission
+              </li>
+            </ul>
+          </div>
+
+          <div class="mode-card">
+            <h4>Line Mode</h4>
+            <p>
+              Line mode provides a balanced approach between efficiency and
+              functionality:
+            </p>
+            <ul>
+              <li>Extensive line editing features managed client-side</li>
+              <li>
+                The client collects an entire line of input before transmitting
+                it
+              </li>
+              <li>
+                This approach reduces network traffic by sending entire commands
+              </li>
+              <li>
+                Users benefit from local editing capabilities while servers get
+                clean commands
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Using a Command-line Interface -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Using a Command-line Interface</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The most distinctive feature of Telnet is its command-line
+              interface. Unlike modern software, which relies on a graphical
+              user interface (GUI), Telnet requires users to manually type
+              text-based commands at a prompt.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Although this approach may seem daunting initially, it becomes
+              remarkably efficient once users become familiar with the syntax
+              and workflow. To find available commands, users can type "help"
+              and press Enter to display a detailed list.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Configuration changes and parameter adjustments on a remote device
+              or server are accomplished by navigating through a hierarchical
+              menu system using specific text commands.
+            </p>
+            <p>
+              It is important to recognize that Telnet was designed primarily
+              for interacting with servers and networking equipment, rather than
+              for everyday desktop applications or web browsing.
+            </p>
+            <p>
+              As a result, most Telnet commands are technical in nature, focused
+              on system administration and network management tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Sending and Receiving Data Through TELNET -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Sending and Receiving Data Through TELNET</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The primary function of TELNET is to facilitate two-way data
+              transmission between a local device and a remote server. Once the
+              connection is established, users can input commands through their
+              local command-line interface, which are then executed by the
+              remote server.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This mechanism enables efficient communication with networking
+              devices and servers from any location with network access. A
+              practical example: When an IT administrator needs to remotely
+              modify configuration settings on a router, they can establish a
+              Telnet connection and input commands as if they were physically
+              connected to the device.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Although this remote administration capability provides
+              significant convenience, it is important to acknowledge a
+              fundamental security limitation of Telnet: all data transmission
+              occurs without encryption. This vulnerability exposes sensitive
+              information, including login credentials and configuration
+              details, to potential interception during transmission.
+            </p>
+            <p>
+              Therefore, network administrators should implement additional
+              security measures, such as authentication protocols and encryption
+              technologies, or consider switching to more secure alternatives,
+              such as SSH.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Telnet FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FAQs - Telnet</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">1. What is Telnet, and how does it work?</div>
+            <div class="answer">
+              Telnet (short for Terminal Network) is a protocol used to remotely
+              access and manage devices on a network. It works by creating a
+              virtual terminal connection between the client and the server.
+              When a user types commands locally, Telnet translates them into a
+              standard format (Network Virtual Terminal or NVT), sends them over
+              the Internet, and allows the remote server to interpret and
+              execute them.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. What are the main differences between local login and remote
+              login using Telnet?
+            </div>
+            <div class="answer">
+              Local login: The user interacts directly with the local computer's
+              operating system and applications. Remote login (via Telnet): The
+              user accesses a remote machine as if they existed locally on that
+              system. Keystrokes are sent over the network using Telnet,
+              translated via NVT, and interpreted by the remote system.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              3. Why is Telnet considered insecure for modern networks?
+            </div>
+            <div class="answer">
+              Telnet transmits all data, including usernames and passwords, in
+              plain text without encryption. This makes it highly vulnerable to
+              packet sniffing and man-in-the-middle attacks. For this reason,
+              Telnet has been largely replaced by secure alternatives such as
+              SSH (Secure Shell).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. What are the main benefits of using Telnet?
+            </div>
+            <div class="answer">
+              Simple, two-way text-based communication; Remote administration of
+              network devices; Built-in user authentication; Compatibility
+              across all systems using Network Virtual Terminal (NVT);
+              Cost-effective sharing of centralized resources.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. What are the common Telnet commands used for option
+              negotiation?
+            </div>
+            <div class="answer">
+              Telnet uses a special command system identified by IAC (Interpret
+              as Command). Common commands include: Will (251) to make or accept
+              an offer to enable a feature; Won't (252) to deny or disable a
+              feature; Do (253) to approve or request enabling a feature; Don't
+              (254) to reject or request disabling a feature.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SMTP Section -->
+
+      <!-- Slide 16: SMTP Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Simple Mail Transfer Protocol (SMTP)</h1>
+          <p class="slide-subtitle">
+            The Standard Protocol for Email Transmission
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              SMTP (Simple Mail Transfer Protocol) is a standard communication
+              protocol used to send emails from one server to another via the
+              Internet. It defines how email messages are formatted,
+              transmitted, and delivered between mail servers.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The main purpose of SMTP is to set up communication rules between
+              servers. The servers have a way of identifying themselves and
+              announcing what kind of communication they are trying to perform.
+              They also have a way of handling errors such as incorrect email
+              addresses.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              For example, if the recipient address is wrong, then the receiving
+              server replies with an error message of some kind.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Components of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Components of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              First, we break the SMTP client and SMTP server into two
+              components such as user agent (UA) and mail transfer agent (MTA).
+            </p>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📧</div>
+            <div class="component-info">
+              <h4>User Agent (UA)</h4>
+              <p>
+                The user agent (UA) prepares the message, creates the envelope
+                and then puts the message in the envelope.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">🔄</div>
+            <div class="component-info">
+              <h4>Mail Transfer Agent (MTA)</h4>
+              <p>
+                The mail transfer agent (MTA) transfers this mail across the
+                internet.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              SMTP allows a more complex system by adding a relaying system.
+              Instead of just having one MTA at sending side and one at
+              receiving side, more MTAs can be added, acting either as a client
+              or server to relay the email.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The relaying system without TCP/IP protocol can also be used to
+              send the emails to users, and this is achieved by the use of the
+              mail gateway. The mail gateway is a relay MTA that can be used to
+              receive an email.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: Working of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Working of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="step-flow">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Composition of Mail</h4>
+                <p>
+                  A user sends an e-mail by composing an electronic mail message
+                  using a Mail User Agent (MUA). The message contains two parts:
+                  body and header. The body is the main part of the message
+                  while the header includes information such as the sender and
+                  recipient address.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>Submission of Mail</h4>
+                <p>
+                  After composing an email, the mail client then submits the
+                  completed e-mail to the SMTP server by using SMTP on TCP port
+                  25.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Delivery of Mail</h4>
+                <p>
+                  E-mail addresses contain two parts: the username of the
+                  recipient and the domain name. It refers to how an email
+                  message is transferred and delivered from the sender's mail
+                  server to the recipient's mail server.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Receipt and Processing of Mail</h4>
+                <p>
+                  Once the incoming message is received, the exchange server
+                  delivers it to the incoming server (Mail Delivery Agent) which
+                  stores the e-mail where it waits for the user to retrieve it.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">5</div>
+              <div class="step-content">
+                <h4>Access and Retrieval of Mail</h4>
+                <p>
+                  The stored email in MDA can be retrieved by using MUA (Mail
+                  User Agent). MUA can be accessed by using login and password.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Applications of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Today, SMTP is used by almost every email system worldwide.
+              Primary email providers, like Gmail or Outlook, and Yahoo, build
+              on strong SMTP architectures, sending and relaying billions of
+              messages every day. Users can access these accounts using the mail
+              servers.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Popular SMTP Servers:</h4>
+            <ul>
+              <li>
+                <strong>Sendmail:</strong> One of the oldest and most widely
+                used mail transfer agents
+              </li>
+              <li>
+                <strong>Postfix:</strong> Known for security, performance, and
+                easy configuration
+              </li>
+              <li>
+                <strong>Microsoft Exchange Server:</strong> Commonly used in
+                corporate environments
+              </li>
+              <li>
+                <strong>Exim:</strong> Flexible and suitable for Unix-like
+                systems
+              </li>
+              <li>
+                <strong>Qmail:</strong> Focused on simplicity and reliability
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              SMTP servers use various certified integrated systems to
+              incorporate spam filtering, antivirus software, and logging,
+              ensuring safe and efficient mail delivery.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: Types of SMTP Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Types of SMTP Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>The SMTP model supports two types of delivery methods:</p>
+          </div>
+
+          <div class="info-card">
+            <h4>1. End-to-End Delivery</h4>
+            <ul>
+              <li>Applies to different organizations</li>
+              <li>
+                Emails travel directly from the sender's SMTP client to the
+                recipient's SMTP server, without any middle servers
+              </li>
+              <li>
+                The SMTP client remains on hold until a copy of the email is
+                saved to the recipient's server
+              </li>
+            </ul>
+          </div>
+
+          <div class="info-card">
+            <h4>2. Store-and-Forward</h4>
+            <ul>
+              <li>
+                Applying to inter- and intra-organizational TCP/IP-based
+                networks
+              </li>
+              <li>
+                Emails can pass through several intermediate MTAs preceding the
+                recipient
+              </li>
+              <li>
+                Emails are only sent to the sender after they are received at
+                the primary server, not at the final one
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              The store-and-forward method is more common in modern email
+              systems as it provides better reliability and allows for more
+              complex routing paths.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: Features of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Features of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Reliability</h4>
+            <p>
+              There is a guarantee that SMTP will successfully deliver messages
+              to the right destination servers. In the rare instances that it
+              doesn't, a return message is produced to inform the sender that
+              there was a breakdown in the communication channel.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Store-and-Forward Service</h4>
+            <p>
+              SMTP also allows for the alternate delivery of messages. In cases
+              where the recipient's server is down, it will still deliver the
+              message as it will be saved and sent when the server is active.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Command and Response Structure</h4>
+            <p>
+              The simplicity of command/response interaction is a distinguishing
+              characteristic of SMTP. Command sent by the client will always
+              produce a corresponding response code from the server indicating
+              delivery or the next step.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Support for Multiple Recipients</h4>
+            <p>
+              SMTP is capable of delivering the same message to multiple
+              recipients at the same time. This facilitates group emailing and
+              mailing lists.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Queue Management</h4>
+            <p>
+              SMTP servers are designed with the ability to manage message
+              queues. If a message is unable to be sent, the server will place
+              the message in the queue and attempt to resend at predetermined
+              time intervals.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Extensibility</h4>
+            <p>
+              The implementation of ESMTP (Extended SMTP) allows for various new
+              functionalities such as authentication, secure transactions, and
+              improved management of oversized attachments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 22: Model of SMTP System -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Model of SMTP System</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>In the SMTP model:</p>
+            <ul>
+              <li>
+                Users utilize User Agents (UAs) like Outlook, Mozilla, etc.
+              </li>
+              <li>
+                Through TCP, Mail Transfer Agents (MTAs) take care of the mail
+                exchange.
+              </li>
+              <li>
+                Local MTAs are set up by system admins, and MTAs are connected
+                in such a manner that queued unsent emails are retried for
+                delivery in the event of failed attempts.
+              </li>
+              <li>
+                MTAs are responsible for distributing emails to mailboxes that
+                can be accessed by the users for later retrieval.
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Core Components: Mail User Agent (MUA), Mail Submission Agent
+              (MSA), Mail Transfer Agent (MTA), and Mail Delivery Agent (MDA)
+              work together to ensure email delivery from sender to recipient.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The SMTP system follows a logical flow where the sender's MUA
+              creates the email, which is then sent to the MSA, which passes it
+              to the MTA. The MTA routes the email through the network to the
+              recipient's MTA, which delivers it to the MDA for storage until
+              the recipient retrieves it with their MUA.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 23: Main Components -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Main Components</h1>
+        </div>
+        <div class="slide-content">
+          <div class="smtp-component">
+            <div class="component-icon">📨</div>
+            <div class="component-info">
+              <h4>Mail User Agent (MUA)</h4>
+              <p>
+                Sends and receives emails. This is the application that users
+                interact with directly, such as Outlook, Thunderbird, or
+                web-based email clients.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📤</div>
+            <div class="component-info">
+              <h4>Mail Submission Agent (MSA)</h4>
+              <p>
+                Accepts mail from MUA and sends it to MTA. It typically listens
+                on port 587 for incoming submissions.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">🔄</div>
+            <div class="component-info">
+              <h4>Mail Transfer Agent (MTA)</h4>
+              <p>
+                Transfers mail between servers using SMTP. It uses DNS MX
+                records to find the recipient's mail server.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📬</div>
+            <div class="component-info">
+              <h4>Mail Delivery Agent (MDA)</h4>
+              <p>
+                Delivers mail to the local system/mailbox. It stores the email
+                until the recipient retrieves it using POP3 or IMAP.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 24: SMTP Commands and Responses -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SMTP Commands and Responses</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Each command set in SMTP is intentional and elicits a response
+              from the server. There is always a client (typically an MUA or
+              MTA) and a server in a client-server relationship. Each command
+              performs a discrete function.
+            </p>
+          </div>
+
+          <table class="command-table">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Keyword</th>
+                <th>Command Form</th>
+                <th>Description</th>
+                <th>Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>HELO</td>
+                <td>HELO &lt;SP&gt; &lt;domain&gt; &lt;CRLF&gt;</td>
+                <td>Identifies the sender host name</td>
+                <td>Mandatory</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>MAIL</td>
+                <td>MAIL FROM:&lt;reverse-path&gt;</td>
+                <td>Specifies sender address</td>
+                <td>Mandatory</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>RCPT</td>
+                <td>RCPT TO:&lt;forward-path&gt;</td>
+                <td>Specifies recipient address</td>
+                <td>Mandatory</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>DATA</td>
+                <td>DATA</td>
+                <td>Begins the mail content</td>
+                <td>Mandatory</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>QUIT</td>
+                <td>QUIT</td>
+                <td>Closes TCP connection</td>
+                <td>Mandatory</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>RSET</td>
+                <td>RSET</td>
+                <td>Aborts mail transaction, keeps TCP open</td>
+                <td>Recommended</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 25: Common SMTP Commands -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Common SMTP Commands</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>1. HELO / EHLO</h4>
+            <p>
+              The HELO command is used by the client to introduce itself to the
+              SMTP server. EHLO (Extended HELO) is a newer version used in
+              Extended SMTP to identify the client and request supported
+              extensions.
+            </p>
+            <p><strong>Example:</strong> HELO mail.example.com</p>
+            <p><strong>Server Response:</strong> 250 mail.example.com Hello</p>
+          </div>
+
+          <div class="info-card">
+            <h4>2. MAIL FROM:</h4>
+            <p>
+              This command specifies the sender's email address. It initiates a
+              mail transaction.
+            </p>
+            <p><strong>Example:</strong> MAIL FROM:&lt;[email protected]&gt;</p>
+            <p><strong>Server Response:</strong> 250 OK</p>
+          </div>
+
+          <div class="info-card">
+            <h4>3. RCPT TO:</h4>
+            <p>
+              Specifies the recipient of the email. Multiple RCPT TO commands
+              can be used for multiple recipients.
+            </p>
+            <p><strong>Example:</strong> RCPT TO:&lt;[email protected]&gt;</p>
+            <p><strong>Server Response:</strong> 250 OK</p>
+          </div>
+
+          <div class="info-card">
+            <h4>4. DATA</h4>
+            <p>
+              The DATA command indicates that the message content will follow.
+              After issuing this command, the client sends the message body and
+              ends it with a single period (.) on a line by itself.
+            </p>
+            <p><strong>Example:</strong> DATA</p>
+            <p>
+              <strong>Server Response:</strong> 354 Start mail input; end with
+              &lt;CRLF&gt;.&lt;CRLF&gt;
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>5. QUIT</h4>
+            <p>
+              Terminates the SMTP session. After this command, the connection is
+              closed.
+            </p>
+            <p><strong>Example:</strong> QUIT</p>
+            <p><strong>Server Response:</strong> 221 Bye</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 26: Common SMTP Response Codes -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Common SMTP Response Codes</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              SMTP servers respond to commands with three-digit codes that
+              indicate the status of the request. These standardized responses
+              help diagnose problems and provide feedback for troubleshooting.
+            </p>
+          </div>
+
+          <table class="command-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>220</td>
+                <td>Service ready</td>
+              </tr>
+              <tr>
+                <td>221</td>
+                <td>Service closing transmission channel</td>
+              </tr>
+              <tr>
+                <td>250</td>
+                <td>Requested mail action okay, completed</td>
+              </tr>
+              <tr>
+                <td>251</td>
+                <td>User not local; will forward to &lt;forward-path&gt;</td>
+              </tr>
+              <tr>
+                <td>354</td>
+                <td>Start mail input; end with &lt;CRLF&gt;.&lt;CRLF&gt;</td>
+              </tr>
+              <tr>
+                <td>421</td>
+                <td>Service not available, closing transmission channel</td>
+              </tr>
+              <tr>
+                <td>450</td>
+                <td>Requested mail action not taken: mailbox unavailable</td>
+              </tr>
+              <tr>
+                <td>451</td>
+                <td>Requested action aborted: error in processing</td>
+              </tr>
+              <tr>
+                <td>452</td>
+                <td>Requested action not taken: insufficient system storage</td>
+              </tr>
+              <tr>
+                <td>500</td>
+                <td>Syntax error, command unrecognized</td>
+              </tr>
+              <tr>
+                <td>550</td>
+                <td>Requested action not taken: mailbox unavailable</td>
+              </tr>
+              <tr>
+                <td>551</td>
+                <td>User not local; please try &lt;forward-path&gt;</td>
+              </tr>
+              <tr>
+                <td>552</td>
+                <td>
+                  Requested mail action aborted: exceeded storage allocation
+                </td>
+              </tr>
+              <tr>
+                <td>553</td>
+                <td>Requested action not taken: mailbox name not allowed</td>
+              </tr>
+              <tr>
+                <td>554</td>
+                <td>Transaction failed</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 27: Extended SMTP (ESMTP) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Extended SMTP (ESMTP)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              With the increasing use of emails, the original SMTP protocol
+              experienced inadequacies, particularly in terms of the need for
+              authentication, security, and message size. To address these, the
+              Extended SMTP (ESMTP) was designed as an advancement of the
+              original protocol.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>ESMTP introduces several new features:</h3>
+          </div>
+
+          <div class="info-card">
+            <h4>SMTP Authentication (AUTH)</h4>
+            <p>
+              The SMTP Authentication (AUTH) feature allows users to log in
+              before sending emails, which helps to prevent spam and the illicit
+              use of mail servers.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Delivery Status Notifications (DSN)</h4>
+            <p>
+              The Delivery Status Notifications (DSN) allow senders to receive
+              more comprehensive reports on the status of an email, including
+              whether it was delivered, failed, or was delayed.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>8BITMIME Support</h4>
+            <p>
+              The 8BITMIME capability allows for the sending of binary
+              attachments and non-ASCII characters, which was not possible in
+              the original SMTP.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>STARTTLS Command</h4>
+            <p>
+              Users can encrypt their SMTP sessions, which enhances the privacy
+              of emails and protects them from eavesdropping.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>SIZE Extension</h4>
+            <p>
+              The SIZE extension allows servers to specify the maximum message
+              size, which avoids excessively large messages.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Thus, ESMTP improves the security, flexibility, and efficiency of
+              SMTP for the modern internet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 28: Difference Between SMTP and ESMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Difference Between SMTP and Extended SMTP (ESMTP)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>SMTP</th>
+                <th>Extended SMTP (ESMTP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>User Verification</td>
+                <td>No user verification - prone to spam</td>
+                <td>Authentication of sender is supported</td>
+              </tr>
+              <tr>
+                <td>Multimedia Support</td>
+                <td>Cannot attach multimedia without MIME</td>
+                <td>Can attach multimedia files directly</td>
+              </tr>
+              <tr>
+                <td>Email Size</td>
+                <td>Cannot reduce email size</td>
+                <td>Supports size reduction/compression</td>
+              </tr>
+              <tr>
+                <td>Initial Command</td>
+                <td>Starts with HELO command</td>
+                <td>Starts with EHLO (Extended Hello)</td>
+              </tr>
+              <tr>
+                <td>Security</td>
+                <td>Limited security features</td>
+                <td>Enhanced security with STARTTLS</td>
+              </tr>
+              <tr>
+                <td>Extensions</td>
+                <td>No support for extensions</td>
+                <td>Supports various extensions</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              ESMTP is backward compatible with SMTP, and most modern email
+              systems use ESMTP for its enhanced features and security
+              capabilities.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 29: SMTP Architecture and Flow -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SMTP Architecture and Flow</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              SMTP Flow and Architecture. Logical components of SMTP office
+              architecture and systems ensure the office seamlessly passes
+              messages for delivery:
+            </p>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📨</div>
+            <div class="component-info">
+              <h4>Mail User Agent (MUA)</h4>
+              <p>
+                This refers to the end-user applications that individuals
+                utilize to craft, dispatch, and access emails (like Outlook or
+                Thunderbird). It connects to an SMTP server when messages need
+                to be sent.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📤</div>
+            <div class="component-info">
+              <h4>Mail Submission Agent (MSA)</h4>
+              <p>
+                This component accepts messages from the MUA; it performs
+                primary checks to qualify gateway access and ensure the proper
+                configuration of messages. It typically listens on port 587 for
+                incoming submissions.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">🔄</div>
+            <div class="component-info">
+              <h4>Mail Transfer Agent (MTA)</h4>
+              <p>
+                This component is tasked with the responsibility of relaying
+                messages between email servers. By utilizing DNS MX records, the
+                MTA identifies the recipients' email servers.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">📬</div>
+            <div class="component-info">
+              <h4>Mail Delivery Agent (MDA)</h4>
+              <p>
+                The MDA receives messages from the MTA and delivers them to the
+                recipient's mailbox for storage. Later, the MUA retrieves it via
+                the POP3 or IMAP protocols.
+              </p>
+            </div>
+          </div>
+
+          <div class="smtp-component">
+            <div class="component-icon">🌐</div>
+            <div class="component-info">
+              <h4>Mail Gateway</h4>
+              <p>
+                This component connects disparate mail systems or networks. For
+                example, it may transform SMTP messages for networks that do not
+                utilize the TCP/IP protocol.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 30: SMTP Ports and Their Usage -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SMTP Ports and Their Usage</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>SMTP communication typically uses the following ports:</p>
+          </div>
+
+          <table class="port-table">
+            <thead>
+              <tr>
+                <th>Port</th>
+                <th>Purpose</th>
+                <th>Encryption</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>25</td>
+                <td>
+                  Default SMTP port for message relay between mail servers
+                </td>
+                <td>May use STARTTLS</td>
+              </tr>
+              <tr>
+                <td>465</td>
+                <td>SMTP over SSL (SMTPS), used for encrypted communication</td>
+                <td>Implicit SSL</td>
+              </tr>
+              <tr>
+                <td>587</td>
+                <td>
+                  Submission port used by mail clients to send messages securely
+                </td>
+                <td>STARTTLS supported</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              For server-to-server communication, port 25 is the standard, while
+              for email submission, port 587 is preferred due to its spam
+              prevention and security features.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Port 465 was originally assigned for SMTPS (SMTP over SSL), but
+              its use has been deprecated in favor of using STARTTLS on port
+              587. However, some systems still support port 465 for backward
+              compatibility.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 31: Advantages of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advantages of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Simplicity</h4>
+            <p>
+              The implementation and understanding of Simple Mail Transfer
+              Protocol (SMTP) is easy, thus making it a preference for email
+              communication. The design guarantees that there will be no
+              interruptions during the transfer of messages between servers.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Interoperability</h4>
+            <p>
+              SMTP functions and communicates on various platforms, operating
+              systems, and networks, thus ensuring communication between
+              differing email clients and servers across the globe.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Scalability</h4>
+            <p>
+              The protocol works with a variety of customers, which can range
+              from personal accounts to large organizations. It can manage
+              extensive email communication, which is a valuable resource to
+              large organizations.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Error Reporting</h4>
+            <p>
+              SMTP grants users and administrators the ability to understand and
+              rectify problems on message delivery by providing a step-by-step
+              guide on the error.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Extensibility</h4>
+            <p>
+              Enhanced SMTP (ESMTP) has been developed in a way to allow more
+              modern extensions that enhance and diversify many functions. Such
+              functions include authentication, encryption, and message queuing.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Security</h4>
+            <p>
+              The addition of TLS (Transport Layer Security) and authentication
+              mechanisms has allowed SMTP to monitor and secure data.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 32: Disadvantages and Limitations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Disadvantages and Limitations</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Plain Text Transmission</h4>
+            <p>
+              Transmitting emails with no encryption can lead to the loss of
+              sensitive data, as emails can be intercepted. While ESMTP supports
+              encryption, basic SMTP does not.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Spam Issues</h4>
+            <p>
+              SMTP is quite open, and it can be abused by sending unsolicited
+              and spam emails. This has led to the development of various
+              anti-spam techniques and authentication mechanisms.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Limited Message Size</h4>
+            <p>
+              Attachment size limitations occur because many servers impose
+              regulations on large file transfers. This can be problematic when
+              sending large files or multimedia content.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Store-and-Forward Delays</h4>
+            <p>
+              Messages can also be delayed if intermediate mail servers are down
+              or if they are overloaded with messages. This can result in
+              significant delays in email delivery.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>No Built-in Delivery Confirmation</h4>
+            <p>
+              The basic SMTP configuration does not include delivery receipts.
+              Enhanced features like Delivery Status Notification (DSN) must be
+              implemented for confirmation.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Despite these limitations, SMTP remains the foundation of email
+              communication, with continuous improvements addressing many of
+              these issues.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 33: SMTP vs. Other Email Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SMTP vs. Other Email Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>SMTP</th>
+                <th>POP</th>
+                <th>IMAP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Full Form</td>
+                <td>Simple Mail Transfer Protocol</td>
+                <td>Post Office Protocol</td>
+                <td>Internet Message Access Protocol</td>
+              </tr>
+              <tr>
+                <td>Purpose</td>
+                <td>Sending mail</td>
+                <td>Retrieving mail</td>
+                <td>Retrieving mail</td>
+              </tr>
+              <tr>
+                <td>Direction</td>
+                <td>Push protocol</td>
+                <td>Pull protocol</td>
+                <td>Pull protocol</td>
+              </tr>
+              <tr>
+                <td>Works Between</td>
+                <td>Sender's server & recipient's server</td>
+                <td>Receiver & mail server</td>
+                <td>Receiver & mail server</td>
+              </tr>
+              <tr>
+                <td>Mail Storage</td>
+                <td>Does not store mail</td>
+                <td>Downloads all mail</td>
+                <td>Stores mail on server</td>
+              </tr>
+              <tr>
+                <td>Port</td>
+                <td>25</td>
+                <td>110</td>
+                <td>143</td>
+              </tr>
+              <tr>
+                <td>Connection</td>
+                <td>Connection-oriented</td>
+                <td>Connection-oriented</td>
+                <td>Connection-oriented</td>
+              </tr>
+              <tr>
+                <td>Persistence</td>
+                <td>Persistent TCP connection</td>
+                <td>Persistent</td>
+                <td>Persistent</td>
+              </tr>
+              <tr>
+                <td>State</td>
+                <td>Stateless</td>
+                <td>Stateful</td>
+                <td>Stateful</td>
+              </tr>
+              <tr>
+                <td>Used For</td>
+                <td>Sending</td>
+                <td>Receiving</td>
+                <td>Receiving</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              While SMTP is responsible for sending messages, POP3 and IMAP are
+              retrieval protocols. The combination of these protocols forms the
+              foundation of Internet email systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 34: The Future of SMTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">The Future of SMTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Despite being decades old, the Simple Mail Transfer Protocol keeps
+              advancing. New updates cater to security, authentication, and
+              merging with the cloud.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Emerging trends include:</h3>
+          </div>
+
+          <div class="info-card">
+            <h4>Encrypted-by-default Communication</h4>
+            <p>
+              Using TLS for all transmissions will soon become the standard.
+              This will help protect email content from interception and
+              tampering.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>AI-driven Spam Detection</h4>
+            <p>
+              Machine-learning strategies will become the standard for
+              identifying spam. These systems can analyze patterns and behaviors
+              to more accurately identify and filter unwanted emails.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Improved Authentication Protocols</h4>
+            <p>
+              Widespread use of SPF, DKIM, and DMARC is gaining traction. These
+              protocols help verify the authenticity of email senders and
+              prevent spoofing.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Integration with APIs</h4>
+            <p>
+              An increasing number of services offer APIs that are
+              SMTP-compatible for streamlined integration with apps and cloud
+              services.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              With the evolving technology and threats, SMTP will still remain
+              the foundation of electronic mail, adapting to meet new challenges
+              and requirements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 35: Conclusion and FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion and FAQs</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Conclusion</h3>
+            <p>
+              SMTP still facilitates email communication and is the basic
+              framework for the world's electronic communication. The extensible
+              SMTP or ESMTP has increased functionality abilities comprising
+              authentication, encryption, and delivery notifications. This
+              provides enhanced security and expands flexibility.
+            </p>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              1. What is SMTP, and why is it important?
+            </div>
+            <div class="answer">
+              SMTP is the Simple Mail Transfer Protocol. It is the digital
+              communication protocol for email transmission. It is the protocol
+              that specifies the structure of messages and the manner of
+              transfer and relay of messages and servers. It provides the
+              foundation on which dependable electronic mail communication is
+              built.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. How does SMTP work in the email-sending process?
+            </div>
+            <div class="answer">
+              SMTP is sequential and includes the following processes:
+              composition, submission, transfer, reception, and retrieval. A
+              Mail User Agent (MUA) composes and transmits an email through the
+              Mail Submission Agent (MSA) on ports 25 or 587. A Mail Transfer
+              Agent (MTA) relays the email through networks, using DNS MX
+              records, until it arrives at the recipient's Mail Delivery Agent
+              (MDA), which saves the email for retrieval.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              3. What is the difference between SMTP and ESMTP?
+            </div>
+            <div class="answer">
+              ESMTP (Extended SMTP) is an improved variant of SMTP that has
+              additional functionalities like authentication (AUTH), encryption
+              (STARTTLS), control of message size (SIZE), and delivery status
+              notifications (DSN). ESMTP is a more secure, more flexible, and
+              more modern email system.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. Which ports are commonly used in SMTP communication?
+            </div>
+            <div class="answer">
+              SMTP uses three ports. Port 25 is used for mail relay between
+              servers. Port 465 is used for SMTPS (which is encrypted over SSL),
+              and Port 587 is used for secure mail submission that employs
+              STARTTLS. Port 587 is now the primary recommended port for
+              authenticated email sending.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. What are some common advantages and limitations of SMTP?
+            </div>
+            <div class="answer">
+              Some of the advantages are simplicity, interoperability, and
+              scalability; it can also be extended through ESMTP. Some
+              limitations are the lack of built-in encryption, insufficient
+              delivery in case of server downtime, undesired spam, and message
+              size restrictions.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Telnet and SMTP in Computer Networks - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

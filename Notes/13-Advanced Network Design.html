@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Network Design</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      .bit-position {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+      }
+
+      .bit-position-number {
+        width: 30px;
+        height: 30px;
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .bit-position-value {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 5px 10px;
+        min-width: 30px;
+        text-align: center;
+      }
+
+      .bit-position.parity {
+        background-color: #e8f0fe;
+      }
+
+      .bit-position.data {
+        background-color: #f8f9fa;
+      }
+
+      .byte-stuffing-example {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .byte {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 0 5px;
+        min-width: 40px;
+        text-align: center;
+      }
+
+      .byte.flag {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.esc {
+        background-color: #f1c40f;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.stuffed {
+        background-color: #e8f0fe;
+        border: 1px dashed #1a73e8;
+      }
+
+      .error-types {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .error-type {
+        text-align: center;
+        width: 200px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .error-type img {
+        max-width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+
+      .error-type h4 {
+        color: #1a73e8;
+        margin-bottom: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advanced Network Design</h1>
+          <p class="slide-subtitle">
+            Strategic Planning, Implementation, and Optimization of Complex
+            Network Architectures
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://progoffice.com/wp-content/uploads/2015/01/Full_Network.png"
+              alt="Advanced Network Design"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              Advanced Network Design is a multifaceted discipline that lies at
+              the intersection of technology, engineering, and strategic
+              planning, shaping the infrastructural backbone of the digital era.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Objectives -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Learning Objectives</h2>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <ul>
+              <li>
+                Develop scalable network architectures to accommodate growing
+                organizational needs
+              </li>
+              <li>
+                Implement robust security measures to safeguard network
+                integrity and protect against cyber threats
+              </li>
+              <li>
+                Optimize network performance through strategic planning and
+                efficient resource allocation
+              </li>
+              <li>
+                Ensure high availability and reliability of network services
+                through redundancy and failover mechanisms
+              </li>
+              <li>
+                Incorporate emerging technologies such as SDN and IoT to enhance
+                network flexibility and agility
+              </li>
+              <li>
+                Align network designs with organizational goals and objectives
+                to maximize business value and ROI
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Introduction to Advanced Network Design -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Introduction to Advanced Network Design</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Advanced Network Design stands at the forefront of modern
+              information technology, shaping the infrastructural backbone of
+              the digital era. It encompasses the strategic planning,
+              implementation, and optimization of sophisticated network
+              architectures tailored to the unique needs of organizations.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By leveraging cutting-edge technologies such as cloud computing,
+              software-defined networking (SDN), and artificial intelligence
+              (AI), advanced network design empowers organizations to unlock new
+              possibilities, streamline operations, and deliver transformative
+              digital experiences.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Advanced network design is not solely concerned with technical
+              intricacies but also encompasses broader considerations such as
+              regulatory compliance, business continuity, and
+              cost-effectiveness.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Design Issues in Networking -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Design Issues in Networking</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Design Issues in Networking delves into the intricacies and
+              challenges that network designers face when architecting modern
+              network infrastructures. Design decisions can have far-reaching
+              implications on performance, scalability, security, and overall
+              operational efficiency.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Technical Considerations</h4>
+                <ul>
+                  <li>Bandwidth requirements</li>
+                  <li>Latency constraints</li>
+                  <li>Reliability factors</li>
+                  <li>Cost-effectiveness</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Strategic Considerations</h4>
+                <ul>
+                  <li>Regulatory compliance</li>
+                  <li>Business continuity</li>
+                  <li>Future growth planning</li>
+                  <li>Organizational objectives</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Design issues in networking are continually evolving in response
+              to emerging trends, technological advancements, and evolving
+              threats.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Network Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Network Architecture</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network architecture encompasses the structural design of
+              networks, including the arrangement of components, protocols, and
+              communication pathways. It serves as the blueprint for organizing
+              and interconnecting devices, systems, and services.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Network Topologies</h3>
+                <ul>
+                  <li>Star topology</li>
+                  <li>Mesh topology</li>
+                  <li>Ring topology</li>
+                  <li>Hybrid topology</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="text-section">
+                <h3>Network Protocols</h3>
+                <ul>
+                  <li>TCP/IP</li>
+                  <li>Ethernet</li>
+                  <li>MPLS</li>
+                  <li>Wi-Fi standards</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Network architectures must align with organizational goals,
+              support future growth, and adapt to changing business needs while
+              integrating robust security measures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Scalability -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Scalability</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Scalability refers to a network's capacity to handle increased
+              loads and expand without compromising performance or reliability.
+              Designing scalable networks involves strategic planning to ensure
+              that network infrastructures can accommodate future growth.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Factors in Scalable Design</h4>
+            <ul>
+              <li>
+                Modular designs allowing for component addition without
+                significant overhauls
+              </li>
+              <li>
+                Hierarchical network designs with core, distribution, and access
+                layers
+              </li>
+              <li>
+                Cloud computing and virtualization for flexible resource
+                allocation
+              </li>
+              <li>Robust load balancing and fault-tolerance mechanisms</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Effective scalability also involves proactive monitoring and
+              management to anticipate and address potential issues before they
+              impact performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Redundancy and Fault Tolerance -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Redundancy and Fault Tolerance</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Redundancy involves the duplication of critical components or
+              functions within a network to provide a backup in case of failure.
+              Fault tolerance refers to the network's ability to continue
+              functioning correctly even when part of the system fails.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Redundancy Implementation</h4>
+                <ul>
+                  <li>Redundant pathways</li>
+                  <li>Duplicate hardware components</li>
+                  <li>Mirrored systems</li>
+                  <li>Automatic failover systems</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Benefits</h4>
+                <ul>
+                  <li>High availability</li>
+                  <li>Reliability</li>
+                  <li>Minimized downtime</li>
+                  <li>Business continuity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The design of redundancy and fault tolerance must be carefully
+              balanced with cost and complexity considerations, prioritizing
+              resources based on criticality.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Security Considerations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Security Considerations</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Security considerations are paramount in the design of advanced
+              network infrastructures, as networks are increasingly targeted by
+              sophisticated cyber threats. Ensuring robust security involves
+              implementing multiple layers of protection.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Security Measures</h4>
+                <ul>
+                  <li>Firewalls</li>
+                  <li>Intrusion Detection Systems (IDS)</li>
+                  <li>Intrusion Prevention Systems (IPS)</li>
+                  <li>Encryption protocols</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Access Control</h4>
+                <ul>
+                  <li>Role-Based Access Control (RBAC)</li>
+                  <li>Multi-Factor Authentication (MFA)</li>
+                  <li>Network segmentation</li>
+                  <li>Security policies</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Security considerations in network design must also address
+              emerging threats and compliance with regulatory standards such as
+              GDPR, HIPAA, and CCPA.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Connection Management -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Connection Management</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Connection management is a fundamental aspect of advanced network
+              design, playing a crucial role in ensuring efficient, reliable,
+              and secure communication across network infrastructures.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Components</h4>
+            <ul>
+              <li>Establishing connections between devices</li>
+              <li>Maintaining connections for optimal performance</li>
+              <li>Terminating connections when no longer needed</li>
+              <li>
+                Managing connection-oriented vs. connectionless communication
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Effective connection management is vital for optimizing network
+              performance, reducing latency, and enhancing the overall user
+              experience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Establishing Connections -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Establishing Connections</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Establishing connections is a critical initial step in connection
+              management, laying the groundwork for effective communication
+              between networked devices.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>TCP Connection</h4>
+                <p>
+                  Employs a three-way handshake to establish a connection,
+                  ensuring both parties are ready to communicate and agree on
+                  initial parameters.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>UDP Connection</h4>
+                <p>
+                  Takes a connectionless approach, bypassing the need for a
+                  formal connection establishment phase, allowing data to be
+                  sent immediately.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="process-flow">
+            <div class="process-step">SYN</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">SYN-ACK</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">ACK</div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Establishing secure connections is vital in environments where
+              sensitive data is transmitted, using protocols like SSL and TLS to
+              create encrypted channels.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Maintaining Connections -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Maintaining Connections</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Maintaining connections is an essential component of connection
+              management, ensuring the continuity and reliability of established
+              communication channels.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Mechanisms</h4>
+            <ul>
+              <li>Flow control to prevent overwhelming the receiver</li>
+              <li>Congestion control to manage network resources</li>
+              <li>Continuous monitoring and error handling</li>
+              <li>
+                Security measures like session timeouts and re-authentication
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Effective maintenance of connections is crucial for providing a
+              seamless user experience, especially in applications that require
+              persistent and reliable communication.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Terminating Connections -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Terminating Connections</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Terminating connections is the final phase of connection
+              management, involving the proper closure of communication channels
+              to release resources and ensure clean disconnection.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>TCP Connection Termination</h4>
+            <p>
+              TCP uses a four-way handshake process to terminate connections
+              gracefully, ensuring that all data has been transmitted and
+              acknowledged before closing the connection.
+            </p>
+          </div>
+          <div class="process-flow">
+            <div class="process-step">FIN</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">ACK</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">FIN</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">ACK</div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Proper connection termination is essential for efficient resource
+              management and preventing resource leaks in network systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Connection Oriented vs. Connectionless Communication -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">
+            Connection Oriented vs. Connectionless Communication
+          </h2>
+        </div>
+        <div class="slide-content">
+          <div class="comparison-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Connection-oriented (TCP)</th>
+                  <th>Connectionless (UDP)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Connection Setup</td>
+                  <td>Required (three-way handshake)</td>
+                  <td>Not required</td>
+                </tr>
+                <tr>
+                  <td>Reliability</td>
+                  <td>High (guaranteed delivery)</td>
+                  <td>Low (best effort)</td>
+                </tr>
+                <tr>
+                  <td>Ordering</td>
+                  <td>Sequenced delivery</td>
+                  <td>No ordering guarantee</td>
+                </tr>
+                <tr>
+                  <td>Overhead</td>
+                  <td>Higher</td>
+                  <td>Lower</td>
+                </tr>
+                <tr>
+                  <td>Use Cases</td>
+                  <td>File transfers, web browsing, email</td>
+                  <td>Video streaming, online gaming, VoIP</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Choosing between connection-oriented and connectionless
+              communication involves considering the specific requirements of
+              the application and the network environment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: TCP Windows Management -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">TCP Windows Management</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              TCP window management is a critical aspect of advanced network
+              design, playing a vital role in regulating the flow of data
+              between sender and receiver.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Components</h4>
+            <ul>
+              <li>Sliding window protocol for dynamic adjustment</li>
+              <li>Receiver's advertised window size</li>
+              <li>Congestion control mechanisms</li>
+              <li>Flow control to prevent receiver overflow</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Proper TCP window management is essential for maintaining high
+              performance and reliability in data communication, especially in
+              environments with varying network conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: TCP Flow Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">TCP Flow Control</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              TCP flow control is an essential component of TCP window
+              management, designed to prevent data overflow at the receiver's
+              end by regulating the rate of data transmission.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Sliding Window Protocol</h4>
+            <p>
+              Dynamically adjusts the sender's data transmission rate based on
+              feedback from the receiver through the advertised window size,
+              which indicates the amount of data the receiver can currently
+              accept.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Effective TCP flow control is vital for maintaining network
+              stability and performance, particularly in diverse and
+              high-traffic environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: TCP Congestion Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">TCP Congestion Control</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              TCP congestion control is a fundamental aspect of TCP window
+              management, aimed at ensuring the stability and efficiency of data
+              transmission across networks.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Slow Start Algorithm</h4>
+                <p>
+                  Begins with a small congestion window size, increasing
+                  exponentially until a threshold is reached.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Congestion Avoidance</h4>
+                <p>
+                  Incrementally adjusts the window size to avoid saturating the
+                  network after the slow start phase.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Fast retransmit and fast recovery mechanisms help TCP quickly
+              recover from packet loss, maintaining continuity and reliability
+              of data transmission.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Windows Scaling -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Windows Scaling</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Window scaling is a crucial feature of TCP window management that
+              enhances the efficiency and performance of data transmission over
+              high-speed networks.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Addressing TCP Limitations</h4>
+            <p>
+              Traditional TCP window sizes are limited to 16 bits (65,535
+              bytes), which can be a bottleneck in high-speed networks. Window
+              scaling allows TCP to negotiate larger window sizes.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Window scaling is particularly beneficial for applications that
+              require high-speed data transfer, such as large file transfers,
+              streaming media, and data-intensive web applications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: Performance Tuning -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Performance Tuning</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Performance tuning is a critical aspect of TCP window management
+              in advanced network design, aimed at optimizing the performance of
+              TCP connections to achieve maximum efficiency and throughput.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Key Parameters to Tune</h4>
+            <ul>
+              <li>TCP window size</li>
+              <li>Maximum Segment Size (MSS)</li>
+              <li>Maximum Transmission Unit (MTU)</li>
+              <li>Transmission Control Block (TCB) size</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Implementing techniques like selective acknowledgment (SACK), fast
+              retransmit, and congestion control algorithms can further enhance
+              TCP's responsiveness and reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Conclusion</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Advanced Network Design is a critical field in modern information
+              technology, shaping the infrastructure that underpins our digital
+              world. It encompasses a variety of sophisticated techniques and
+              strategies to create networks that are functional, secure,
+              scalable, and resilient.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Key Principles</h4>
+                <ul>
+                  <li>Security</li>
+                  <li>Scalability</li>
+                  <li>Reliability</li>
+                  <li>Performance</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Future Considerations</h4>
+                <ul>
+                  <li>Emerging technologies</li>
+                  <li>Evolving threats</li>
+                  <li>Increasing connectivity</li>
+                  <li>Digital transformation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The ongoing advancements in this field will continue to drive
+              innovation and efficiency, ensuring that network systems are
+              robust enough to handle the challenges of the future.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: Questions and Answers -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Questions and Answers</h2>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q1. What are the key considerations in designing a scalable
+              network architecture?
+            </div>
+            <div class="answer">
+              A1. Key considerations include selecting appropriate network
+              topology (star, mesh, or hybrid), choosing the right network
+              protocols (TCP/IP, Ethernet, MPLS), employing modular designs, and
+              implementing hierarchical network designs with core, distribution,
+              and access layers.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q2. How does network security play a role in advanced network
+              design?
+            </div>
+            <div class="answer">
+              A2. Network security is integral to advanced network design,
+              ensuring the protection of sensitive information and maintaining
+              uninterrupted operation of network services. It involves
+              implementing multiple layers of protection including firewalls,
+              intrusion detection systems, encryption protocols, and access
+              control mechanisms.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q3. What are the main techniques for managing TCP connections in
+              advanced network design?
+            </div>
+            <div class="answer">
+              A3. Main techniques include window management to regulate data
+              flow, flow control to adjust transmission rate based on receiver
+              capacity, and congestion control strategies to prevent network
+              congestion and ensure optimal performance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Advanced Network Design - Strategic Planning and Implementation of
+        Modern Network Infrastructures
+      </p>
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

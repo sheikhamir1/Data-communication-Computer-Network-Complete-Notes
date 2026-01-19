@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routing & Network Layer Protocols - Professional Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 15px;
+        }
+        
+        .slide-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #5f6368;
+        }
+        
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .text-section {
+            margin-bottom: 20px;
+        }
+        
+        .text-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .text-section p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .list-section {
+            margin-bottom: 20px;
+        }
+        
+        .list-section ul {
+            padding-left: 25px;
+        }
+        
+        .list-section li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .highlight-box {
+            background-color: #e8f0fe;
+            border-left: 4px solid #1a73e8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: #0d47a1;
+            transform: scale(1.1);
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: #1a73e8;
+            z-index: 101;
+            transition: width 0.3s ease;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #5f6368;
+            font-size: 0.9rem;
+        }
+        
+        .info-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-card h4 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #e1e8ed;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .qa-pair {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .question {
+            font-weight: 500;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .answer {
+            padding-left: 20px;
+        }
+        
+        .protocol-card {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .protocol-icon {
+            font-size: 2rem;
+            color: #1a73e8;
+            margin-right: 15px;
+            width: 60px;
+            text-align: center;
+        }
+        
+        .protocol-info {
+            flex: 1;
+        }
+        
+        .protocol-info h4 {
+            margin-bottom: 5px;
+            color: #1a73e8;
+        }
+        
+        .frame-structure {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .frame-field {
+            background-color: #e8f0fe;
+            border: 1px solid #1a73e8;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+            flex-grow: 1;
+            min-width: 100px;
+        }
+        
+        .frame-field.primary {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .process-step {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            width: 150px;
+        }
+        
+        .process-arrow {
+            color: #1a73e8;
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+        
+        .bit-position {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .bit-position-number {
+            width: 30px;
+            height: 30px;
+            background-color: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .bit-position-value {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 5px 10px;
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .bit-position.parity {
+            background-color: #e8f0fe;
+        }
+        
+        .bit-position.data {
+            background-color: #f8f9fa;
+        }
+        
+        .byte-stuffing-example {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .byte {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e8ed;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 0 5px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .byte.flag {
+            background-color: #1a73e8;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .byte.esc {
+            background-color: #f1c40f;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .byte.stuffed {
+            background-color: #e8f0fe;
+            border: 1px dashed #1a73e8;
+        }
+        
+        .error-types {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .error-type {
+            text-align: center;
+            width: 200px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .error-type img {
+            max-width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .error-type h4 {
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                bottom: 20px;
+                top: auto;
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator" id="progressBar"></div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="topBtn" title="Go to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="nav-btn" id="downBtn" title="Go to Bottom">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+    
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Routing & Network Layer Protocols</h1>
+                <p class="slide-subtitle">Comprehensive Guide to Network Routing and Protocols</p>
+            </div>
+            <div class="slide-content">
+                <div class="image-container">
+                    <img src="https://cf-assets.www.cloudflare.com/slt3lc6tev37/3g2Hv0frHsql5SFauJL5EG/d8cede7b6a780e63413bd86de9eee7f9/osi_model_network_layer_3.png" alt="Network Routing Concept" style="max-height: 400px;">
+                </div>
+                <div class="highlight-box">
+                    <!-- <p><strong>Last Updated:</strong> 17 Mar 2025</p> -->
+                    <p><strong>Routing</strong> is the process of selecting the best path for data to travel from the source to the destination across a network, managed by network devices called "Routers."</p>
+                </div>
+                <p>This presentation covers the fundamental concepts of routing, routing protocols, and network layer protocols that form the backbone of modern computer networks.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Routing Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing Overview</h2>
+                <p class="slide-subtitle">Understanding the Basics of Network Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Routing?</h3>
+                    <p>Routing is the process of selecting the best path for data to travel from the source (sender) to the destination (receiver) across a network. Directing a data packet to its intended destination is an autonomous operation that is managed by the network devices.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Key Point:</strong> The node in this context refers to a network device known as a "Router."</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Router Functionality</h3>
+                    <ul>
+                        <li>A Router works at the network layer in the OSI model and internet layer in TCP/IP model.</li>
+                        <li>A router is a networking device that forwards the packet based on the information available in the packet header and forwarding table.</li>
+                        <li>The routing algorithms are used for routing the packets.</li>
+                        <li>The routing algorithm is software responsible for deciding the optimal path through which packet can be transmitted.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Routing Metrics</h3>
+                    <p>The routing protocols use the metric to determine the best path for the packet delivery. The metric is the standard of measurement such as hop count, bandwidth, delay, current load on the path, etc. used by the routing algorithm to determine the optimal path to the destination.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Types of Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Types of Routing</h2>
+                <p class="slide-subtitle">Different Approaches to Network Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Routing can be classified into three categories:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>1) Static Routing</h4>
+                    <p>Static Routing is also known as Nonadaptive Routing. It is a technique in which the administrator manually adds the routes in a routing table. A Router can send the packets for the destination along the route defined by the administrator. In this technique, routing decisions are not made based on the condition or topology of the networks.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2) Default Routing</h4>
+                    <p>Default Routing is a technique in which a router is configured to send all the packets to the same hop device, and it doesn't matter whether it belongs to a particular network or not. A Packet is transmitted to the device for which it is configured in default routing.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3) Dynamic Routing</h4>
+                    <p>It is also known as Adaptive Routing. It is a technique in which a router adds a new route in the routing table for each packet in response to the changes in the condition or topology of the network. Dynamic protocols are used to discover the new routes to reach the destination.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The routing algorithm initializes and maintains the routing table for the process of path determination.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Static Routing Details -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Static Routing</h2>
+                <p class="slide-subtitle">Advantages and Disadvantages</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Static Routing</h3>
+                    <p>Static Routing is also known as Nonadaptive Routing. It is a technique in which the administrator manually adds the routes in a routing table. A Router can send the packets for the destination along the route defined by the administrator.</p>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Advantages Of Static Routing</h4>
+                            <ul>
+                                <li><strong>No Overhead:</strong> It has no overhead on the CPU usage of the router. Therefore, the cheaper router can be used to obtain static routing.</li>
+                                <li><strong>Bandwidth:</strong> It has no bandwidth usage between the routers.</li>
+                                <li><strong>Security:</strong> It provides security as the system administrator is allowed only to have control over the routing to a particular network.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Disadvantages of Static Routing</h4>
+                            <ul>
+                                <li>For a large network, it becomes a very difficult task to add each route manually to the routing table.</li>
+                                <li>The system administrator should have a good knowledge of a topology as he has to add each route manually.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Static routing is most suitable for small networks with simple topology and minimal changes in network structure.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Default Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Default Routing</h2>
+                <p class="slide-subtitle">Simplifying Network Configuration</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Default Routing?</h3>
+                    <p>Default Routing is a technique in which a router is configured to send all the packets to the same hop device, and it doesn't matter whether it belongs to a particular network or not. A Packet is transmitted to the device for which it is configured in default routing.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>When to Use Default Routing</h3>
+                    <ul>
+                        <li>Default Routing is used when networks deal with the single exit point.</li>
+                        <li>It is also useful when the bulk of transmission networks have to transmit the data to the same hop device.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Route Selection Priority</h3>
+                    <p>When a specific route is mentioned in the routing table, the router will choose the specific route rather than the default route. The default route is chosen only when a specific route is not mentioned in the routing table.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Default routing simplifies network configuration by providing a path for all traffic that doesn't have a more specific route defined.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Dynamic Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Dynamic Routing</h2>
+                <p class="slide-subtitle">Adaptive Network Path Selection</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Dynamic Routing</h3>
+                    <p>It is also known as Adaptive Routing. It is a technique in which a router adds a new route in the routing table for each packet in response to the changes in the condition or topology of the network.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Dynamic Routing Protocols</h3>
+                    <p>Dynamic protocols are used to discover the new routes to reach the destination. In Dynamic Routing, RIP and OSPF are the protocols used to discover the new routes.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>If any route goes down, then the automatic adjustment will be made to reach the destination.</li>
+                        <li>All the routers must have the same dynamic routing protocol in order to exchange the routes.</li>
+                        <li>If the router discovers any change in the condition or topology, then router broadcast this information to all other routers.</li>
+                    </ul>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Advantages of Dynamic Routing</h4>
+                            <ul>
+                                <li>It is easier to configure.</li>
+                                <li>It is more effective in selecting the best route in response to the changes in the condition or topology.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Disadvantages of Dynamic Routing</h4>
+                            <ul>
+                                <li>It is more expensive in terms of CPU and bandwidth usage.</li>
+                                <li>It is less secure as compared to default and static routing.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Routing Protocols Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing Protocols</h2>
+                <p class="slide-subtitle">Enabling Communication Between Routers</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What are Routing Protocols?</h3>
+                    <p>Protocols Routers use routing protocols to communicate with each other, share routing tables, and find the best routes to send data across the network. These protocols enable the setup and use of dynamic routing, making it possible for a network to automatically adjust to changes like link failures, varying traffic, and the addition of new devices.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Purpose of Routing Protocols</h3>
+                    <p>Routing protocols provide consistent and timely updates to network devices to track and maintain valid paths to a given destination. This ensures the timely delivery of network packets, even with continuous changes to the network paths.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Categories of Routing Protocols</h3>
+                    <p>Routing protocols fall into three main categories:</p>
+                    <ul>
+                        <li>Distance Vector Routing Protocols</li>
+                        <li>Link State Routing Protocols</li>
+                        <li>Path Vector Protocols</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Each category of routing protocol has its own advantages and disadvantages, making them suitable for different network scenarios and requirements.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Distance Vector Routing Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Distance Vector Routing Protocols</h2>
+                <p class="slide-subtitle">Simple but Limited Routing Approach</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Distance Vector Protocols</h3>
+                    <p>Distance vector protocols are called so because they evaluate the routing paths based on distance and hop count. Once every interval, each router communicates the entire routing table to its neighbor routers, which are directly linked.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Distance vector protocols are simplistic and straightforward</li>
+                        <li>They are slower to respond when changes occur</li>
+                        <li>Common protocols: RIP (Routing Information Protocol), IGRP (Interior Gateway Routing Protocol)</li>
+                    </ul>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>Extremely simple to set up</li>
+                                <li>Minimal processing requirements</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>Slow convergence</li>
+                                <li>High susceptibility to routing loops</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Distance vector protocols are best suited for small networks with simple topology where routing changes are infrequent.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Link State Routing Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Link State Routing Protocols</h2>
+                <p class="slide-subtitle">Advanced Routing with Complete Network Knowledge</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Link State Protocols</h3>
+                    <p>Link-state protocols create a complete map of the network by exchanging link-state advertisements between routers. Every router independently figures out the most efficient route to each destination, utilizing something like Dijkstra's SPF (Shortest Path First) algorithm.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>More intricate than the basic protocols</li>
+                        <li>These algorithms provide quicker and more precise routing decisions</li>
+                        <li>Commonly used protocols include OSPF (Open Shortest Path First) and IS-IS (Intermediate System to Intermediate System)</li>
+                    </ul>
+                </div>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>Faster convergence</li>
+                                <li>Scalability</li>
+                                <li>Reliable path selection</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="info-card">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>Increased memory and processing power required</li>
+                                <li>Workload to maintain and update the network's topology</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Link state protocols are ideal for large enterprise networks that require fast convergence and reliable routing decisions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Path Vector Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Path Vector Protocols</h2>
+                <p class="slide-subtitle">Routing Across Autonomous Systems</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Understanding Path Vector Protocols</h3>
+                    <p>For inter-domain routing, especially in large networks like the Internet, path vector protocols are the most utilized. Unlike simpler protocols, these maintain all routing path information, including the order of autonomous systems (AS), to facilitate loop-free routing and intricate policy controls.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Key Characteristics</h3>
+                    <ul>
+                        <li>An example of these protocols is BGP (Border Gateway Protocol), the main protocol that enables internet routing on a global scale</li>
+                        <li>These protocols are considerably scalable and are able to support intricate routing policies</li>
+                        <li>BGP's complexity is in its routing policy management and configuration, in contrast to IGPs (Interior Gateway Protocols)</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Use Cases</h3>
+                    <p>Path vector protocols are primarily used for routing between different autonomous systems, making them essential for internet-scale routing.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>BGP is the de facto standard for internet routing, enabling the global connectivity that defines the modern internet.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Interior vs Exterior Routing Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Interior vs Exterior Routing Protocols</h2>
+                <p class="slide-subtitle">Differentiating Routing Protocol Categories</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Protocols routing protocols are generally divided into two categories: Interior Gateway Protocols and Exterior Gateway Protocols.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Interior Gateway Protocols (IGPs)</h4>
+                    <p>An Interior Gateway Protocol only routes within one autonomous system and handles routes in an organization or enterprise. Common IGPs are RIP, OSPF, IS-IS, and EIGRP.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Exterior Gateway Protocols (EGPs)</h4>
+                    <p>EGPs allow routing between different autonomous systems, handling wide-area and internet-level routing between various systems. BGP (Border Gateway Protocol) is the primary EGP and efficiently handles global routing.</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Interior Gateway Protocols</th>
+                                <th>Exterior Gateway Protocols</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Scope</td>
+                                <td>Within a single autonomous system</td>
+                                <td>Between different autonomous systems</td>
+                            </tr>
+                            <tr>
+                                <td>Complexity</td>
+                                <td>Less complex</td>
+                                <td>More complex</td>
+                            </tr>
+                            <tr>
+                                <td>Examples</td>
+                                <td>RIP, OSPF, IS-IS, EIGRP</td>
+                                <td>BGP</td>
+                            </tr>
+                            <tr>
+                                <td>Use Case</td>
+                                <td>Enterprise networks</td>
+                                <td>Internet routing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Key Routing Protocols - RIP -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Key Routing Protocols: RIP</h2>
+                <p class="slide-subtitle">Routing Information Protocol</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Overview of RIP</h3>
+                    <p>RIP was among the first distance-vector routing protocols. RIP utilizes hop count as the only routing metric. With a maximum hop count of 15, RIP is not scalable, and large networks cannot use it.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Despite being easy to configure and understand, RIP has inefficient convergence and is slow compared to modern protocols</li>
+                        <li>It is now used primarily in small networks or in educational settings</li>
+                        <li>RIP prevents routing loops by implementing a limit on the number of hops allowed in a path from source to destination</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Advantages</h4>
+                    <ul>
+                        <li>Simple to configure and implement</li>
+                        <li>Low resource requirements</li>
+                        <li>Widely supported across different vendor equipment</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Disadvantages</h4>
+                    <ul>
+                        <li>Limited scalability (maximum 15 hops)</li>
+                        <li>Slow convergence time</li>
+                        <li>Only considers hop count, not bandwidth or delay</li>
+                        <li>Consumes more bandwidth than other protocols</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Key Routing Protocols - OSPF -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Key Routing Protocols: OSPF</h2>
+                <p class="slide-subtitle">Open Shortest Path First</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Overview of OSPF</h3>
+                    <p>OSPF is a common link-state routing protocol in enterprise networks. OSPF uses cost (typically derived from bandwidth) as a routing metric.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>OSPF achieves fast convergence and layered designs that help in reducing routing overhead in expansive ecosystems</li>
+                        <li>OSPF is more complex to configure than RIP, but OSPF is more efficient than RIP and appropriate for medium and large-sized networks that need a high level of reliability and scalability</li>
+                        <li>OSPF supports hierarchical routing through the use of areas</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Advantages</h4>
+                    <ul>
+                        <li>Fast convergence</li>
+                        <li>Scalable to large networks</li>
+                        <li>Supports hierarchical routing</li>
+                        <li>Efficient use of bandwidth</li>
+                        <li>Supports variable length subnet masking (VLSM)</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Disadvantages</h4>
+                    <ul>
+                        <li>More complex to configure and understand</li>
+                        <li>Requires more CPU and memory than distance vector protocols</li>
+                        <li>More difficult to troubleshoot</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Key Routing Protocols - EIGRP -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Key Routing Protocols: EIGRP</h2>
+                <p class="slide-subtitle">Enhanced Interior Gateway Routing Protocol</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Overview of EIGRP</h3>
+                    <p>EIGRP is a hybrid protocol developed by Cisco that uses both distance-vector and link-state technologies. It utilizes a composite metric of bandwidth, delay, reliability, and load for determining the best paths.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>EIGRP is also easier to manage than OSPF, balancing performance and simplicity</li>
+                        <li>EIGRP was originally proprietary and is now partially open-standard, but mostly only seen in Cisco environments</li>
+                        <li>EIGRP uses Diffusing Update Algorithm (DUAL) to calculate the shortest path</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Advantages</h4>
+                    <ul>
+                        <li>Fast convergence</li>
+                        <li>Efficient use of bandwidth</li>
+                        <li>Supports multiple network layer protocols</li>
+                        <li>Easy to configure</li>
+                        <li>Supports VLSM and CIDR</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Disadvantages</h4>
+                    <ul>
+                        <li>Cisco proprietary (though now partially open)</li>
+                        <li>More complex than RIP</li>
+                        <li>Not as widely supported as OSPF</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Key Routing Protocols - BGP -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Key Routing Protocols: BGP</h2>
+                <p class="slide-subtitle">Border Gateway Protocol</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Overview of BGP</h3>
+                    <p>BGP is the main protocol of the Internet and is in charge of inter-domain routing. It is a path-vector protocol, routing information between autonomous systems (AS).</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>BGP provides routing determination with path attributes, policies, and AS paths, rather than simple metrics</li>
+                        <li>BGP is highly customizable and scalable, which is needed for global connectivity</li>
+                        <li>It can be a problem if mismanaged, leading to global connectivity issues</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Advantages</h4>
+                    <ul>
+                        <li>Highly scalable</li>
+                        <li>Supports complex routing policies</li>
+                        <li>Reliable and stable</li>
+                        <li>Loop-free path selection</li>
+                        <li>Supports route aggregation</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Disadvantages</h4>
+                    <ul>
+                        <li>Complex configuration</li>
+                        <li>Slow convergence compared to IGPs</li>
+                        <li>Resource intensive</li>
+                        <li>Difficult to troubleshoot</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 16: Routing Loops and Solutions -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing Loops and Solutions</h2>
+                <p class="slide-subtitle">Preventing and Resolving Routing Loops</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>The Problem of Routing Loops</h3>
+                    <p>One serious issue with routing is when routing loops happen and packets of data become trapped in a loop between a finite groups of routers and fail to reach their destination. This issue causes a waste of bandwidth, delays, and, in extreme cases, network congestion.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Causes of Routing Loops</h3>
+                    <ul>
+                        <li>A slow convergence in response to network topology changes</li>
+                        <li>Erroneous route configurations due to human mistakes</li>
+                        <li>Faulty or outdated updates that go back and forth between routers</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li><strong>Split Horizon:</strong> Split horizon is when a router is prevented from re-advertising a route back out of the interface from which it was originally learned. This helps decrease the possibility of loops.</li>
+                        <li><strong>Route Poisoning:</strong> Route poisoning is when a failed route is designated as unreachable, which stops other routers from accessing it and prevents false data from being disseminated.</li>
+                        <li><strong>Hold-Down Timers:</strong> Hold-down timers temporarily prevent route updates from being accepted. This allows the network to stabilize.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>These techniques, among others, help prevent loops and provide reliable routing.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 17: Administrative Distance -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Administrative Distance (AD)</h2>
+                <p class="slide-subtitle">Determining Route Trustworthiness</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Administrative Distance?</h3>
+                    <p>Determining which route should be taken, out of many available with different routing protocols, depends on the routers' Administrative Distance (AD). Essentially, AD is the measure of trust of a routing source.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>How AD Works</h3>
+                    <p>The route is deemed more trustworthy if its value is lower; if multiple routes lead to the same location, the router opts for the one with the lowest Administrative Distance (AD).</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Default AD Values</h4>
+                    <ul>
+                        <li><strong>Directly connected route:</strong> AD = 0 (highest priority, always preferred)</li>
+                        <li><strong>Static route:</strong> AD = 1 (manually configured, very reliable)</li>
+                        <li><strong>EIGRP:</strong> AD = 90 (trusted for internal routing)</li>
+                        <li><strong>OSPF:</strong> AD = 110 (slightly less preferred than EIGRP)</li>
+                        <li><strong>RIP:</strong> AD = 120 (least preferred among common protocols)</li>
+                        <li><strong>Unknown routes:</strong> AD = 255 (considered unreachable)</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Each route is given AD values so that routers can navigate the most trustworthy route without stepping on different routing protocols.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 18: Routing in IPv4 vs IPv6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing in IPv4 vs IPv6</h2>
+                <p class="slide-subtitle">Adapting Routing Protocols for IPv6</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>IPv6 Routing Protocol Evolution</h3>
+                    <p>IPv6 Routing protocols have also been upgraded due to the transition from IPv4 to IPv6. While the fundamental routing principles remain, many protocols have been adapted to the IPv6 network address expansion.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Examples of IPv6-Compatible Protocols</h3>
+                    <ul>
+                        <li><strong>RIPng (RIP next generation):</strong> An IPv6 alternative to RIP that works on the same principles, but expanded addressing.</li>
+                        <li><strong>OSPFv3:</strong> Further refinement of OSPF, particularly for IPv6 routing.</li>
+                        <li><strong>EIGRP for IPv6:</strong> An adaptation of EIGRP by Cisco to cover IPv6 networks.</li>
+                        <li><strong>MP-BGP (Multiprotocol BGP):</strong> BGP is extended to include routing with IPv6 prefixes in addition to the traditional IPv4, and is commonly used for global routing.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Challenges and Benefits</h3>
+                    <p>While the longer addresses and larger routing tables do impose challenges, the improvements that come with IPv6 are more critical. More efficient networks are simpler to manage due to the improved routing scalability.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>The transition to IPv6 requires updates to routing infrastructure but provides significant benefits in terms of address space and network efficiency.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Hierarchical Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Hierarchical Routing</h2>
+                <p class="slide-subtitle">Managing Complexity in Large Networks</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Hierarchical Routing?</h3>
+                    <p>To reduce complexity in large-scale networks, one can adopt hierarchical routing. Instead of handling a single, enormous routing table, the network is sliced vertically into several tiers.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Network Tiers</h3>
+                    <p>For most networks, these tiers include core, distribution, and access. This design ensures that network devices handle a manageable number of routes, which positively impacts network performance and resource scalability.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Benefits of Hierarchical Routing</h3>
+                    <ul>
+                        <li>Reduction of routing table size</li>
+                        <li>Improvement of network scalability</li>
+                        <li>Improved traffic engineering</li>
+                        <li>Better fault isolation</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Example</h3>
+                    <p>To optimize routing and reduce overhead, OSPF utilizes routing areas, which are hierarchical structures, while incorporating a backbone area, stub area, and NSSA.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Hierarchical design results in improved network performance and easier management of large networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 20: Routing in Real-World Scenarios -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing in Real-World Scenarios</h2>
+                <p class="slide-subtitle">Practical Applications of Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Routing strategies vary depending on the type and scale of the network.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>1. Enterprise Networks</h4>
+                    <p>In enterprise networks, large organizations usually adopt a blend of OSPF and EIGRP as internal routing protocols. This is because it offers a good mix of performance and scalability for large organizations. For smaller branch offices, where low overhead, simplicity, and minimal administrative work are the priorities, static routing is often used.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>2. Internet Service Providers (ISPs)</h4>
+                    <p>ISPs depend on BGP, which is routing by exchange, for automated routing control between different ASes. For the BGP to work, ISPs need to maintain several large routing tables and ensure the credible stability and reliability of the Internet while containing several thousand routing prefixes.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>3. Data Centers</h4>
+                    <p>Depending on size and design, data centers might use OSPF, IS-IS, or BGP. There is a strong focus on rapid, low-latency routing, with maintenance of service through redundancy and failover provisions being prioritized.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>4. Home Networks</h4>
+                    <p>Default routes supplied by ISPs are used by home routers. Devices are linked through NAT, and routers are frequently set up to operate in a plug-and-play configuration.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 21: Challenges in Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Challenges in Routing</h2>
+                <p class="slide-subtitle">Modern Network Routing Challenges</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>Modern networks encounter a unique set of adversities that make routing increasingly complicated and imperative.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Scalability</h4>
+                    <p>The growth of networks and the Internet increases routing tables, which in turn increases the demand for memory and computation.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Security</h4>
+                    <p>Randomized routing, such as route hijacking or spoofing, causes disruptive routing attacks. Secure BGP with RPKI is enforced to mitigate such attacks.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Convergence Time</h4>
+                    <p>For applications that demand real-time data, convergence speed is critical, especially for VoIP and video conferencing.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Mobility</h4>
+                    <p>Dynamic topologies in mobile networks and the IoT require more improvements in routing protocols.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Energy Efficiency</h4>
+                    <p>In routing, energy optimization is used as a means to extend the lifetime of devices, particularly in wireless sensor networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 22: Comparison of Routing Types -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Comparison of Static, Default, and Dynamic Routing</h2>
+                <p class="slide-subtitle">Key Differences Between Routing Types</p>
+            </div>
+            <div class="slide-content">
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Static Routing</th>
+                                <th>Default Routing</th>
+                                <th>Dynamic Routing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Configuration</td>
+                                <td>Manual</td>
+                                <td>Manual</td>
+                                <td>Automatic</td>
+                            </tr>
+                            <tr>
+                                <td>Adaptability</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Scalability</td>
+                                <td>Poor</td>
+                                <td>Limited</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>CPU/Memory Usage</td>
+                                <td>Minimal</td>
+                                <td>Low</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Convergence</td>
+                                <td>Not applicable</td>
+                                <td>Limited</td>
+                                <td>Fast</td>
+                            </tr>
+                            <tr>
+                                <td>Security</td>
+                                <td>High</td>
+                                <td>Moderate</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>Best Use Case</td>
+                                <td>Small networks</td>
+                                <td>Single exit point</td>
+                                <td>Large, dynamic networks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Each routing type has its own advantages and disadvantages, making them suitable for different network scenarios and requirements.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 23: Future of Routing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Future of Routing</h2>
+                <p class="slide-subtitle">Emerging Technologies in Network Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <p>The growth of new networking technologies will guide the evolution of routing to meet new expectations, such as:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Software-Defined Networking (SDN)</h4>
+                    <p>Detaches the control plane from the data plane. The ability to implement dynamic and programmable routing is due to centralized controllers managing routing decisions.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Segment Routing (SR)</h4>
+                    <p>Embedding the routing information in the header of the packet simplifies MPLS. State in the network is reduced, and scalability is improved.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Artificial Intelligence and Machine Learning</h4>
+                    <p>Congestion and traffic rerouting are predicted by AI algorithms. It aids in real-time performance optimization.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Quantum Networking</h4>
+                    <p>Still in research, but routing in quantum networks will require entirely new protocols due to quantum entanglement principles.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>These emerging technologies promise to make routing more efficient, scalable, and adaptable to the growing demands of modern networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 24: Routing FAQs -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Routing FAQs</h2>
+                <p class="slide-subtitle">Common Questions About Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="qa-pair">
+                    <div class="question">1. What is routing, and why is it important in networking?</div>
+                    <div class="answer">Routing is defined as determining the most efficient course for data to travel from a point of origin to a destination point across multiple networks. It is executed by routers, which function at the network layer of the OSI and the internet layer of the TCP/IP model.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">2. What are the main types of routing, and how do they differ?</div>
+                    <div class="answer">Routing can be classified into Static, Default, and Dynamic routing.
+                        <ul>
+                            <li><strong>Static Routing:</strong> Static routing is simple, secure, and manually configured by the administrator; however, it is inflexible to changes in the routing network.</li>
+                            <li><strong>Default Routing:</strong> Default Routing sends all unknown packets to a pre-assigned next hop and is suitable for networks that have a single exit point.</li>
+                            <li><strong>Dynamic Routing:</strong> Dynamic Routing is the most flexible of the 3 as it uses the RIP, OSPF, and EIGRP protocols and actively changes path directions, saving to adjust to predetermined routing limits. Dynamic routing is more complex as it consumes more CPU and bandwidth.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">3. How do routing protocols work, and what are their types?</div>
+                    <div class="answer">Routing protocols enable the communication between routers and the management of routing tables. These protocols can be classified as follows:
+                        <ul>
+                            <li><strong>Distance Vector Protocols:</strong> Use metrics such as hop count, e.g., RIP.</li>
+                            <li><strong>Link State Protocols:</strong> Link State protocols. Is able to create a complete graph, ex. OSPF, IS-IS.</li>
+                            <li><strong>Path Vector Protocols:</strong> These keep the path across multiple autonomous systems, e.g., BGP.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">4. What is convergence, and why is it important?</div>
+                    <div class="answer">Convergence refers to the routers in a network synchronizing their routing information following any change. The significance of convergence stems from the fact that fast convergence decreases downtime and loss of packets, vital for real-time services such as VoIP and video conferencing.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">5. What are the future trends in routing?</div>
+                    <div class="answer">The advancement of routing systems is marked by the introduction of Software-Defined Networking (SDN), Segment Routing (SR), AI routing, and quantum networking. These changes provide centralized control, dynamic optimization, and improved scalability, enabling the efficient management of intricate and high-speed networks.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 25: Network Layer Protocols Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Layer Protocols</h2>
+                <p class="slide-subtitle">Overview of Network Layer Protocols</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Network Layer Responsibilities</h3>
+                    <p>The Network Layer is responsible for delivering packets from the source to the destination across multiple networks. It handles logical addressing, routing, and packet forwarding.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>TCP/IP Supported Protocols</h3>
+                    <p>TCP/IP supports the following protocols:</p>
+                    <ul>
+                        <li>ARP (Address Resolution Protocol)</li>
+                        <li>RARP (Reverse Address Resolution Protocol)</li>
+                        <li>ICMP (Internet Control Message Protocol)</li>
+                        <li>IGMP (Internet Group Message Protocol)</li>
+                        <li>IP (Internet Protocol)</li>
+                        <li>DHCP (Dynamic Host Configuration Protocol)</li>
+                        <li>NAT (Network Address Translation)</li>
+                        <li>OSPF (Open Shortest Path First)</li>
+                        <li>RIP (Routing Information Protocol)</li>
+                        <li>BGP (Border Gateway Protocol)</li>
+                        <li>MPLS (Multiprotocol Label Switching)</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Last Updated:</strong> 17 Mar 2025</p>
+                    <p>Each of these protocols plays a specific role in ensuring effective communication across networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 26: ARP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">ARP (Address Resolution Protocol)</h2>
+                <p class="slide-subtitle">Mapping IP Addresses to MAC Addresses</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is ARP?</h3>
+                    <p>ARP (Address Resolution Protocol) is a protocol that helps a computer find the MAC address of another computer or device in the same local network, when it only knows the IP address.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>MAC vs IP Addresses</h3>
+                    <ul>
+                        <li>Each device on the network is recognized by the MAC address imprinted on the NIC.</li>
+                        <li><strong>MAC address:</strong> The MAC address is used to identify the actual device.</li>
+                        <li><strong>IP address:</strong> It is an address used to locate a device on the network.</li>
+                        <li>MAC address can be changed easily.</li>
+                        <li>If the NIC on a particular machine fails, the MAC address changes but IP address does not change.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>ARP Purpose</h3>
+                    <p>ARP is used to find the MAC address of the node when an internet address is known.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>ARP is essential for communication on local networks, as devices need MAC addresses to communicate with each other.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 27: How ARP Works -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">How ARP Works</h2>
+                <p class="slide-subtitle">ARP Operation Process</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>ARP Query Process</h3>
+                    <p>If the host wants to know the physical address of another host on its network, then it sends an ARP query packet that includes the IP address and broadcast it over the network. Every host on the network receives and processes the ARP packet, but only the intended recipient recognizes the IP address and sends back the physical address.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Steps Taken by ARP Protocol</h3>
+                    <p>If a device wants to communicate with another device, the following steps are taken by the device:</p>
+                </div>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <h4>Step 1</h4>
+                        <p>The device will first look at its internet list, called the ARP cache to check whether an IP address contains a matching MAC address or not.</p>
+                    </div>
+                    <div class="process-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="process-step">
+                        <h4>Step 2</h4>
+                        <p>If ARP cache is empty, then device broadcast the message to the entire network asking each device for a matching MAC address.</p>
+                    </div>
+                    <div class="process-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="process-step">
+                        <h4>Step 3</h4>
+                        <p>The device that has the matching IP address will then respond back to the sender with its MAC address.</p>
+                    </div>
+                </div>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <h4>Step 4</h4>
+                        <p>Once the MAC address is received by the device, then the communication can take place between two devices.</p>
+                    </div>
+                    <div class="process-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="process-step">
+                        <h4>Step 5</h4>
+                        <p>If the device receives the MAC address, then the MAC address gets stored in the ARP cache.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>ARP cache is used to make a network more efficient. We can check the ARP cache in command prompt by using a command arp -a.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 28: ARP Entries -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">ARP Entries</h2>
+                <p class="slide-subtitle">Types of ARP Entries</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>ARP Cache</h3>
+                    <p>The host holding the datagram adds the physical address to the cache memory and to the datagram header, then sends back to the sender.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Types of ARP Entries</h3>
+                    <p>There are two types of ARP entries:</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Dynamic Entry</h4>
+                    <p>It is an entry which is created automatically when the sender broadcast its message to the entire network. Dynamic entries are not permanent, and they are removed periodically.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Static Entry</h4>
+                    <p>It is an entry where someone manually enters the IP to MAC address association by using the ARP command utility.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>In the screenshot, we observe the association of IP address to the MAC address in the ARP cache.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>ARP Commands</h3>
+                    <ul>
+                        <li><strong>arp -a:</strong> Displays the current ARP cache table</li>
+                        <li><strong>arp -d:</strong> Deletes an entry from the ARP cache</li>
+                        <li><strong>arp -s:</strong> Adds a static entry to the ARP cache</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 29: RARP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">RARP (Reverse Address Resolution Protocol)</h2>
+                <p class="slide-subtitle">Mapping MAC Addresses to IP Addresses</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is RARP?</h3>
+                    <p>RARP stands for Reverse Address Resolution Protocol. If the host wants to know its IP address, then it broadcast the RARP query packet that contains its physical address to the entire network. A RARP server on the network recognizes the RARP packet and responds back with the host IP address.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>RARP Purpose</h3>
+                    <p>The protocol which is used to obtain the IP address from a server is known as Reverse Address Resolution Protocol.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>RARP Message Format</h3>
+                    <p>The message format of the RARP protocol is similar to the ARP protocol. Like ARP frame, RARP frame is sent from one machine to another encapsulated in the data portion of a frame.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>RARP vs ARP</h3>
+                    <ul>
+                        <li><strong>ARP:</strong> Maps IP address to MAC address</li>
+                        <li><strong>RARP:</strong> Maps MAC address to IP address</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>RARP is now largely obsolete, having been replaced by more advanced protocols like BOOTP and DHCP.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 30: ICMP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">ICMP (Internet Control Message Protocol)</h2>
+                <p class="slide-subtitle">Error Reporting and Diagnostics</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is ICMP?</h3>
+                    <p>ICMP stands for Internet Control Message Protocol. The ICMP is a network layer protocol used by hosts and routers to send the notifications of IP datagram problems back to the sender.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>ICMP Functions</h3>
+                    <ul>
+                        <li>ICMP uses echo test/reply to check whether the destination is reachable and responding.</li>
+                        <li>ICMP handles both control and error messages, but its main function is to report the error but not to correct them.</li>
+                        <li>An IP datagram contains the addresses of both source and destination, but it does not know the address of the previous router through which it has been passed.</li>
+                        <li>Due to this reason, ICMP can only send the messages to the source, but not to the immediate routers.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>ICMP Message Transmission</h3>
+                    <p>ICMP protocol communicates the error messages to the sender. ICMP messages cause the errors to be returned back to the user processes. ICMP messages are transmitted within IP datagram.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>ICMP is an integral part of IP, and all IP implementations must include ICMP.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 31: ICMP Message Format -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">ICMP Message Format</h2>
+                <p class="slide-subtitle">Structure of ICMP Messages</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>ICMP Message Structure</h3>
+                    <p>The Format of an ICMP message includes several fields:</p>
+                </div>
+                
+                <div class="frame-structure">
+                    <div class="frame-field primary">Type</div>
+                    <div class="frame-field primary">Code</div>
+                    <div class="frame-field">Checksum</div>
+                    <div class="frame-field">Rest of Header</div>
+                    <div class="frame-field">Data</div>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Field Descriptions</h3>
+                    <ul>
+                        <li><strong>Type:</strong> The first field specifies the type of the message.</li>
+                        <li><strong>Code:</strong> The second field specifies the reason for a particular message type.</li>
+                        <li><strong>Checksum:</strong> The checksum field covers the entire ICMP message.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Error Reporting</h3>
+                    <p>ICMP protocol reports the error messages to the sender. Five types of errors are handled by the ICMP protocol:</p>
+                    <ul>
+                        <li>Destination unreachable</li>
+                        <li>Source Quench</li>
+                        <li>Time Exceeded</li>
+                        <li>Parameter problems</li>
+                        <li>Redirection</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>ICMP messages are used for network diagnostics and error reporting, but not for error correction.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 32: ICMP Error Types -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">ICMP Error Types</h2>
+                <p class="slide-subtitle">Types of Errors Handled by ICMP</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <h4>Destination Unreachable</h4>
+                    <p>The message of "Destination Unreachable" is sent from receiver to the sender when destination cannot be reached, or packet is discarded when the destination is not reachable.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Source Quench</h4>
+                    <p>The purpose of the source quench message is congestion control. The message sent from the congested router to the source host to reduce the transmission rate. ICMP will take the IP of the discarded packet and then add the source quench message to the IP datagram to inform the source host to reduce its transmission rate.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Time Exceeded</h4>
+                    <p>Time Exceeded is also known as "Time-To-Live". It is a parameter that defines how long a packet should live before it would be discarded.
+                        <ul>
+                            <li>Sometimes packet discarded due to some bad routing implementation, and this causes the looping issue and network congestion.</li>
+                            <li>When destination host does not receive all the fragments in a certain time limit, then the received fragments are also discarded.</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Parameter Problems</h4>
+                    <p>When a router or host discovers any missing value in the IP datagram, the router discards the datagram, and the "parameter problem" message is sent back to the source host.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Redirection</h4>
+                    <p>Redirection message is generated when host consists of a small routing table. When the host consists of a limited number of entries due to which it sends the datagram to a wrong router. The router that receives a datagram will forward a datagram to a correct router and also sends the "Redirection message" to the host to update its routing table.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 33: IGMP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IGMP (Internet Group Message Protocol)</h2>
+                <p class="slide-subtitle">Multicast Group Management</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is IGMP?</h3>
+                    <p>IGMP stands for Internet Group Message Protocol. The IP protocol supports two types of communication:</p>
+                    <ul>
+                        <li><strong>Unicasting:</strong> It is a communication between one sender and one receiver. Therefore, we can say that it is one-to-one communication.</li>
+                        <li><strong>Multicasting:</strong> Sometimes the sender wants to send the same message to a large number of receivers simultaneously. This process is known as multicasting which has one-to-many communication.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>IGMP Purpose</h3>
+                    <ul>
+                        <li>The IGMP protocol is used by the hosts and router to support multicasting.</li>
+                        <li>The IGMP protocol is used by the hosts and router to identify the hosts in a LAN that are the members of a group.</li>
+                        <li>IGMP is a part of the IP layer, and IGMP has a fixed-size message.</li>
+                        <li>The IGMP message is encapsulated within an IP datagram.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>IGMP is essential for efficient multicast communication, allowing routers to determine which hosts are interested in receiving specific multicast traffic.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 34: IGMP Message Format -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IGMP Message Format</h2>
+                <p class="slide-subtitle">Structure of IGMP Messages</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>IGMP Message Structure</h3>
+                    <p>The Format of IGMP message includes several fields:</p>
+                </div>
+                
+                <div class="frame-structure">
+                    <div class="frame-field primary">Type</div>
+                    <div class="frame-field primary">Maximum Response Time</div>
+                    <div class="frame-field">Checksum</div>
+                    <div class="frame-field">Group Address</div>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Field Descriptions</h3>
+                    <ul>
+                        <li><strong>Type:</strong> It determines the type of IGMP message. There are three types of IGMP message: Membership Query, Membership Report and Leave Report.</li>
+                        <li><strong>Maximum Response Time:</strong> This field is used only by the Membership Query message. It determines the maximum time the host can send the Membership Report message in response to the Membership Query message.</li>
+                        <li><strong>Checksum:</strong> It determines the entire payload of the IP datagram in which IGMP message is encapsulated.</li>
+                        <li><strong>Group Address:</strong> The behavior of this field depends on the type of the message sent.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Group Address Behavior</h3>
+                    <ul>
+                        <li>For Membership Query, the group address is set to zero for General Query and set to multicast group address for a specific query.</li>
+                        <li>For Membership Report, the group address is set to the multicast group address.</li>
+                        <li>For Leave Group, it is set to the multicast group address.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 35: IGMP Messages -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IGMP Messages</h2>
+                <p class="slide-subtitle">Types of IGMP Messages</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <h4>Membership Query Message</h4>
+                    <p>This message is sent by a router to all hosts on a local area network to determine the set of all the multicast groups that have been joined by the host. It also determines whether a specific multicast group has been joined by the hosts on an attached interface.</p>
+                    <p>The group address in the query is zero since the router expects one response from a host for every group that contains one or more members on that host.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Membership Report Message</h4>
+                    <p>The host responds to the membership query message with a membership report message.</p>
+                    <p>Membership report messages can also be generated by the host when a host wants to join the multicast group without waiting for a membership query message from the router.</p>
+                    <p>Each membership report message includes the multicast address of a single group that the host wants to join.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Leave Report</h4>
+                    <p>When the host does not send the "Membership Report message", it means that the host has left the group. The host knows that there are no members in the group, so even when it receives the next query, it would not report the group.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>IGMP protocol does not care which host has joined the group or how many hosts are present in a single group. It only cares whether one or more attached hosts belong to a single multicast group.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 36: IGMP Feedback Suppression -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IGMP Feedback Suppression</h2>
+                <p class="slide-subtitle">Optimizing IGMP Performance</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is Feedback Suppression?</h3>
+                    <p>The membership Query message sent by a router also includes a "Maximum Response time". After receiving a membership query message and before sending the membership report message, the host waits for the random amount of time from 0 to the maximum response time.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>How Feedback Suppression Works</h3>
+                    <p>If a host observes that some other attached host has sent the "Maximum Report message", then it discards its "Maximum Report message" as it knows that the attached router already knows that one or more hosts have joined a single multicast group.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Benefits of Feedback Suppression</h3>
+                    <ul>
+                        <li>This process is known as feedback suppression.</li>
+                        <li>It provides the performance optimization, thus avoiding the unnecessary transmission of a "Membership Report message".</li>
+                        <li>Reduces network traffic</li>
+                        <li>Improves efficiency of multicast communication</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Feedback suppression is a key optimization in IGMP that helps reduce unnecessary network traffic and improve overall performance.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 37: IP (Internet Protocol) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IP (Internet Protocol)</h2>
+                <p class="slide-subtitle">The Foundation of Network Communication</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Importance of IP</h3>
+                    <p>While discussing the network layer, we can't fail to mention Internet Protocol (IP) because the other protocols at this layer won't work without IP, since each one depends on IP for addressing and delivery of data across networks.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics of IP</h3>
+                    <ul>
+                        <li><strong>Connectionless protocol:</strong> IP is a connectionless protocol. It doesn't mean communication doesn't take place, only that no dedicated communication path is established. Packets, or datagrams as they are called, are each routed independently.</li>
+                        <li><strong>Best-effort delivery:</strong> IP employs a best-effort delivery. It will try to deliver the data but will not guarantee delivery, and will not sequence the data or correct errors.</li>
+                        <li><strong>Addressing mechanism:</strong> IP can provide addressing. It gives every host and router unique logical addresses, and they may be in the form of IPv4 or IPv6, thus enabling global communication.</li>
+                        <li><strong>Fragmentation and reassembly:</strong> IP must also deal with fragmentation and reassembly of packets. When a datagram is larger than the maximum transmission unit (MTU) of the underlying network. IP is required to break it into smaller packets for transmission, and they are reassembled at the destination.</li>
+                        <li><strong>Routing:</strong> Lastly, routers will route the data using the most appropriate path. They will refer to the IP header to make their decision.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>IP is the foundation of internet communication, providing the addressing and routing mechanisms that enable data to travel across multiple networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 38: IPv4 vs IPv6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">IPv4 vs IPv6</h2>
+                <p class="slide-subtitle">Evolution of Internet Protocol</p>
+            </div>
+            <div class="slide-content">
+                <div class="info-card">
+                    <h4>IPv4 Addressing</h4>
+                    <p>An example of IPv4 is 192.168.1.1, which is a 32-bit address in dotted decimal form. There are approximately 4.3 billion unique addresses. However, due to address exhaustion from the rapid growth of the internet, the need for IPv6 arose.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>IPv6 Addressing</h4>
+                    <p>With 128 bits, the number of IPv6 addresses is nearly limitless. Example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334.</p>
+                    <p>Furthermore, IPv6 improved the efficiency of routing and address space allocation, auto configuration, and added security protocols.</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>IPv4</th>
+                                <th>IPv6</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Address Size</td>
+                                <td>32 bits</td>
+                                <td>128 bits</td>
+                            </tr>
+                            <tr>
+                                <td>Address Format</td>
+                                <td>Dotted decimal (192.168.1.1)</td>
+                                <td>Hexadecimal (2001:0db8:85a3::8a2e:0370:7334)</td>
+                            </tr>
+                            <tr>
+                                <td>Number of Addresses</td>
+                                <td>~4.3 billion</td>
+                                <td>~3.4×10^38</td>
+                            </tr>
+                            <tr>
+                                <td>Configuration</td>
+                                <td>Manual or DHCP</td>
+                                <td>Auto-configuration</td>
+                            </tr>
+                            <tr>
+                                <td>Security</td>
+                                <td>Optional (IPsec)</td>
+                                <td>Built-in (IPsec)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 39: DHCP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">DHCP (Dynamic Host Configuration Protocol)</h2>
+                <p class="slide-subtitle">Automating IP Address Assignment</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is DHCP?</h3>
+                    <p>Although IP gives a device a logical address, it is DHCP that automates the allocation of these network addresses and configuration when a device connects to a network.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>DHCP Functions</h3>
+                    <p>Along with inter-networking parameters like the subnet mask, default gateway, and DNS servers, DHCP automates the allocation of IP addresses. Without DHCP, each host would need to be configured manually, which is arduous in large environments and prone to mistakes.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Working Steps (DORA Process)</h3>
+                </div>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <h4>Discover</h4>
+                        <p>New devices on a network want to join a network and send a DHCP Discover message to find a DHCP server.</p>
+                    </div>
+                    <div class="process-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="process-step">
+                        <h4>Offer</h4>
+                        <p>The server gives a DHCP Offer by providing an available IP address alongside some other settings.</p>
+                    </div>
+                </div>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <h4>Request</h4>
+                        <p>The client replies with a DHCP Request message, confirming they want the offered IP address.</p>
+                    </div>
+                    <div class="process-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="process-step">
+                        <h4>Acknowledgment</h4>
+                        <p>The server responds with a DHCP Acknowledgment (ACK), and the client then adjusts its interface settings.</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>DHCP has become an integral part of networks, improving the ease of management in networks and the reliable and effective connectivity for users.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 40: DHCP Benefits -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">DHCP Benefits</h2>
+                <p class="slide-subtitle">Advantages of Using DHCP</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Key Benefits of DHCP</h3>
+                </div>
+                
+                <div class="info-card">
+                    <h4>IP Management Simplification</h4>
+                    <p>IP Management becomes less of a hassle and more streamlined, easing the burden on the administrators.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>No Duplicate IP Assignments</h4>
+                    <p>No duplicate IP assignments can occur, as DHCP maintains a pool of available addresses and tracks which addresses are in use.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>No Manual Reconfiguration</h4>
+                    <p>No manual reconfiguration is needed within a network, as devices automatically receive their network configuration when they connect.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Centralized Management</h4>
+                    <p>DHCP allows for centralized management of IP addresses and network configuration parameters.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Efficient Use of IP Addresses</h4>
+                    <p>DHCP enables efficient use of a limited pool of IP addresses through leasing and reusing addresses as devices connect and disconnect.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Due to these benefits, DHCP has become an essential protocol in modern networks, from small home networks to large enterprise environments.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 41: NAT Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">NAT (Network Address Translation)</h2>
+                <p class="slide-subtitle">Conserving IP Addresses</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is NAT?</h3>
+                    <p>The internet is ever-expanding, and so is its need for a wider variety of IP addresses (specifically, IPv4 addresses). This created a need for NAT to let multiple private devices use a single public IP address when accessing the internet.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>NAT Definition</h3>
+                    <p>NAT (Network Address Translation) is a networking process that translates private IP addresses used inside a local network into a public IP address before sending data to the internet, and vice versa.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Types of NAT</h3>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Static NAT</h4>
+                    <p>Static NAT establishes a one-to-one relationship between a private and a public IP address.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>Dynamic NAT</h4>
+                    <p>It assigns private IP addresses to a set of available public IP addresses.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>PAT (Port Address Translation)</h4>
+                    <p>It is also called NAT overload - allows many private IP addresses to share one public IP address, each distinguished by a port number.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>NAT has become essential for conserving IPv4 addresses and enabling multiple devices to share a single public IP address.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 42: OSPF Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">OSPF (Open Shortest Path First)</h2>
+                <p class="slide-subtitle">Advanced Intra-Domain Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is OSPF?</h3>
+                    <p>OSPF is an advanced routing protocol that is responsible for ensuring that the data packets take the most optimal routing within a network and across networks.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics of OSPF</h3>
+                    <ul>
+                        <li><strong>Link-state protocol:</strong> distance vector protocols (like RIP) pass summarized data. OSPF shares the details within its area of the network.</li>
+                        <li><strong>Dijkstra's algorithm:</strong> It finds the best and most optimal route for the packet to be transmitted over the network by calculating the most reliable path.</li>
+                        <li><strong>Hierarchical routing:</strong> For hierarchical routing, OSPF streamlines routing and lowers overhead by structuring networks into regions.</li>
+                        <li><strong>Fast convergence:</strong> OSPF guarantees rapid changes in the network by ensuring the system stays available and fails minimally.</li>
+                        <li><strong>Authentication support:</strong> For authentication, OSPF aids in creating secure routing exchanges so that malicious updates are scrubbed.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Benefits of OSPF</h3>
+                    <ul>
+                        <li>Very large and complicated enterprise networks are an optimal fit.</li>
+                        <li>Multiple routes will provide loop-free routing.</li>
+                        <li>Load balancing will be an additional routing spiral and resource use overall.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>OSPF is one of the most widely used interior gateway protocols in large enterprise networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 43: RIP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">RIP (Routing Information Protocol)</h2>
+                <p class="slide-subtitle">Simple Distance-Vector Routing</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Overview of RIP</h3>
+                    <p>Before OSPF became the dominant simple routing protocol, RIP was the leader.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Characteristics of RIP</h3>
+                    <ul>
+                        <li><strong>Distance-vector protocol:</strong> Distance-vector protocol: shared routed tables through neighbours in intervals.</li>
+                        <li><strong>Metric based on hop count:</strong> Its metric is HM for a max of 15 hops. Anything beyond is unreached.</li>
+                        <li><strong>Simple but limited:</strong> Simplistically, it has little in large networks that complexity around slow convergence and its scalability.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>RIP Usage Today</h3>
+                    <p>Still, RIP provides value for teaching, and in smaller networks, its use is justifiable.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>RIP Versions</h3>
+                    <ul>
+                        <li><strong>RIP version 1:</strong> Classful routing protocol</li>
+                        <li><strong>RIP version 2:</strong> Classless routing protocol with support for VLSM and authentication</li>
+                        <li><strong>RIPng:</strong> RIP next generation for IPv6 networks</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>While largely replaced by more advanced protocols, RIP remains important for understanding the fundamentals of distance-vector routing.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 44: BGP Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">BGP (Border Gateway Protocol)</h2>
+                <p class="slide-subtitle">The Protocol of the Internet</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is BGP?</h3>
+                    <p>BGP is the main routing protocol for the worldwide Internet. Its features include path-vector protocol, routing information between autonomous systems (AS), and policy-based routing.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>BGP Features</h3>
+                    <ul>
+                        <li><strong>Path-vector protocol:</strong> BGP uses nodes on a defined path, like AS numbers, to track and report hops.</li>
+                        <li><strong>Inter-domain routing:</strong> BGP is the protocol that connects different Autonomous Systems (AS), making it the protocol of the Internet.</li>
+                        <li><strong>Policy-based routing:</strong> Administrators can define routing policies based on business or performance needs, not just the shortest path.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>BGP Importance</h3>
+                    <p>BGP is highly scalable and is able to support intricate routing policies, which is needed for global connectivity. However, BGP's complexity is in its routing policy management and configuration.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>BGP Message Types</h3>
+                    <ul>
+                        <li><strong>OPEN:</strong> Establishes BGP session</li>
+                        <li><strong>UPDATE:</strong> Advertises routes</li>
+                        <li><strong>NOTIFICATION:</strong> Reports errors</li>
+                        <li><strong>KEEPALIVE:</strong> Maintains session</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>BGP is the protocol that makes the global Internet possible by connecting thousands of autonomous systems.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 45: MPLS Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">MPLS (Multiprotocol Label Switching)</h2>
+                <p class="slide-subtitle">Enhancing Network Performance</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>What is MPLS?</h3>
+                    <p>MPLS (Multiprotocol Label Switching) is not a protocol in the strict sense, but it operates between the network and data link layer, providing enhancements.</p>
+                </div>
+                
+                <div class="text-section">
+                    <h3>How MPLS Works</h3>
+                    <ul>
+                        <li>Rather than just forwarding packets based on the IP address, MPLS also uses labels.</li>
+                        <li>Label Switch Routers (LSRs) use these labels to forward packets, a faster method than the traditional IP lookup.</li>
+                        <li>It forms label-switched paths (LSPs) to promote efficient routing.</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Benefits of MPLS</h3>
+                    <ul>
+                        <li><strong>Quality of Service (QoS):strong> Gives priority to specific traffic types (such as voice or video).</li>
+                        <li><strong>Traffic Engineering:</strong> Improves bandwidth optimization.</li>
+                        <li><strong>VPN Support:</strong> Enhances the performance of Virtual Private Networks (VPNs).</li>
+                        <li><strong>Faster Packet Forwarding:</strong> More efficient than traditional IP routing.</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>MPLS is widely used in service provider networks to improve performance and enable advanced services like VPNs and traffic engineering.</p>
+                </div>
+            </div>
+        </slide>
+        
+        <!-- Slide 46: Comparison of Network Layer Protocols -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Comparison of Network Layer Protocols</h2>
+                <p class="slide-subtitle">Key Differences Between Network Layer Protocols</p>
+            </div>
+            <div class="slide-content">
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Protocol</th>
+                                <th>Purpose</th>
+                                <th>Key Features</th>
+                                <th>Layer Relation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ARP</td>
+                                <td>Maps IP to MAC</td>
+                                <td>Broadcast query, ARP cache</td>
+                                <td>Link ↔ Network</td>
+                            </tr>
+                            <tr>
+                                <td>RARP</td>
+                                <td>Maps MAC to IP</td>
+                                <td>Uses RARP server</td>
+                                <td>Link ↔ Network</td>
+                            </tr>
+                            <tr>
+                                <td>ICMP</td>
+                                <td>Error handling</td>
+                                <td>Reports errors, not corrections</td>
+                                <td>Network</td>
+                            </tr>
+                            <tr>
+                                <td>IGMP</td>
+                                <td>Multicast management</td>
+                                <td>Membership queries & reports</td>
+                                <td>Network</td>
+                            </tr>
+                            <tr>
+                                <td>DHCP</td>
+                                <td>Dynamic IP assignment</td>
+                                <td>DORA process</td>
+                                <td>Application ↔ Network</td>
+                            </tr>
+                            <tr>
+                                <td>NAT</td>
+                                <td>IP conservation</td>
+                                <td>Hides private addresses</td>
+                                <td>Network ↔ Transport</td>
+                            </tr>
+                            <tr>
+                                <td>OSPF</td>
+                                <td>Intra-domain routing</td>
+                                <td>Link-state, Dijkstra</td>
+                                <td>Network</td>
+                            </tr>
+                            <tr>
+                                <td>RIP</td>
+                                <td>Intra-domain routing</td>
+                                <td>Distance-vector, hop count</td>
+                                <td>Network</td>
+                            </tr>
+                            <tr>
+                                <td>BGP</td>
+                                <td>Inter-domain routing</td>
+                                <td>Path-vector, AS-based</td>
+                                <td>Network</td>
+                            </tr>
+                            <tr>
+                                <td>MPLS</td>
+                                <td>Label-based switching</td>
+                                <td>Faster forwarding, QoS</td>
+                                <td>Between Link & Network</td>
+                            </tr>
+                            <tr>
+                                <td>IPsec</td>
+                                <td>Security</td>
+                                <td>Encryption, authentication</td>
+                                <td>Network</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="highlight-box">
+                    <p>Each protocol serves a specific purpose in the network layer, working together to ensure reliable and efficient communication across networks.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 47: Network Layer Protocols FAQs -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Network Layer Protocols FAQs</h2>
+                <p class="slide-subtitle">Common Questions About Network Layer Protocols</p>
+            </div>
+            <div class="slide-content">
+                <div class="qa-pair">
+                    <div class="question">1. What does the network layer do in the TCP/IP model?</div>
+                    <div class="answer">The network layer oversees logical addressing, routing, and the transmission of data packets through various networks. It enables data transmission from the source device to the destination device, even if they are on different networks. The Standards IP, ARP, and ICMP protocols and error handling construct, adding addressing and routing protocols OSPF, RIP, and BGP, compute the optimal routing.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">2. How does ARP differ from RARP?</div>
+                    <div class="answer">ARP (Address Resolution Protocol) assigns a MAC address to an IP address, allowing communications on a local network. In contrast, RARP (Reverse ARP) enables a device that knows only its MAC address to determine its corresponding IP address.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">3. Why is NAT important in networking?</div>
+                    <div class="answer">NAT (Network Address Translation) enables many private devices to use one public IP address to access the internet, preserving valuable IPv4 addresses. NAT also allows scaling networks without the need for additional public IPs.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">4. What is the difference between OSPF, RIP, and BGP?</div>
+                    <div class="answer">OSPF (Open Shortest Path First) is a link-state protocol, which means it is designed for large enterprise networks and is used for routing large networks using Dijkstra's algorithm. RIP (Routing Information Protocol) is a distance-vector protocol that is much simpler and uses hop count as its routing metric, but is very limited in scalability. BGP (Border Gateway Protocol) is a path-vector protocol and is used on the Internet to connect different autonomous systems and facilitate global data routing.</div>
+                </div>
+                
+                <div class="qa-pair">
+                    <div class="question">5. In what ways do the network layer address performance and security issues?</div>
+                    <div class="answer">IPsec is a network protocol that focuses on security by providing encryption, authentication, and integrity checks, and is a critical component of VPNs. In regard to performance, MPLS (Multiprotocol Label Switching) addresses the speed of data on a network and enhances QoS by labeling packets, which allows for efficient routing and prioritization of data packets that need it the most, such as voice or video.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 48: Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Summary</h2>
+                <p class="slide-subtitle">Key Takeaways</p>
+            </div>
+            <div class="slide-content">
+                <div class="text-section">
+                    <h3>Routing Essentials</h3>
+                    <ul>
+                        <li>Routing is the process of selecting the best path for data to travel from source to destination across networks</li>
+                        <li>Three main types of routing: Static, Default, and Dynamic</li>
+                        <li>Routing protocols enable communication between routers and can be categorized as Distance Vector, Link State, and Path Vector</li>
+                        <li>Key routing protocols include RIP, OSPF, EIGRP, and BGP</li>
+                        <li>Routing challenges include scalability, security, convergence time, and mobility</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Network Layer Protocols</h3>
+                    <ul>
+                        <li>ARP maps IP addresses to MAC addresses for local network communication</li>
+                        <li>ICMP handles error reporting and network diagnostics</li>
+                        <li>IGMP manages multicast group membership</li>
+                        <li>IP provides logical addressing and packet forwarding</li>
+                        <li>DHCP automates IP address assignment</li>
+                        <li>NAT conserves IP addresses by translating private to public addresses</li>
+                        <li>OSPF, RIP, and BGP are key routing protocols for different network scenarios</li>
+                        <li>MPLS enhances network performance with label-based switching</li>
+                    </ul>
+                </div>
+                
+                <div class="text-section">
+                    <h3>Future Trends</h3>
+                    <ul>
+                        <li>Software-Defined Networking (SDN) for centralized control</li>
+                        <li>Segment Routing for improved scalability</li>
+                        <li>AI and Machine Learning for traffic optimization</li>
+                        <li>Quantum Networking for revolutionary changes in communication</li>
+                    </ul>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>Final Thought:</strong> Routing and network layer protocols form the backbone of modern network communication, enabling data to travel efficiently across the global internet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <!-- <p>Professional Presentation on Routing & Network Layer Protocols | Last Updated: 17 Mar 2025</p> -->
+    </div>
+    
+    <script>
+        // Navigation functionality
+        document.getElementById('topBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        document.getElementById('downBtn').addEventListener('click', function() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Progress bar functionality
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+        
+        // Add fade-in animation to slides when they come into view
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(20px)';
+            slide.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(slide);
+        });
+    </script>
+</body>
+</html>

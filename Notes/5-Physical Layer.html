@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physical Layer - Data Communication and Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .modulation-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .modulation-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .modulation-info {
+        flex: 1;
+      }
+
+      .modulation-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Physical Layer</h1>
+          <p class="slide-subtitle">
+            The Foundation of Data Communication and Computer Networks
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://www.lifewire.com/thmb/0tWvThahAVRNHDb6Vpw0m7MnD5k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/layers-of-the-osi-model-illustrated-818017-finalv1-2-ct-ed94d33e885a41748071ca15289605c9.png"
+              alt="Physical Layer"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              The Physical Layer serves as the foundational layer in the OSI
+              model, responsible for the transmission and reception of raw bit
+              streams over physical media, forming the bedrock upon which
+              higher-level communication protocols are built.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Physical Layer serves as the foundational layer in the OSI
+              (Open Systems Interconnection) model, playing a crucial role in
+              the realm of Data Communication and Computer Networks. This layer
+              is responsible for the transmission and reception of raw bit
+              streams over a physical medium, ensuring that data sent from one
+              device can be accurately received by another.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              It encompasses various aspects such as the transmission media
+              (both guided, like cables, and unguided, like wireless),
+              transmission modes (simplex, half-duplex, and full-duplex), and
+              modulation techniques that facilitate the encoding of data into
+              transmittable signals.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Additionally, the Physical Layer includes essential switching
+              methods, Integrated Services Digital Networks (ISDN), and terminal
+              handling procedures. Switching methods, such as circuit switching,
+              packet switching, and message switching, determine how data
+              traverses the network, impacting efficiency and reliability.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By addressing these fundamental components, the Physical Layer
+              ensures that data can be reliably communicated over different
+              types of physical networks, forming the bedrock upon which
+              higher-level communication protocols are built.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectives Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Objectives</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              After completing this unit, you will have gained the following
+              abilities:
+            </p>
+          </div>
+          <div class="list-section">
+            <ul>
+              <li>
+                Understand the principles of data transmission using various
+                guided and unguided media.
+              </li>
+              <li>
+                Explore different transmission modes and their applications in
+                network communication.
+              </li>
+              <li>
+                Analyze the efficiency and functionality of circuit, packet, and
+                message switching methods.
+              </li>
+              <li>
+                Gain insights into the architecture and services of Integrated
+                Services Digital Networks (ISDN).
+              </li>
+              <li>
+                Learn about the role and configuration of terminal equipment in
+                network communication.
+              </li>
+              <li>
+                Develop the ability to design and implement robust physical
+                layer solutions for diverse network environments.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to Physical Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Physical Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Physical Layer forms the foundational level of the OSI (Open
+              Systems Interconnection) model, serving as the crucial interface
+              for the transmission of raw data between devices across various
+              types of physical media.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer is responsible for defining the electrical, mechanical,
+              and procedural characteristics necessary for activating,
+              maintaining, and deactivating physical links. It encompasses a
+              variety of transmission methods, including guided media like
+              twisted pair cables and fiber optics, as well as unguided media
+              such as radio waves and microwaves.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              By managing the encoding of data into signals that can traverse
+              these media, the Physical Layer ensures accurate and reliable
+              communication over diverse network infrastructures.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Beyond basic data transmission, the Physical Layer also plays a
+              pivotal role in various switching methods, Integrated Services
+              Digital Networks (ISDN), and terminal handling, making it
+              essential for designing and maintaining robust network systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to Transmission -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Transmission</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Physical Layer is the foundational layer in the OSI (Open
+              Systems Interconnection) model, playing a critical role in data
+              communication and networking. It is responsible for the physical
+              connection between devices, encompassing the hardware components,
+              electrical signals, and transmission media that enable data to be
+              sent and received.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This layer defines the protocols for data encoding, transmission,
+              and reception, ensuring that bits are correctly conveyed from one
+              device to another over various media types. The Physical Layer
+              includes various transmission technologies, modulation techniques,
+              and error detection mechanisms, forming the bedrock for
+              higher-level network functions.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Transmission Media Types</h3>
+            <div class="two-column">
+              <div class="column">
+                <div class="info-card">
+                  <h4>Guided Media</h4>
+                  <ul>
+                    <li>Twisted pair cables</li>
+                    <li>Coaxial cables</li>
+                    <li>Optical fibers</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="column">
+                <div class="info-card">
+                  <h4>Unguided Media</h4>
+                  <ul>
+                    <li>Radio waves</li>
+                    <li>Microwaves</li>
+                    <li>Infrared signals</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Each type of media has its own characteristics and suitability for
+              different environments and applications, impacting overall network
+              performance and reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transmission Modes -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Transmission Modes</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A key aspect of the Physical Layer is the concept of transmission
+              modes, which dictate how data flows between devices. Transmission
+              modes are classified into three main types: simplex, half-duplex,
+              and full-duplex.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Simplex Mode</h4>
+            <p>
+              Communication is unidirectional, meaning data flows in only one
+              direction, such as in a traditional television broadcast.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Half-Duplex Mode</h4>
+            <p>
+              Allows data to flow in both directions, but not simultaneously; an
+              example is a walkie-talkie system where communication alternates
+              between sending and receiving.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Full-Duplex Mode</h4>
+            <p>
+              Enables simultaneous two-way communication, akin to a telephone
+              conversation where both parties can speak and listen at the same
+              time.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Each mode has its specific applications and benefits, with
+              full-duplex providing the highest efficiency for interactive
+              communication. Understanding these modes is crucial for designing
+              effective communication systems tailored to specific needs and
+              operational contexts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modulation Techniques -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Modulation Techniques</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A significant component of the Physical Layer is modulation
+              techniques, which are essential for encoding data into
+              transmittable signals over various media. Modulation involves
+              altering certain properties of a carrier signal—such as amplitude,
+              frequency, or phase—to represent the data being transmitted.
+            </p>
+          </div>
+
+          <div class="modulation-card">
+            <div class="modulation-icon">
+              <i class="fas fa-signal"></i>
+            </div>
+            <div class="modulation-info">
+              <h4>Amplitude Modulation (AM)</h4>
+              <p>
+                Varies the signal's amplitude to encode data, commonly used in
+                radio broadcasting.
+              </p>
+            </div>
+          </div>
+
+          <div class="modulation-card">
+            <div class="modulation-icon">
+              <i class="fas fa-wave-square"></i>
+            </div>
+            <div class="modulation-info">
+              <h4>Frequency Modulation (FM)</h4>
+              <p>
+                Changes the signal's frequency to represent data, providing
+                better noise resistance than AM.
+              </p>
+            </div>
+          </div>
+
+          <div class="modulation-card">
+            <div class="modulation-icon">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <div class="modulation-info">
+              <h4>Phase Modulation (PM)</h4>
+              <p>
+                Alters the phase of the carrier signal to encode data, often
+                used in digital communications.
+              </p>
+            </div>
+          </div>
+
+          <div class="modulation-card">
+            <div class="modulation-icon">
+              <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="modulation-info">
+              <h4>Quadrature Amplitude Modulation (QAM)</h4>
+              <p>
+                Combines amplitude and phase modulation to increase data rates
+                and efficiency.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These techniques are crucial for optimizing data transmission,
+              enhancing signal robustness, and maximizing the efficient use of
+              available bandwidth.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switching Methods -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Switching Methods</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Switching methods are crucial mechanisms in the Physical Layer of
+              data communication and networking, determining how data is
+              directed and managed as it travels across networks. These methods
+              ensure that data packets reach their intended destinations
+              efficiently and reliably.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Circuit Switching</h4>
+            <p>
+              Establishes a dedicated communication path between the sender and
+              receiver for the duration of the session, providing a continuous
+              and exclusive channel for data transmission. This method is akin
+              to traditional telephone networks and is highly reliable for voice
+              communication but can be inefficient for data traffic due to the
+              fixed path allocation.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Packet Switching</h4>
+            <p>
+              Divides data into smaller packets that are routed independently
+              across the network based on the destination address contained in
+              each packet. This method optimizes the use of network resources
+              and is highly efficient for data communication, as it allows
+              multiple packets from different sources to share the same network
+              paths.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Message Switching</h4>
+            <p>
+              Involves storing and forwarding entire messages from one node to
+              another until they reach their final destination. Although less
+              common in modern networks, message switching is used in specific
+              applications where complete message integrity and sequential
+              delivery are critical.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding these switching methods is essential for designing
+              robust and efficient network infrastructures that can handle
+              diverse communication needs and traffic patterns.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Packet Switching -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Packet Switching</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Packet switching is a fundamental switching method in the Physical
+              Layer, particularly vital for the efficient and flexible
+              management of data communication across modern networks. Unlike
+              circuit switching, which establishes a dedicated path for the
+              entire communication session, packet switching divides data into
+              smaller, manageable packets that travel independently through the
+              network.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Each packet is routed based on the destination address it carries,
+              allowing for dynamic and efficient use of network resources. This
+              method optimizes bandwidth utilization and enhances network
+              resilience, as packets can take the most efficient routes and can
+              be rerouted in case of node or link failures.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Connectionless Packet Switching</h4>
+                <p>
+                  Also known as the datagram approach, each packet is treated
+                  independently, with no predetermined path. This method
+                  provides flexibility and robustness, as packets can take any
+                  route to reach the destination.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Connection-Oriented Packet Switching</h4>
+                <p>
+                  Also known as the virtual circuit approach, establishes a
+                  logical path before transmitting packets. This method ensures
+                  that all packets follow the same route, providing more
+                  predictable delivery times.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Packet switching is the backbone of the internet and most local
+              area networks (LANs), supporting protocols such as the Internet
+              Protocol (IP).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message Switching -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Message Switching</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Message switching is a classic method of switching used in the
+              Physical Layer for data communication, characterized by its
+              store-and-forward technique. In message switching, entire messages
+              are transmitted from the source to the destination through a
+              series of intermediate nodes.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Each node receives the complete message, stores it temporarily,
+              and then forwards it to the next node. This process continues
+              until the message reaches its final destination. Unlike packet
+              switching, which breaks data into smaller packets, message
+              switching deals with whole messages, which can vary significantly
+              in size.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Advantages of Message Switching</h3>
+            <ul>
+              <li>
+                Ability to handle large volumes of data with high reliability
+              </li>
+              <li>Ensures message integrity and complete delivery</li>
+              <li>
+                Useful in applications where data integrity is critical (email
+                systems, financial transactions)
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Disadvantages of Message Switching</h3>
+            <ul>
+              <li>Higher latency due to store-and-forward approach</li>
+              <li>Demands significant storage resources at each node</li>
+              <li>
+                Variable delivery times and potential delays under high network
+                load
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding the intricacies of message switching helps network
+              engineers design systems that effectively balance the need for
+              reliable data transmission with the constraints of storage and
+              latency.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Integrated Services Digital Networks -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Integrated Services Digital Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Integrated Services Digital Networks (ISDN) represent a
+              significant advancement in digital communication technology,
+              providing a standardized system for transmitting voice, video, and
+              data over traditional telephone lines.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              ISDN integrates these services into a single network, allowing for
+              the simultaneous transmission of multiple types of data through
+              the same medium. This integration enhances efficiency and
+              flexibility, enabling users to utilize their existing
+              infrastructure for a broad range of communication needs.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Key Features of ISDN</h3>
+            <ul>
+              <li>
+                Higher data rates compared to traditional analog systems (up to
+                128 Kbps in BRI)
+              </li>
+              <li>Digital nature reduces noise and improves signal quality</li>
+              <li>
+                Supports advanced network features like call forwarding, caller
+                ID, and multi-party conferencing
+              </li>
+              <li>
+                Uses two main types of channels: Bearer (B) channels for data
+                and Delta (D) channels for control
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Despite the emergence of newer broadband technologies, ISDN
+              remains a valuable solution in areas where such infrastructures
+              are unavailable, providing a robust and versatile communication
+              platform.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to ISDN -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to ISDN</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Integrated Services Digital Networks (ISDN) is a set of
+              communication standards designed to facilitate the transmission of
+              voice, video, and data over digital telephone lines. Introduced to
+              enhance the capabilities of the traditional analog telephone
+              system, ISDN integrates multiple services into a single digital
+              network.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              This allows for the simultaneous transmission of different types
+              of data, offering improved efficiency and flexibility. ISDN
+              operates through two main types of channels: Bearer (B) channels,
+              which carry the actual data, and Delta (D) channels, which handle
+              control and signaling information.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Basic Rate Interface (BRI)</h4>
+                <p>
+                  Includes two B channels and one D channel (2B+D), allowing
+                  users to perform multiple tasks simultaneously, such as making
+                  phone calls while accessing the internet. Data rates of up to
+                  128 Kbps.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Primary Rate Interface (PRI)</h4>
+                <p>
+                  Provides even higher data rates suitable for larger
+                  organizations and businesses. Offers multiple B channels
+                  (typically 23 or 30) and one D channel, known as 23B+D or
+                  30B+D.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              ISDN's digital nature reduces noise and interference, resulting in
+              clearer voice calls and more reliable data transfers, making it
+              ideal for various applications including video conferencing and
+              remote medical consultations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISDN Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">ISDN Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Integrated Services Digital Networks (ISDN) architecture is a
+              structured framework designed to deliver digital transmission of
+              voice, video, and data over traditional telephone lines. The
+              architecture of ISDN is built around a hierarchical structure
+              consisting of several key components.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Key Components</h3>
+            <ul>
+              <li>
+                <strong>Terminal Equipment (TE):</strong> Devices at the
+                subscriber's end that interface with the network
+              </li>
+              <li>
+                <strong>Network Termination Type 1 (NT1):</strong> Converts
+                digital signals from the ISDN line to a form usable by the
+                subscriber's equipment
+              </li>
+              <li>
+                <strong>Network Termination Type 2 (NT2):</strong> Provides
+                additional networking functions such as multiplexing and routing
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>ISDN Interfaces</h3>
+            <div class="two-column">
+              <div class="column">
+                <div class="info-card">
+                  <h4>Basic Rate Interface (BRI)</h4>
+                  <p>
+                    Designed for home and small business use, providing two 64
+                    Kbps Bearer (B) channels for data transmission and one 16
+                    Kbps Delta (D) channel for signaling and control (2B+D).
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="info-card">
+                  <h4>Primary Rate Interface (PRI)</h4>
+                  <p>
+                    Intended for larger organizations, offering multiple B
+                    channels (typically 23 or 30) and one 64 Kbps D channel,
+                    known as 23B+D or 30B+D depending on the region.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This architecture allows ISDN to support a wide range of services
+              simultaneously, including voice calls, video conferencing, and
+              high-speed internet access.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISDN Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">ISDN Services</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Integrated Services Digital Networks (ISDN) offer a range of
+              services that enable the seamless transmission of voice, video,
+              and data over digital telephone lines. These services leverage the
+              digital nature of ISDN to provide enhanced communication
+              capabilities.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Voice Communication</h4>
+            <p>
+              ISDN supports high-quality voice transmission, offering clear and
+              reliable connections that are free from the noise and interference
+              commonly associated with analog telephone lines. Additionally,
+              ISDN's digital nature allows for the simultaneous transmission of
+              voice and data.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Data Transmission</h4>
+            <p>
+              ISDN's Basic Rate Interface (BRI) typically offers data rates of
+              up to 128 Kbps by combining its two B channels, while the Primary
+              Rate Interface (PRI) provides even higher data rates suitable for
+              larger organizations and businesses.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Advanced Telecommunication Features</h4>
+            <p>
+              ISDN's digital signaling protocol supports advanced features like
+              caller ID, call forwarding, and three-way conferencing, enhancing
+              the overall user experience and providing more versatile
+              communication options.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By leveraging the diverse range of services offered by ISDN,
+              organizations and individuals can enjoy reliable and integrated
+              digital communication solutions that meet their specific needs and
+              requirements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ISDN Channels -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">ISDN Channels</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Integrated Services Digital Networks (ISDN) utilize different
+              types of channels to facilitate the transmission of voice, video,
+              and data over digital telephone lines. These channels are designed
+              to efficiently handle different types of communication needs.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Bearer (B) Channels</h4>
+            <p>
+              B channels carry the actual user data, including voice calls,
+              video transmission, and data transfer. In a Basic Rate Interface
+              (BRI) configuration, two B channels are available, each offering a
+              data rate of 64 Kbps. Users can use these channels independently
+              for different types of communication.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Delta (D) Channels</h4>
+            <p>
+              D channels are responsible for control and signaling functions
+              within the network. They carry signaling information that
+              facilitates call setup, teardown, and other signaling tasks
+              necessary for establishing and maintaining communication sessions.
+              In a BRI configuration, there is typically one D channel with a
+              data rate of 16 Kbps.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Channel Functions</h3>
+            <ul>
+              <li>
+                B channels provide dedicated paths for communication between the
+                sender and receiver
+              </li>
+              <li>
+                D channels manage call routing, providing additional network
+                services such as caller ID and call forwarding
+              </li>
+              <li>
+                The separation of B and D channels allows for efficient network
+                management and control
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding the role of B and D channels within ISDN
+              architecture is essential for designing and implementing effective
+              communication systems that meet the diverse needs of users and
+              organizations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal Handling -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Terminal Handling</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Terminal handling refers to the process of managing and
+              configuring terminal equipment within a network environment,
+              particularly within the context of the Physical Layer. Terminal
+              equipment comprises devices such as computers, printers, modems,
+              and multiplexers that interface with the network to send and
+              receive data.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Effective terminal handling involves ensuring seamless
+              connectivity between these devices and the network infrastructure.
+              This includes tasks such as configuring terminal settings,
+              establishing communication protocols, and managing terminal
+              connections.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Key Aspects of Terminal Handling</h3>
+            <ul>
+              <li>
+                Configuring terminal settings such as baud rate, data format,
+                and flow control parameters
+              </li>
+              <li>
+                Managing terminal interfaces and protocols to ensure
+                compatibility and interoperability
+              </li>
+              <li>
+                Troubleshooting and resolving issues related to terminal
+                equipment
+              </li>
+              <li>
+                Implementing security measures and access controls to protect
+                terminal devices
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Terminal handling plays a crucial role in enabling efficient data
+              transmission and communication across the network, as it ensures
+              that terminal devices can effectively communicate with each other
+              and with the network infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Terminal Equipment -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Data Terminal Equipment</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Data terminal equipment (DTE) refers to devices that serve as
+              endpoints in a data communication system, facilitating the
+              exchange of data with a network. Terminal handling, within the
+              context of DTE, involves the management and configuration of these
+              devices to ensure seamless connectivity and efficient data
+              transmission.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              This encompasses tasks such as configuring communication settings,
+              establishing protocols, and managing connections between DTE
+              devices and network interfaces. Effective terminal handling is
+              essential for optimizing the performance and reliability of data
+              communication systems.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Examples of DTE</h3>
+            <ul>
+              <li>Computers and workstations</li>
+              <li>Printers and scanners</li>
+              <li>Modems and routers</li>
+              <li>Multiplexers and switches</li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Terminal Handling for DTE</h3>
+            <ul>
+              <li>Configuring communication parameters</li>
+              <li>Troubleshooting connection problems</li>
+              <li>Identifying hardware or software faults</li>
+              <li>Implementing corrective measures</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By effectively managing DTE devices, network administrators can
+              ensure that data communication systems operate smoothly and meet
+              the communication needs of users and organizations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal Configuration -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Terminal Configuration</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Terminal configuration refers to the process of setting up and
+              configuring terminal equipment within a network environment to
+              ensure effective communication and data exchange. This process
+              involves adjusting various parameters and settings on terminal
+              devices to match the requirements of the network infrastructure.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Terminal handling plays a critical role in terminal configuration,
+              as it ensures that terminal devices are properly configured and
+              optimized for efficient data transmission.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Configuration Parameters</h3>
+            <ul>
+              <li>Baud rate (speed of data transmission)</li>
+              <li>Data format (number of data bits, stop bits, parity)</li>
+              <li>Flow control settings (hardware or software)</li>
+              <li>Protocol settings (XON/XOFF, RTS/CTS)</li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Terminal Interfaces</h3>
+            <ul>
+              <li>Serial ports (RS-232, RS-485)</li>
+              <li>Ethernet ports</li>
+              <li>Wireless connections</li>
+              <li>USB interfaces</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By effectively configuring terminal equipment, network
+              administrators can optimize network performance, enhance
+              reliability, and ensure secure communication between users and
+              network resources.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terminal Emulation -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Terminal Emulation</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Terminal emulation is a process wherein a device or software
+              program imitates the behavior of another terminal type, allowing
+              it to interact with a network or host system as if it were the
+              emulated terminal.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Terminal handling in the context of terminal emulation involves
+              configuring terminal equipment to mimic the characteristics and
+              capabilities of the emulated terminal. This may include adjusting
+              communication settings, terminal protocols, and interface
+              configurations to ensure seamless compatibility with the network
+              or host system.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Applications of Terminal Emulation</h3>
+            <ul>
+              <li>Connecting modern computers to legacy systems</li>
+              <li>Accessing mainframe applications from personal computers</li>
+              <li>
+                Enabling communication between systems with different terminal
+                types
+              </li>
+              <li>Facilitating remote access to host systems</li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Terminal Emulation Management</h3>
+            <ul>
+              <li>Installing and configuring emulation software</li>
+              <li>Deploying dedicated hardware devices for emulation</li>
+              <li>Troubleshooting compatibility problems</li>
+              <li>Optimizing emulation settings for performance</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By effectively managing terminal emulation, organizations can
+              extend the lifespan of legacy systems, streamline communication
+              processes, and enhance overall productivity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In conclusion, the Physical Layer is a fundamental component of
+              Data Communication and Computer Networks, underpinning the entire
+              structure of network communication. By understanding the various
+              transmission methods, from guided media like cables to unguided
+              media such as wireless signals, we can appreciate the diverse ways
+              data is transmitted across different environments.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The Physical Layer's role in modulating and encoding data ensures
+              that signals are accurately conveyed over various distances and
+              media types. This foundational knowledge is essential for grasping
+              how higher-level protocols operate and interact, making it a
+              critical area of study for anyone involved in network design,
+              implementation, and maintenance.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Furthermore, the exploration of switching methods, Integrated
+              Services Digital Networks (ISDN), and terminal handling within the
+              Physical Layer highlights the complexity and sophistication of
+              modern network systems. Switching methods like circuit, packet,
+              and message switching optimize data flow and network efficiency,
+              while ISDN represents an evolution in integrating multiple
+              services over a single network infrastructure.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              A thorough understanding of these elements equips professionals
+              with the knowledge to design robust, scalable, and efficient
+              network infrastructures, capable of meeting the demands of
+              contemporary communication needs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 1) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions / Answers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 1. What are the primary types of transmission media used
+              in the Physical Layer?
+            </div>
+            <div class="answer">
+              Answer. The primary types of transmission media are guided media
+              (such as twisted pair cables, coaxial cables, and optical fibers)
+              and unguided media (such as radio waves, microwaves, and
+              infrared).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 2. What is the difference between simplex, half-duplex,
+              and full-duplex transmission modes?
+            </div>
+            <div class="answer">
+              Answer. Simplex transmission allows data to flow in only one
+              direction, half-duplex allows data to flow in both directions but
+              not simultaneously, and full-duplex allows data to flow in both
+              directions simultaneously.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 3. How does circuit switching differ from packet
+              switching?
+            </div>
+            <div class="answer">
+              Answer. Circuit switching establishes a dedicated communication
+              path between nodes for the duration of the session, while packet
+              switching divides data into packets that are transmitted over
+              shared network paths and reassembled at the destination.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 4. What are the key features of Integrated Services
+              Digital Networks (ISDN)?
+            </div>
+            <div class="answer">
+              Answer. ISDN provides digital transmission of voice and data over
+              ordinary telephone copper wires, offering higher data rates and
+              supporting multiple services such as voice, video, and text over
+              the same network infrastructure.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 2) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Unit Based Questions / Answers (Continued)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 5. What is the role of terminal equipment in network
+              communication?
+            </div>
+            <div class="answer">
+              Answer. Terminal equipment, including devices like modems and
+              multiplexers, facilitates the sending and receiving of data over
+              the network, ensuring proper conversion and transmission of
+              signals between the network and end-user devices.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 6. Why is modulation important in data transmission at
+              the Physical Layer?
+            </div>
+            <div class="answer">
+              Answer. Modulation is important because it allows data signals to
+              be encoded onto carrier waves, enabling efficient and accurate
+              transmission over various media types and distances, and helping
+              to mitigate issues like signal degradation and interference.
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These questions cover the key concepts from the Physical Layer
+              unit, providing a comprehensive review of transmission media,
+              modes, switching methods, ISDN, and terminal handling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

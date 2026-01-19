@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTTP and SNMP in Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .version-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .version-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .status-code {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .code-number {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 50px;
+        text-align: center;
+      }
+
+      .code-info {
+        flex: 1;
+      }
+
+      .code-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .url-structure {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .url-part {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .url-part.protocol {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .snmp-component {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .component-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .component-info {
+        flex: 1;
+      }
+
+      .component-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .command-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .command-table th,
+      .command-table td {
+        border: 1px solid #e1e8ed;
+        padding: 10px;
+        text-align: left;
+      }
+
+      .command-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .command-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- HTTP Section -->
+
+      <!-- Slide 1: HTTP Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hypertext Transfer Protocol - HTTP</h1>
+          <p class="slide-subtitle">The Foundation of Web Communication</p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://substackcdn.com/image/fetch/$s_!2s7A!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7140c6e1-4315-45cf-8648-d7685219bc6b_1938x1116.png"
+              alt="HTTP Protocol"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              The World Wide Web brings together various web applications that
+              link up through the Hypertext Transfer Protocol, or HTTP. Browsers
+              on computers, apps on phones, and servers all rely on HTTP to swap
+              data and show web pages.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: How HTTP Works -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">How Does HTTP Work?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Hypertext Transfer Protocol, or HTTP, mainly handles the
+              coding and moving of data from a client, such as a web browser, to
+              a server. It acts as the top protocol for sharing info and
+              delivering content online.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              HTTP runs on a request-response pattern. The client starts things
+              off with a request. The server then delivers the resource along
+              with any useful status details. This approach keeps HTTP flexible
+              and able to grow big.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Data can pass through various routers, proxies, or cache servers
+              along the way. Those middle points handle extra tasks, too. They
+              might balance loads, add encryption, squeeze down file sizes, or
+              store copies for faster access.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Cookies in HTTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Cookies in HTTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              HTTP cookies come into play here. Servers send these small data
+              bits to a user's browser. The term web cookies or browser cookies
+              works too. The browser holds onto them and includes them in later
+              requests back to the server.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Sites use this to spot users who come back. It keeps track of
+              session details as well. Cookies fill a gap in HTTP, which is
+              stateless on its own.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              They let sites hold onto user choices, login info, and past
+              actions across visits. In the end, that creates a smoother, more
+              tailored way to browse.
+            </p>
+            <p>
+              HTTP sits at the application level. It depends on lower transport
+              layers like TCP for solid connections. Headers in HTTP shape most
+              of its actions. They control transmission, caching, and
+              compression of data.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Features of HTTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Features of HTTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Connectionless Protocol</h4>
+            <p>
+              HTTP is a connectionless protocol. HTTP client initiates a request
+              and waits for a response from the server. When the server receives
+              the request, the server processes the request and sends back the
+              response to the HTTP client after which the client disconnects the
+              connection. The connection between client and server exist only
+              during the current request and response time only.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Media Independent</h4>
+            <p>
+              HTTP protocol is a media independent as data can be sent as long
+              as both the client and server know how to handle the data content.
+              It is required for both the client and server to specify the
+              content type in MIME-type header.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Stateless</h4>
+            <p>
+              HTTP is a stateless protocol as both the client and server know
+              each other only during the current request. Due to this nature of
+              the protocol, both the client and server do not retain the
+              information between various requests of the web pages.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: History of HTTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">History of HTTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Hypertext Transfer Protocol serves as the base for data exchange
+              on the web. Tim Berners-Lee and his group at CERN came up with it.
+              HTTP has changed a lot over time. Each new version brought better
+              speed, better use of resources, and stronger safety measures.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>HTTP/0.9 (1991)</h4>
+            <p>
+              The first version came out in 1991 as HTTP/0.9. It stayed pretty
+              basic. That setup only handled simple pulls of data. Servers sent
+              plain HTML files straight to browsers back then.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>HTTP/1.0 (1996)</h4>
+            <p>
+              HTTP/1.0 showed up in 1996. People laid it out in RFC 1945. This
+              one added some big things like status codes. Headers came in, too.
+              Content types helped out.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>HTTP/1.1 (1997-1999)</h4>
+            <p>
+              They rolled out HTTP/1.1 between 1997 and 1999. RFC 2068 started
+              it off. Later tweaks happened in RFC 2616. Persistent connections
+              made an appearance here. Transfers could break into segments.
+              Caching got smarter, too.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>HTTP/2 (2015)</h4>
+            <p>
+              HTTP/2 arrived in 2015. RFC 7540 covers it. This version jumped
+              way ahead in performance. Multiplexing lets multiple streams run
+              at once. Headers shrank down with compression. Servers could push
+              content without waiting.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>HTTP/3 (2022)</h4>
+            <p>
+              HTTP/3 started in 2022. It builds on Google's QUIC system. This
+              shifts from TCP to UDP. Connections feel faster and hold up
+              better. Speeds go up across the board. Encryption comes built
+              right in.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: DDoS Attacks Over HTTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Can DDoS Attacks Be Launched Over HTTP?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Yes, Distributed Denial of Service (DDoS) attacks can be executed
+              over the HTTP protocol. You need to keep in mind that HTTP runs
+              statelessly. Every request stands on its own. It does not track
+              what came before.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              The early setup had each request start its own TCP link. Then it
+              would close right after. Actions stayed cut off from each other.
+              HTTP/1.1 changed that pattern. Newer ones built on it, too.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Persistent TCP links let bunches of requests share one connection.
+              That cuts waste for normal use. It boosts how things flow. Still,
+              attackers found ways to twist it against sites.
+            </p>
+            <p>
+              In a DDoS hit, bad actors swamp the target with tons of HTTP
+              requests. This happens up at the application layer in the OSI
+              model. That spot is layer seven. Attacks blend in with regular
+              traffic. Spotting them gets tough that way. Servers burn through
+              resources fast. Responses drag out. Sites can go dark completely
+              in the end.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: HTTP Status Codes -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">HTTP Status Codes</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              HTTP status codes may not be visible to most users, but they play
+              a vital role in website performance, SEO, and user experience.
+              These codes are server responses that tell the browser whether a
+              request was successful, redirected, or failed.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Types of HTTP Status Codes</h3>
+            <p>
+              Each code consists of three digits - the first digit identifies
+              the general range of response:
+            </p>
+            <ul>
+              <li>1xx - Informational: Request received, server processing</li>
+              <li>
+                2xx - Success: The request was successful (for example, 200 OK)
+              </li>
+              <li>
+                3xx - Redirection: The resource has moved to a new location
+              </li>
+              <li>
+                4xx - Client error: The request was incorrect or the page does
+                not exist
+              </li>
+              <li>
+                5xx - Server Error: The server failed to complete a valid
+                request
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Important HTTP status codes from an SEO perspective</h3>
+          </div>
+
+          <div class="status-code">
+            <div class="code-number">200</div>
+            <div class="code-info">
+              <h4>OK</h4>
+              <p>
+                Everything is working correctly. The page loads successfully and
+                is indexed by the search engine.
+              </p>
+            </div>
+          </div>
+
+          <div class="status-code">
+            <div class="code-number">301</div>
+            <div class="code-info">
+              <h4>Permanent Redirect</h4>
+              <p>
+                The page has permanently moved to a new URL. Ideal for
+                maintaining link equity and SEO value.
+              </p>
+            </div>
+          </div>
+
+          <div class="status-code">
+            <div class="code-number">404</div>
+            <div class="code-info">
+              <h4>Not Found</h4>
+              <p>
+                The requested page does not exist. Too many 404 errors can hurt
+                SEO; Redirect deleted pages instead.
+              </p>
+            </div>
+          </div>
+
+          <div class="status-code">
+            <div class="code-number">500</div>
+            <div class="code-info">
+              <h4>Internal Server Error</h4>
+              <p>
+                A server failure prevents the page from loading. Should be
+                corrected immediately.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: HTTP Transactions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">HTTP Transactions</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              An HTTP transaction is basically one full round of back and forth
+              between a client and a server. It starts when something like a web
+              browser on the client side sends out an HTTP request. The server
+              takes that request, handles it, and sends back an HTTP response.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              All of this makes up the core way data moves around in the HTTP
+              protocol. Every single transaction stands alone in a stateless
+              way. That means it does not depend on what came before or what
+              might come after.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              An HTTP transaction is not the same as a connection or a session
+              in HTTP. A transaction just involves that one request paired with
+              its response.
+            </p>
+            <p>
+              But a connection might handle several of those transactions over
+              the same ongoing link. A session, on the other hand, ties multiple
+              transactions together using things like cookies or tokens.
+            </p>
+            <p>
+              Take a user loading up a website, for instance. Their browser
+              kicks off an HTTP transaction with a GET request aimed at the
+              homepage. The server fires back the HTML content they asked for.
+              That wraps up the whole transaction right there. The process
+              repeats for every other piece required to load the page
+              completely.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: HTTP Messages -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">HTTP Messages</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              HTTP messages are of two types: request and response. Both the
+              message types follow the same message format.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Request Message</h4>
+            <p>
+              The request message is sent by the client that consists of a
+              request line, headers, and sometimes a body.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Response Message</h4>
+            <p>
+              The response message is sent by the server to the client that
+              consists of a status line, headers, and sometimes a body.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Both message types follow a specific format that includes a start
+              line, headers, and an optional body. The start line for a request
+              contains the method and URL, while for a response it contains the
+              status code.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: URL Structure -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Uniform Resource Locator (URL)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A URL stands for Uniform Resource Locator and acts as a unique tag
+              for every resource out there on the internet. It works like a
+              digital address to find and reach specific things such as
+              websites, files, or images.
+            </p>
+          </div>
+
+          <div class="url-structure">
+            <div class="url-part protocol">Protocol (https://)</div>
+            <div class="url-part">Domain Name (www.example.com)</div>
+            <div class="url-part">Port (:8080)</div>
+            <div class="url-part">Path (/page)</div>
+            <div class="url-part">Query (?param=value)</div>
+            <div class="url-part">Fragment (#section)</div>
+          </div>
+
+          <div class="text-section">
+            <h3>URL Structure Components</h3>
+            <ul>
+              <li>
+                <strong>Protocol:</strong> Sets how to reach the resource (HTTP,
+                HTTPS, FTP, etc.)
+              </li>
+              <li>
+                <strong>Domain Name:</strong> The unique address of the website
+              </li>
+              <li>
+                <strong>Port:</strong> Defines the network port for the
+                connection (usually hidden; default for HTTP is 80)
+              </li>
+              <li>
+                <strong>Path:</strong> Specifies the exact file or page on the
+                server
+              </li>
+              <li>
+                <strong>Query:</strong> Starts with a question mark (?) and
+                includes parameters that send data to the server
+              </li>
+              <li>
+                <strong>Fragment:</strong> Starts with a hash symbol (#) and
+                indicates a specific section of the web page
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: HTTP/1 vs HTTP/3 -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Key Differences between HTTP/1 and HTTP/3</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              HTTP/3 marks a big step ahead in web speed and safety when you
+              compare it to HTTP/1. It swaps out the old TCP layer for QUIC.
+              QUIC works on UDP and focuses on quickness, dependability, and
+              built-in encryption.
+            </p>
+          </div>
+
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>HTTP/1</th>
+                <th>HTTP/3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Transport Protocol</td>
+                <td>TCP</td>
+                <td>QUIC (based on UDP)</td>
+              </tr>
+              <tr>
+                <td>Connection Setup</td>
+                <td>Multiple round trips for HTTPS</td>
+                <td>Zero-round-trip for secure connections</td>
+              </tr>
+              <tr>
+                <td>Request Handling</td>
+                <td>Sequential, one after another</td>
+                <td>Multiplexed, multiple at once</td>
+              </tr>
+              <tr>
+                <td>Head-of-Line Blocking</td>
+                <td>Yes, blocked by previous requests</td>
+                <td>No, requests don't block each other</td>
+              </tr>
+              <tr>
+                <td>Encryption</td>
+                <td>Optional (TLS)</td>
+                <td>Built-in (TLS 1.3)</td>
+              </tr>
+              <tr>
+                <td>Error Recovery</td>
+                <td>Slower due to TCP's congestion control</td>
+                <td>Faster with QUIC's improved mechanisms</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              HTTP/3's shift to QUIC eliminates head-of-line blocking and
+              provides faster connection setup, making it ideal for modern web
+              applications with multiple resources and security requirements.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Choosing the Right HTTP Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Choosing the Right Protocol: HTTP vs. HTTP/2 vs. HTTP/3
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>HTTP/1 - The Foundation of the Web</h4>
+            <p>
+              HTTP/1 still forms the base for everyday web traffic. It stays
+              simple and steady. It works well for light sites, fixed files, and
+              old setups. Plenty of people browse the web through HTTP/1 and do
+              not even notice. It handles basic file sharing just fine.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>HTTP/2 - Performance for Modern Sites</h4>
+            <p>
+              HTTP/2 fits better for today's busy sites. Developers made it to
+              boost speed on pages full of changing content. It suits online
+              stores, sites with lots of videos, and big business tools. Things
+              like sending multiple streams, shrinking headers, and pushing from
+              the server help a lot.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>HTTP/3 - The Future of Web Communication</h4>
+            <p>
+              HTTP/3 points toward fast and safe web talks in the years ahead.
+              It suits advanced setups that need both quickness and protection.
+              The QUIC base lowers delays. It speeds up how data arrives.
+              Performance stays even across gadgets and connections.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              HTTP/3 shines in advanced use cases like IoT applications,
+              microservices architecture, and web-based VR/AR where reliable,
+              low-latency communication is critical.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Advantages and Disadvantages of HTTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advantages and Disadvantages of HTTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <h3>Advantages</h3>
+              <div class="info-card">
+                <h4>Low Resource Usage</h4>
+                <p>
+                  Minimal memory and CPU are used since fewer connections run at
+                  the same time.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Reduced Network Congestion</h4>
+                <p>
+                  Fewer TCP connections put less strain on the system overall.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Low Latency</h4>
+                <p>
+                  The initial handshake happens just once, avoiding extra delays
+                  for later requests.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Error Reporting</h4>
+                <p>
+                  Issues are reported without shutting down the whole
+                  connection.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <h3>Disadvantages</h3>
+              <div class="info-card">
+                <h4>High Power Usage</h4>
+                <p>
+                  Setting up and keeping communications active demands more
+                  energy and processing.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>No Encryption</h4>
+                <p>
+                  Data travels in plain text and risks getting intercepted.
+                  HTTPS with TLS works better for anything needing protection.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Mobile Network Issues</h4>
+                <p>
+                  Extra overhead on cellular links makes it less suitable for
+                  mobile networks.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Connection Blocking</h4>
+                <p>
+                  The client holds on until data finishes loading, keeping the
+                  server tied up.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: HTTP FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FAQs - HTTP Transactions</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">1. What is an HTTP transaction?</div>
+            <div class="answer">
+              An HTTP transaction is a single exchange between a client and a
+              server. It begins when the client sends an HTTP request to the
+              server. The process ends when the server responds with the
+              requested data or some kind of error message.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. How is an HTTP transaction different from an HTTP connection?
+            </div>
+            <div class="answer">
+              An HTTP transaction involves just one request and one response in
+              total. An HTTP connection can handle multiple transactions over a
+              persistent link that stays open. This approach lets multiple
+              exchanges happen more efficiently.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">3. Why is HTTP considered stateless?</div>
+            <div class="answer">
+              HTTP is considered stateless because each transaction stands alone
+              completely. It does not retain any information about previous
+              interactions with the client. Websites have to use other methods
+              to maintain user state, like login sessions.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. What are the main components of an HTTP transaction?
+            </div>
+            <div class="answer">
+              The first part is the HTTP request sent by the client. It contains
+              details like the method being used, such as GET or POST, along
+              with the requested resource. The second part is the HTTP response
+              sent back by the server.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. Can multiple HTTP transactions occur simultaneously?
+            </div>
+            <div class="answer">
+              Multiple HTTP transactions can occur simultaneously without any
+              issues. Modern browsers and servers handle this kind of
+              concurrency quite well, especially over persistent or multiplexed
+              connections, like those in HTTP/2 and HTTP/3.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SNMP Section -->
+
+      <!-- Slide 15: SNMP Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Simple Network Management Protocol (SNMP)</h1>
+          <p class="slide-subtitle">Monitoring and Managing Network Devices</p>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Simple Network Management Protocol (SNMP) is an application-layer
+              protocol established by the Internet Architecture Board (IAB) and
+              defined in RFC 1157. It enables the exchange of management
+              information between different network devices, forming an
+              important component of the TCP/IP protocol suite.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              SNMP is widely recognized for its role in monitoring and managing
+              network elements such as routers, switches, servers, firewalls,
+              and printers. It allows network administrators to collect
+              performance data, identify issues, and efficiently maintain the
+              overall health of the network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Most professional-grade networking devices come with a built-in
+              SNMP agent, which must be enabled and properly configured to
+              communicate with a network management system (NMS) or monitoring
+              tool.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: SNMP Concept -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SNMP Concept</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>SNMP has two components: Manager and Agent.</p>
+          </div>
+
+          <div class="snmp-component">
+            <div class="component-icon">🖥️</div>
+            <div class="component-info">
+              <h4>SNMP Manager</h4>
+              <p>
+                The SNMP manager, also known as a network management station
+                (NMS), serves as the centralized control system responsible for
+                monitoring and managing devices within a network. It sends
+                requests to agents for data, interprets the responses, and
+                displays the collected information in a user-friendly format.
+              </p>
+            </div>
+          </div>
+
+          <div class="snmp-component">
+            <div class="component-icon">🔧</div>
+            <div class="component-info">
+              <h4>SNMP Agent</h4>
+              <p>
+                The SNMP agent is a software module installed on each managed
+                device, such as a router, switch, printer, or server. It acts as
+                a communicator between the device and the SNMP manager. The
+                agent collects device data, stores it locally in a structured
+                format, and responds to manager queries using SNMP commands.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Management with SNMP has three basic ideas: a manager checks the
+              agent by requesting information, a manager forces the agent to
+              perform certain functions, and an agent warns the manager about
+              unusual conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Management Components -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Management Components</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Management is not achieved only through the SNMP protocol but also
+              the use of other protocols that can cooperate with the SNMP
+              protocol. Management is achieved through the use of the other two
+              protocols: SMI (Structure of management information) and
+              MIB(management information base).
+            </p>
+          </div>
+
+          <div class="snmp-component">
+            <div class="component-icon">📋</div>
+            <div class="component-info">
+              <h4>SMI (Structure of Management Information)</h4>
+              <p>
+                The SMI is a component used in network management. Its main
+                function is to define the type of data that can be stored in an
+                object and to show how to encode the data for the transmission
+                over a network.
+              </p>
+            </div>
+          </div>
+
+          <div class="snmp-component">
+            <div class="component-icon">🗄️</div>
+            <div class="component-info">
+              <h4>MIB (Management Information Base)</h4>
+              <p>
+                The MIB is a second component for the network management. Each
+                agent has its own MIB, which is a collection of all the objects
+                that the manager can manage. MIB is categorized into eight
+                groups: system, interface, address translation, ip, icmp, tcp,
+                udp, and egp.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Management is a combination of SMI, MIB, and SNMP. All these three
+              protocols such as abstract syntax notation 1 (ASN.1) and basic
+              encoding rules (BER).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: SNMP Messages -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SNMP Messages</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              SNMP defines five types of messages: GetRequest, GetNextRequest,
+              SetRequest, GetResponse, and Trap.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>GetRequest</h4>
+            <p>
+              The GetRequest message is sent from a manager (client) to the
+              agent (server) to retrieve the value of a variable.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>GetNextRequest</h4>
+            <p>
+              The GetNextRequest message is sent from the manager to agent to
+              retrieve the value of a variable. This type of message is used to
+              retrieve the values of the entries in a table.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>GetResponse</h4>
+            <p>
+              The GetResponse message is sent from an agent to the manager in
+              response to the GetRequest and GetNextRequest message. This
+              message contains the value of a variable requested by the manager.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>SetRequest</h4>
+            <p>
+              The SetRequest message is sent from a manager to the agent to set
+              a value in a variable.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Trap</h4>
+            <p>
+              The Trap message is sent from an agent to the manager to report an
+              event. For example, if the agent is rebooted, then it informs the
+              manager as well as sends the time of rebooting.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Basic Commands of SNMP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Basic Commands of SNMP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Simple Network Management Protocol (SNMP) is widely used for
+              monitoring and managing network devices due to its straightforward
+              communication process and minimal command set.
+            </p>
+          </div>
+
+          <table class="command-table">
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GET</td>
+                <td>
+                  The SNMP manager uses the GET command to request specific
+                  information from a managed device. It retrieves one or more
+                  values from the device's Management Information Base (MIB).
+                </td>
+              </tr>
+              <tr>
+                <td>GET NEXT</td>
+                <td>
+                  This command works like the GET but retrieves next object
+                  identifier (OID) in the MIB hierarchy, making it useful for
+                  sequentially browsing through the data.
+                </td>
+              </tr>
+              <tr>
+                <td>BULK GET</td>
+                <td>
+                  This command allows the manager to efficiently collect large
+                  amounts of data, especially from wide tables in the MIB.
+                </td>
+              </tr>
+              <tr>
+                <td>SET</td>
+                <td>
+                  This command enables the SNMP manager to modify parameters or
+                  assign new values on a managed device, allowing configuration
+                  changes or controlling operations remotely.
+                </td>
+              </tr>
+              <tr>
+                <td>TRAP</td>
+                <td>
+                  Unlike the manager-initiated commands above, TRAP messages are
+                  sent by SNMP agents to notify the manager about specific
+                  events or issues, such as device failures or limit violations.
+                </td>
+              </tr>
+              <tr>
+                <td>NOTIFY</td>
+                <td>
+                  Similar to TRAP, this command is sent by an agent to alert the
+                  manager about an event, but it also includes an acknowledgment
+                  mechanism to confirm that the manager received the message.
+                </td>
+              </tr>
+              <tr>
+                <td>RESPONSE</td>
+                <td>
+                  This command returns the requested data or the result of a
+                  previously issued command from the agent to the manager.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 20: SNMP Versions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">SNMP Versions</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Since its introduction, the Simple Network Management Protocol
+              (SNMP) has evolved through several versions, each of which
+              improves on the previous version in terms of functionality,
+              performance, and security.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>SNMPv1</h4>
+            <p>
+              The basic version of the SNMP protocol, defined in RFC 1155 and
+              RFC 1157, provides the infrastructure for network management. It
+              uses a simple community-based security model, where devices
+              authenticate with plain-text community strings.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>SNMPv2c</h4>
+            <p>
+              Introduced as an enhancement to SNMPv1, SNMPv2c includes improved
+              protocol handling, additional packet types, and improved error
+              handling. It still relies on the same community-based
+              authentication model as SNMPv1.
+            </p>
+          </div>
+
+          <div class="version-card">
+            <h4>SNMPv3</h4>
+            <p>
+              Defined in multiple RFCs, SNMPv3 adds a much-needed layer of
+              security and remote configuration capabilities. It introduces
+              authentication, encryption, and message integrity, protecting
+              against unauthorized access and data tampering.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Security Models by Version:</h4>
+            <ul>
+              <li>SNMPv1: Community-based security</li>
+              <li>SNMPv2c: Community-based security</li>
+              <li>SNMPv2u: User-based security</li>
+              <li>SNMPv2p: Party-based security</li>
+              <li>
+                SNMPv3: User-based security (with authentication and encryption)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: Why We Need SNMP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Why Do We Need SNMP?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              To understand the importance of SNMP, it helps to look at how
+              network management worked before its development. In the 1970s and
+              early 1980s, corporate networks were small and manually managed.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Administrators relied on the command line interface (CLI) to
+              configure and monitor each device individually. There was no
+              centralized monitoring system (NMS) to track performance or detect
+              failures across multiple equipment.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              As networks expanded rapidly in the late 1980s, they became
+              increasingly complex and business-critical. It was no longer
+              possible to manually manage hundreds of interconnected devices.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Network teams needed a way to:</h3>
+            <ul>
+              <li>Monitor all devices centrally</li>
+              <li>Collect performance data automatically</li>
+              <li>Detect and report failures in real-time</li>
+              <li>Ensure network uptime and reliability</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Recognizing this challenge, the Internet Engineering Task Force
+              (IETF) under the Internet Activities Board (IAB) began developing
+              a universal network management protocol in 1987. The result was
+              SNMP, which was designed to be simple, standardized, and
+              vendor-neutral.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 22: The Idea Behind SNMP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">The Idea Behind SNMP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The basic concept behind Simple Network Management Protocol (SNMP)
+              is that every device connected to a network, whether it's a
+              computer, router, switch, firewall, printer, or access point,
+              shares a common set of operational characteristics.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Each of these devices consists of components such as CPU, memory
+              (RAM), storage (disk), operating system (OS), interfaces, buffers,
+              IP addresses, and even environmental sensors such as temperature
+              monitors.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              SNMP takes advantage of this similarity by representing each
+              characteristic or measurable characteristic of a device as a
+              variable. These variables can then be read or modified remotely,
+              allowing the management system to efficiently monitor and control
+              the equipment.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Each of these variables is uniquely identified by an object
+              identifier (OID), which acts as an address in a hierarchical
+              naming structure. All of these OIDs are organized within a
+              management information base (MIB), a structured database that
+              defines what information can be accessed and managed on each
+              device.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              In short, SNMP provides a standardized way for network
+              administrators to collect information about the status and
+              performance of devices and make configuration changes when
+              necessary.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 23: SNMP FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FAQs - SNMP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              1. What is SNMP, and what purpose does it serve?
+            </div>
+            <div class="answer">
+              SNMP, or Simple Network Management Protocol, is a standard
+              protocol used to monitor and manage network devices over IP
+              networks. It allows administrators to track device performance,
+              detect faults, and maintain network stability. Using SNMP,
+              organizations can manage different devices such as routers,
+              switches, firewalls, and servers from a single monitoring system.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">2. What are the main components of SNMP?</div>
+            <div class="answer">
+              SNMP works through two principal entities, the Manager and the
+              Agent. The manager (network management station) collects
+              information from multiple devices and analyzes their performance.
+              The agent runs on each network device, stores device data in a
+              management information base (MIB), and provides the requested
+              details to the manager.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              3. What types of messages are used in SNMP communication?
+            </div>
+            <div class="answer">
+              SNMP uses specific message types to exchange data between the
+              manager and the agent: GetRequest (used by the manager to get
+              specific data values), GetNextRequest (retrieves the next item in
+              the sequence), SetRequest (allows the manager to change a variable
+              value), GetResponse (sent with the information requested), and
+              Trap (sent automatically by the agent to alert the manager about
+              an incident).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">4. What are the major versions of SNMP?</div>
+            <div class="answer">
+              SNMP has evolved over time into three main versions: SNMPv1 (the
+              first version with a simple structure and community-based
+              authentication), SNMPv2c (enhanced version with improved error
+              reporting and bulk data transfer support), and SNMPv3 (the most
+              secure version, combining authentication, encryption, and message
+              integrity for secure communications).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. What role do MIBs and SMIs play in SNMP?
+            </div>
+            <div class="answer">
+              MIB (Management Information Base) serves as a structured database
+              that defines all the variables or parameters that a manager can
+              monitor or modify on a device. SMI (Structure of Management
+              Information) defines how data should be represented and
+              transmitted in the MIB. Together, they ensure consistent and
+              standardized communication between managers and agents.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              6. Why is SNMP important in modern network management?
+            </div>
+            <div class="answer">
+              SNMP simplifies network administration by offering centralized
+              control and automation. It enables administrators to monitor
+              network devices in real time, identify defects before they affect
+              multiple users, track traffic, bandwidth, and performance metrics,
+              and perform configuration updates remotely. With SNMP, network
+              monitoring is enabled, improving uptime, reliability, and
+              efficiency across all connected systems.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      HTTP and SNMP in Computer Networks - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

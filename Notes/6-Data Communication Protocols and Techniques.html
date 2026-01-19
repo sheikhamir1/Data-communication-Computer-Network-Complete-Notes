@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Communication Protocols and Techniques</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Data Communication Protocols and Techniques
+          </h1>
+          <p class="slide-subtitle">
+            Channel Allocations, LAN Protocols, and ALOHA Protocols
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://psiborg.in/wp-content/uploads/2024/01/IoT-protocols-2.webp"
+              alt="Data Communication Protocols"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              In the vast landscape of data communication protocols and
+              techniques, understanding the allocation of channels, the
+              intricacies of LAN protocols, and the efficiency of ALOHA
+              protocols is fundamental to modern networking systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Channel allocations refer to the methodologies employed to manage
+              the distribution of communication resources within a network,
+              ensuring optimal utilization of available bandwidth. Various
+              techniques such as frequency division multiplexing (FDM), time
+              division multiplexing (TDM), and code division multiplexing (CDM)
+              delineate how channels are apportioned, each offering unique
+              advantages and applications.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              LAN protocols govern the operation of Local Area Networks,
+              delineating the rules for data transmission and reception within a
+              confined geographical area. Prominent examples like Ethernet and
+              Wi-Fi protocols define the standards for wired and wireless
+              communication, playing a pivotal role in modern networking
+              infrastructures.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The ALOHA protocols, including Pure ALOHA and Slotted ALOHA,
+              represent pioneering approaches to random access communication,
+              vital for shared networks where multiple devices contend for
+              access to the transmission medium.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The interplay between channel allocations, LAN protocols, and
+              ALOHA protocols underscores the complexity and sophistication of
+              contemporary data communication systems, forming the backbone of
+              modern data communication infrastructures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectives Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Objectives</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              After completing this unit, you will have gained the following
+              abilities:
+            </p>
+          </div>
+          <div class="list-section">
+            <ul>
+              <li>
+                Understand the principles and mechanisms behind channel
+                allocation methods.
+              </li>
+              <li>
+                Learn the operation and significance of LAN protocols in data
+                communication.
+              </li>
+              <li>
+                Explore the advantages and limitations of ALOHA protocols in
+                shared network environments.
+              </li>
+              <li>
+                Compare and contrast different channel allocation techniques
+                like FDM, TDM, and CDM.
+              </li>
+              <li>
+                Implement LAN protocols such as Ethernet and Wi-Fi to establish
+                efficient local networks.
+              </li>
+              <li>
+                Evaluate the performance and efficiency of Pure ALOHA and
+                Slotted ALOHA protocols in random access communication.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Communication Protocols and Techniques -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Data Communication Protocols and Techniques
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Data Communication Protocols and Techniques form the backbone of
+              modern networking systems, encompassing various methodologies and
+              standards that govern the efficient transmission of data across
+              networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Channel allocations are a critical aspect of data communication
+              protocols, involving the strategic allocation of communication
+              resources to ensure optimal utilization of available bandwidth.
+              Techniques such as Frequency Division Multiplexing (FDM), Time
+              Division Multiplexing (TDM), and Code Division Multiplexing (CDM)
+              delineate how channels are allocated.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              LAN protocols play a pivotal role in facilitating communication
+              within Local Area Networks (LANs), defining the rules for data
+              transmission and reception. Protocols such as Ethernet and Wi-Fi
+              protocols establish standards for wired and wireless
+              communication.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              ALOHA Protocols represent pioneering approaches to random access
+              communication, particularly relevant in shared network
+              environments. The Pure ALOHA and Slotted ALOHA protocols provide
+              solutions for managing contention and ensuring fair access to
+              network resources.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Together, these aspects of Data Communication Protocols and
+              Techniques form a comprehensive framework for efficient and
+              reliable data transmission across diverse networking environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Channel Allocations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Channel Allocations</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Channel allocations are a foundational aspect of data
+              communication protocols, delineating how communication resources
+              are distributed within networks to facilitate efficient data
+              transmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Various methods are employed to allocate channels, each catering
+              to different network architectures and communication requirements:
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-broadcast-tower"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Frequency Division Multiplexing (FDM)</h4>
+              <p>
+                Divides the available frequency spectrum into multiple
+                non-overlapping channels, allowing simultaneous transmission of
+                multiple signals.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Time Division Multiplexing (TDM)</h4>
+              <p>
+                Partitions the transmission medium into time slots, with each
+                channel allocated a specific time interval for data
+                transmission.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-qrcode"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Code Division Multiplexing (CDM)</h4>
+              <p>
+                Utilizes unique codes to multiplex data from multiple channels
+                onto the same frequency band, enabling robust and secure
+                communication in wireless networks.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By implementing appropriate channel allocation techniques, network
+              administrators can optimize bandwidth utilization, mitigate
+              congestion, and enhance overall network performance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to Channel Allocations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Channel Allocations</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Introduction to channel allocations provides a fundamental
+              understanding of how communication resources are managed within
+              networks to ensure efficient data transmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Channel allocation methods are essential for optimizing the
+              utilization of available bandwidth and mitigating congestion in
+              network environments.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Frequency Division Multiplexing (FDM)</h4>
+                <p>
+                  Divides the frequency spectrum into non-overlapping channels,
+                  allowing multiple signals to be transmitted simultaneously
+                  without interference.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Time Division Multiplexing (TDM)</h4>
+                <p>
+                  Partitions the transmission medium into time slots, with each
+                  channel allocated a specific time interval for data
+                  transmission.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h4>Code Division Multiplexing (CDM)</h4>
+            <p>
+              Uses unique codes to multiplex data from multiple channels onto
+              the same frequency band, enabling secure communication in wireless
+              networks.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By grasping the fundamentals of channel allocations, network
+              administrators can make informed decisions regarding the
+              allocation of communication resources to meet the demands of their
+              network infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frequency Division Multiplexing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Frequency Division Multiplexing (FDM)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Frequency Division Multiplexing (FDM) is a key channel allocation
+              technique used in data communication systems to allow multiple
+              signals to share the same transmission medium without
+              interference.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In FDM, the available frequency spectrum is divided into
+              non-overlapping channels, with each channel allocated a specific
+              range of frequencies. This enables multiple signals to be
+              transmitted simultaneously over different frequency bands within
+              the same medium.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Applications of FDM</h3>
+            <ul>
+              <li>Radio broadcasting</li>
+              <li>Cable television systems</li>
+              <li>Telephone networks</li>
+              <li>Broadband internet access</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Advantages of FDM</h3>
+            <ul>
+              <li>Allows multiple signals to be transmitted simultaneously</li>
+              <li>Maintains signal integrity and minimizes interference</li>
+              <li>
+                Each signal can be extracted and demodulated independently
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding the principles and applications of Frequency
+              Division Multiplexing is essential for network engineers and
+              communication specialists tasked with designing and implementing
+              efficient data communication systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time Division Multiplexing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Time Division Multiplexing (TDM)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Time Division Multiplexing (TDM) is a critical channel allocation
+              technique utilized in data communication systems to enable
+              multiple signals to share the same transmission medium by dividing
+              it into distinct time slots.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In TDM, the transmission medium is partitioned into sequential
+              time intervals, with each channel allocated a specific time slot
+              for data transmission. During each time slot, data from a single
+              channel is transmitted, and multiple channels take turns utilizing
+              the transmission medium in a sequential manner.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Applications of TDM</h3>
+            <ul>
+              <li>Digital telephone systems</li>
+              <li>Satellite communication</li>
+              <li>Fiber optic communication</li>
+              <li>Digital audio broadcasting</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Advantages of TDM</h3>
+            <ul>
+              <li>
+                Allows multiple signals to share a common transmission medium
+              </li>
+              <li>
+                Signals are transmitted sequentially without overlapping in time
+              </li>
+              <li>Efficient utilization of the transmission medium</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              TDM is particularly suitable for applications where the data rate
+              of each channel is relatively low compared to the overall capacity
+              of the transmission medium.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Division Multiplexing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Code Division Multiplexing (CDM)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Code Division Multiplexing (CDM) is a sophisticated channel
+              allocation technique employed in data communication systems to
+              allow multiple signals to share the same transmission medium.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Unlike Frequency Division Multiplexing (FDM) and Time Division
+              Multiplexing (TDM), which allocate separate frequency bands or
+              time slots to individual channels, CDM utilizes unique codes to
+              multiplex data from multiple channels onto the same frequency band
+              simultaneously.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Each channel is assigned a distinct code, and the combined signals
+              are transmitted over the shared transmission medium. CDM is
+              commonly used in wireless communication systems, such as CDMA
+              (Code Division Multiple Access) networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Advantages of CDM</h3>
+            <ul>
+              <li>
+                Accommodates multiple signals concurrently while maintaining
+                signal integrity
+              </li>
+              <li>Provides privacy and security through unique codes</li>
+              <li>Protection against eavesdropping and unauthorized access</li>
+              <li>Efficient use of available frequency spectrum</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              CDM is particularly suitable for applications where security and
+              privacy are paramount, making it ideal for wireless communication
+              systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAN Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">LAN Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              LAN Protocols, or Local Area Network Protocols, are essential
+              standards that govern communication within a confined geographical
+              area, typically within a single building or campus.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              These protocols define the rules for how devices communicate with
+              each other over the network, including how data packets are
+              transmitted and received, addressing schemes, error handling, and
+              network management.
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-ethernet"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Ethernet</h4>
+              <p>
+                One of the most widely used LAN protocols, operating on the Data
+                Link Layer of the OSI model and employing techniques such as
+                Carrier Sense Multiple Access with Collision Detection
+                (CSMA/CD).
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Wi-Fi (IEEE 802.11)</h4>
+              <p>
+                A prevalent LAN protocol used for wireless communication within
+                a local area network, defining how devices establish
+                connections, transmit and receive data wirelessly.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding LAN protocols like Ethernet and Wi-Fi is crucial for
+              network administrators and IT professionals responsible for
+              designing, deploying, and managing local area networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to LAN Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to LAN Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Introduction to LAN protocols provides a foundational
+              understanding of the standards and mechanisms governing
+              communication within Local Area Networks (LANs).
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              LAN protocols define the rules and procedures for data
+              transmission and reception among devices connected to the same
+              network infrastructure. These protocols establish the framework
+              for how devices communicate, addressing issues such as data packet
+              format, error detection and correction, and network addressing
+              schemes.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              By adhering to established LAN protocols, devices within a LAN can
+              effectively exchange data, collaborate, and access shared network
+              resources.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Ethernet</h4>
+                <p>
+                  The de facto standard for wired LANs, specifying how devices
+                  access the network medium, manage collisions, and transmit
+                  data packets.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Wi-Fi (IEEE 802.11)</h4>
+                <p>
+                  Governs wireless communication within LANs, defining how
+                  devices connect to the network, authenticate users, and
+                  transmit data wirelessly.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding the fundamentals of LAN protocols is essential for
+              network administrators and IT professionals involved in designing,
+              deploying, and managing LANs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ethernet Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Ethernet Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Ethernet protocol stands as a cornerstone in LAN technology,
+              governing how devices communicate over wired networks. Operating
+              at the Data Link Layer of the OSI model, Ethernet employs various
+              techniques to manage network access and ensure reliable data
+              transmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              One of the key features of Ethernet is its utilization of the
+              Carrier Sense Multiple Access with Collision Detection (CSMA/CD)
+              mechanism, which allows devices to share the network medium by
+              listening for carrier signals before transmitting data. In the
+              event of a collision, CSMA/CD enables devices to detect the
+              collision and subsequently initiate a retransmission process to
+              avoid data loss.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features of Ethernet</h3>
+            <ul>
+              <li>Specifies data packet format and frame structure</li>
+              <li>Defines addressing schemes (MAC addresses)</li>
+              <li>Implements error detection mechanisms</li>
+              <li>Supports different network topologies (bus, star, ring)</li>
+              <li>
+                Offers various speed options (10 Mbps, 100 Mbps, 1 Gbps, 10
+                Gbps)
+              </li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              With its widespread adoption and evolution over the years,
+              Ethernet has become the standard choice for wired LAN deployments
+              in various environments, ranging from small office setups to
+              large-scale enterprise networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wi-Fi Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Wi-Fi Protocol (IEEE 802.11)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Wi-Fi Protocol, based on the IEEE 802.11 standard, is a
+              fundamental LAN protocol that governs wireless communication
+              within Local Area Networks (LANs).
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              It enables devices to connect to a network wirelessly, allowing
+              users to access network resources without the need for physical
+              cables. The Wi-Fi protocol defines how devices establish
+              connections, transmit and receive data, and manage network
+              resources.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Wi-Fi networks operate in the unlicensed 2.4 GHz and 5 GHz
+              frequency bands, utilizing radio frequency signals to transmit
+              data packets between devices. With its widespread adoption and
+              continuous advancements, Wi-Fi has become a ubiquitous technology
+              in various environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Aspects of Wi-Fi</h3>
+            <ul>
+              <li>Network authentication and encryption</li>
+              <li>Data transmission rates</li>
+              <li>
+                Multiple amendments and versions (802.11a, 802.11b, 802.11g,
+                802.11n, 802.11ac, 802.11ax)
+              </li>
+              <li>Flexibility and mobility for users</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding the Wi-Fi protocol is essential for network
+              administrators and IT professionals involved in designing,
+              deploying, and managing wireless LANs.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Token Ring Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Token Ring Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Token Ring Protocol is a LAN protocol that operates on a ring
+              topology, where data packets circulate around the network in a
+              unidirectional manner.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In Token Ring networks, devices are connected in a closed loop,
+              and a special token is passed sequentially from one device to
+              another. Only the device holding the token can transmit data,
+              ensuring orderly access to the network medium and preventing
+              collisions.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              This token passing mechanism regulates access to the network,
+              allowing devices to transmit data when they possess the token and
+              pass it to the next device once transmission is complete.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Features of Token Ring</h3>
+            <ul>
+              <li>
+                Deterministic performance with guaranteed access opportunities
+              </li>
+              <li>Prevents collisions through token passing mechanism</li>
+              <li>Operates at speeds of 4 Mbps and 16 Mbps</li>
+              <li>Uses IBM's proprietary cabling system</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Despite its deterministic nature, Token Ring networks have become
+              less prevalent compared to Ethernet networks due to factors such
+              as higher implementation costs and lower scalability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALOHA Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">ALOHA Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              ALOHA Protocols represent pioneering approaches to random access
+              communication, particularly relevant in shared network
+              environments where multiple devices contend for access to the
+              transmission medium.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The Pure ALOHA protocol, introduced in the late 1960s, allows
+              stations to transmit data packets whenever they have data to send.
+              However, collisions occur if two or more stations transmit
+              simultaneously, leading to packet loss and the need for
+              retransmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              To address this issue, the Slotted ALOHA protocol divides time
+              into discrete slots, with stations only allowed to transmit at the
+              beginning of a slot. This synchronization reduces the likelihood
+              of collisions, improving the overall efficiency of the network.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Pure ALOHA</h4>
+                <p>
+                  Stations transmit data whenever they have information to send,
+                  without coordination with other stations.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Slotted ALOHA</h4>
+                <p>
+                  Time is divided into discrete slots, and stations can only
+                  transmit at the beginning of each slot.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding ALOHA Protocols is crucial for network engineers and
+              communication specialists tasked with designing and managing
+              shared network environments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to ALOHA Protocols -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to ALOHA Protocols</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Introduction to ALOHA Protocols offers a foundational
+              understanding of random access communication techniques employed
+              in shared network environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Developed in the 1960s at the University of Hawaii, the ALOHA
+              Protocol was one of the earliest methods for allowing multiple
+              users to transmit data over a shared communication channel.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The Pure ALOHA protocol permits stations to send data packets
+              whenever they have data to transmit, without coordinating with
+              other stations. However, collisions may occur if multiple stations
+              attempt to transmit simultaneously, leading to packet loss and the
+              need for retransmission.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Subsequently, the Slotted ALOHA protocol was introduced to improve
+              the efficiency of random access communication. Slotted ALOHA
+              divides time into discrete slots, with stations only permitted to
+              transmit at the beginning of a slot.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This synchronized approach reduces the likelihood of collisions,
+              as stations wait for the next available slot to transmit data,
+              improving the overall efficiency of the network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pure ALOHA Protocol -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Pure ALOHA Protocol</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Pure ALOHA Protocol, conceived in the late 1960s, represents
+              one of the earliest forms of random access communication
+              protocols.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In Pure ALOHA, stations are allowed to transmit data packets
+              whenever they have information to send, without the need for
+              coordination with other stations. However, collisions can occur if
+              multiple stations attempt to transmit simultaneously, resulting in
+              packet loss and subsequent retransmissions.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Uncoordinated approach to data transmission</li>
+              <li>Stations transmit whenever they have data</li>
+              <li>
+                Collisions occur when multiple stations transmit simultaneously
+              </li>
+              <li>
+                Requires collision detection and retransmission mechanisms
+              </li>
+              <li>Maximum throughput of approximately 18.4%</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Advantages</h3>
+            <ul>
+              <li>Simple implementation</li>
+              <li>No need for synchronization between stations</li>
+              <li>Foundation for more advanced protocols</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Despite its inefficiencies due to collisions and retransmissions,
+              Pure ALOHA provided valuable insights into the challenges of
+              random access communication and paved the way for more
+              sophisticated protocols.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slotted ALOHA -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Slotted ALOHA</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Slotted ALOHA is an enhancement of the Pure ALOHA protocol,
+              introduced to improve the efficiency of random access
+              communication in shared network environments.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              In Slotted ALOHA, time is divided into discrete time slots, and
+              stations are only permitted to transmit data at the beginning of
+              each slot. This synchronized approach reduces the likelihood of
+              collisions, as stations wait for the next available slot to
+              transmit data.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Key Characteristics</h3>
+            <ul>
+              <li>Time is divided into discrete slots</li>
+              <li>Stations can only transmit at the beginning of each slot</li>
+              <li>Requires synchronization between stations</li>
+              <li>Reduced collision probability compared to Pure ALOHA</li>
+              <li>Maximum throughput of approximately 36.8%</li>
+            </ul>
+          </div>
+          <div class="text-section">
+            <h3>Advantages over Pure ALOHA</h3>
+            <ul>
+              <li>Doubled maximum throughput</li>
+              <li>Reduced collision probability</li>
+              <li>More efficient use of the transmission medium</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By synchronizing transmissions and reducing collisions, Slotted
+              ALOHA demonstrated the feasibility of efficient shared network
+              access without the need for centralized coordination.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In conclusion, the study of channel allocations, LAN protocols,
+              and ALOHA Protocols—specifically Pure ALOHA and Slotted
+              ALOHA—reveals the intricate mechanisms and standards governing
+              data communication within networks.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Channel allocations, encompassing techniques like Frequency
+              Division Multiplexing (FDM), Time Division Multiplexing (TDM), and
+              Code Division Multiplexing (CDM), play a crucial role in
+              optimizing bandwidth utilization and managing network resources
+              efficiently.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              LAN protocols, such as Ethernet and Wi-Fi, define the rules for
+              communication within Local Area Networks, enabling devices to
+              exchange data reliably and securely.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Additionally, ALOHA Protocols, with their random access
+              communication approach, offer solutions for managing contention
+              and ensuring fair access to network resources in shared network
+              environments.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Understanding these concepts is essential for network engineers,
+              IT professionals, and communication specialists tasked with
+              designing, deploying, and managing modern networking systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 1) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Unit Based Questions / Answers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 1. What are the key principles behind Frequency Division
+              Multiplexing (FDM)?
+            </div>
+            <div class="answer">
+              Answer. FDM divides the frequency spectrum into non-overlapping
+              channels, allowing multiple signals to be transmitted
+              simultaneously over different frequency bands.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 2. How does Time Division Multiplexing (TDM) allocate
+              communication resources?
+            </div>
+            <div class="answer">
+              Answer. TDM partitions the transmission medium into time slots,
+              with each channel allocated a specific time interval for data
+              transmission.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 3. What is the significance of Code Division Multiplexing
+              (CDM) in wireless communication?
+            </div>
+            <div class="answer">
+              Answer. CDM utilizes unique codes to multiplex data from multiple
+              channels onto the same frequency band, enabling secure and
+              efficient communication in wireless networks.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 4. What are the primary LAN protocols used in wired
+              networks?
+            </div>
+            <div class="answer">
+              Answer. The primary LAN protocols used in wired networks include
+              Ethernet, Token Ring, and Fiber Distributed Data Interface (FDDI).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 5. How does the Carrier Sense Multiple Access with
+              Collision Detection (CSMA/CD) mechanism work in Ethernet networks?
+            </div>
+            <div class="answer">
+              Answer. CSMA/CD allows devices to share the network medium by
+              listening for carrier signals before transmitting data. Collisions
+              are detected and resolved through a retransmission process.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit Based Questions (Part 2) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Unit Based Questions / Answers (Continued)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Question 6. What is the IEEE 802.11 standard commonly known as?
+            </div>
+            <div class="answer">
+              Answer. The IEEE 802.11 standard is commonly known as Wi-Fi,
+              governing wireless communication within Local Area Networks
+              (LANs).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 7. How does the Pure ALOHA protocol handle data
+              transmission?
+            </div>
+            <div class="answer">
+              Answer. In Pure ALOHA, stations transmit data packets whenever
+              they have information to send, without coordination with other
+              stations, leading to potential collisions.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 8. What improvement does Slotted ALOHA offer over Pure
+              ALOHA?
+            </div>
+            <div class="answer">
+              Answer. Slotted ALOHA divides time into discrete slots, allowing
+              stations to transmit data only at the beginning of each slot,
+              reducing the likelihood of collisions.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 9. What role do LAN protocols play in network
+              communication?
+            </div>
+            <div class="answer">
+              Answer. LAN protocols define the rules and procedures for data
+              transmission and reception among devices within a Local Area
+              Network (LAN).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Question 10. Why is understanding channel allocations and ALOHA
+              Protocols important in network design?
+            </div>
+            <div class="answer">
+              Answer. Understanding channel allocations and ALOHA Protocols is
+              crucial for optimizing network performance, managing contention,
+              and ensuring fair access to network resources in shared network
+              environments.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

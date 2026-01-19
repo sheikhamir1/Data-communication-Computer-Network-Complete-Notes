@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transport Layer Protocols and Services</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Transport Layer Protocols and Services</h1>
+          <p class="slide-subtitle">
+            Understanding the Core of Network Communication
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20230623142335/Transport-layer-660.jpg"
+              alt="Transport Layer Concept"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              The transport layer is a fundamental component of the OSI model,
+              playing a critical role in facilitating reliable data transfer
+              between networked systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Objectives -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Learning Objectives</h2>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <ul>
+              <li>
+                Understand the core functions and operations of the transport
+                layer within the OSI and TCP/IP models
+              </li>
+              <li>
+                Explore the roles and mechanisms of key transport layer
+                protocols such as TCP and UDP
+              </li>
+              <li>
+                Study error detection and correction techniques employed by
+                transport layer protocols
+              </li>
+              <li>
+                Evaluate flow control and congestion control strategies used to
+                optimize network performance
+              </li>
+              <li>
+                Learn about connection establishment and termination processes
+                in connection-oriented protocols
+              </li>
+              <li>
+                Understand how multiplexing and demultiplexing services enable
+                efficient sharing of network connections
+              </li>
+              <li>
+                Explore advanced transport layer protocols like SCTP and QUIC
+                and their specific use cases
+              </li>
+              <li>
+                Study transport layer security mechanisms such as TLS and SSL
+                for encryption and authentication
+              </li>
+              <li>
+                Examine the implementation of Quality of Service (QoS) to
+                prioritize network traffic
+              </li>
+              <li>
+                Develop practical skills in configuring and managing transport
+                layer protocols in real-world scenarios
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Introduction to Transport Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Introduction to Transport Layer</h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Definition</h3>
+                <p>
+                  The transport layer is a fundamental component of the OSI and
+                  TCP/IP models, responsible for providing reliable and
+                  efficient data transfer between end systems.
+                </p>
+              </div>
+              <div class="text-section">
+                <h3>Position in Network Models</h3>
+                <p>
+                  Positioned between the network layer and the application
+                  layer, the transport layer acts as an intermediary,
+                  translating high-level application requests into network-level
+                  operations.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/osimodel/400/300.jpg"
+                  alt="OSI Model"
+                /> -->
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By managing end-to-end communication, the transport layer
+              abstracts the complexities of the underlying network
+              infrastructure, allowing applications to exchange data seamlessly.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Functions of the Transport Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Functions of the Transport Layer</h2>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Connection Management</h4>
+            <p>
+              Establishing, maintaining, and terminating connections between
+              devices through processes like the three-way handshake in TCP.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Error Detection and Correction</h4>
+            <p>
+              Implementing error-checking mechanisms such as checksums to ensure
+              the integrity of transmitted data and requesting retransmission of
+              corrupted packets.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Flow Control</h4>
+            <p>
+              Managing the rate of data transmission to prevent the sender from
+              overwhelming the receiver with too much data at once.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Multiplexing and Demultiplexing</h4>
+            <p>
+              Enabling multiple applications to share the same network
+              connection without interference, ensuring data is delivered to the
+              correct application.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Transport Layer Protocols Overview -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Transport Layer Protocols</h2>
+        </div>
+        <div class="slide-content">
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Transmission Control Protocol (TCP)</h4>
+              <p>
+                Reliable, connection-oriented protocol ensuring ordered and
+                error-checked delivery of data packets.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon"><i class="fas fa-bolt"></i></div>
+            <div class="protocol-info">
+              <h4>User Datagram Protocol (UDP)</h4>
+              <p>
+                Lightweight, connectionless protocol with minimal overhead,
+                prioritizing speed over reliability.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon"><i class="fas fa-stream"></i></div>
+            <div class="protocol-info">
+              <h4>Stream Control Transmission Protocol (SCTP)</h4>
+              <p>
+                Combines the reliability of TCP with the message-oriented nature
+                of UDP, supporting multihoming for enhanced fault tolerance.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon"><i class="fas fa-rocket"></i></div>
+            <div class="protocol-info">
+              <h4>QUIC (Quick UDP Internet Connections)</h4>
+              <p>
+                Developed by Google to reduce latency and improve security by
+                integrating transport and security features.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Transmission Control Protocol (TCP) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Transmission Control Protocol (TCP)</h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Key Features</h3>
+                <ul>
+                  <li>Connection-oriented protocol</li>
+                  <li>Reliable data delivery</li>
+                  <li>Ordered data transmission</li>
+                  <li>Error detection and correction</li>
+                  <li>Flow control and congestion control</li>
+                </ul>
+              </div>
+              <div class="text-section">
+                <h3>Three-Way Handshake</h3>
+                <p>
+                  TCP establishes connections through a three-way handshake
+                  process involving SYN and ACK messages between sender and
+                  receiver.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/tcpconnection/400/300.jpg"
+                  alt="TCP Connection"
+                /> -->
+              </div>
+              <div class="process-flow">
+                <div class="process-step">SYN</div>
+                <div class="process-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="process-step">SYN-ACK</div>
+                <div class="process-arrow">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="process-step">ACK</div>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              TCP's sliding window mechanism allows for flow control, ensuring
+              that the sender does not overwhelm the receiver with too much data
+              at once.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: User Datagram Protocol (UDP) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">User Datagram Protocol (UDP)</h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Key Characteristics</h3>
+                <ul>
+                  <li>Connectionless protocol</li>
+                  <li>No guarantee of delivery</li>
+                  <li>No ordering of packets</li>
+                  <li>Minimal overhead</li>
+                  <li>Fast transmission</li>
+                </ul>
+              </div>
+              <div class="text-section">
+                <h3>Common Applications</h3>
+                <ul>
+                  <li>Video streaming</li>
+                  <li>Online gaming</li>
+                  <li>Voice over IP (VoIP)</li>
+                  <li>DNS queries</li>
+                  <li>Broadcast services</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/udpprotocol/400/300.jpg"
+                  alt="UDP Protocol"
+                /> -->
+              </div>
+              <div class="info-card">
+                <h4>UDP Datagram Structure</h4>
+                <div class="frame-structure">
+                  <div class="frame-field">Source Port</div>
+                  <div class="frame-field">Dest. Port</div>
+                  <div class="frame-field">Length</div>
+                  <div class="frame-field">Checksum</div>
+                  <div class="frame-field primary">Data</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              UDP's "best effort" approach makes it highly efficient for
+              scenarios where a small amount of packet loss does not
+              significantly affect the overall performance or user experience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Stream Control Transmission Protocol (SCTP) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">
+            Stream Control Transmission Protocol (SCTP)
+          </h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Key Features</h3>
+                <ul>
+                  <li>Message-oriented protocol</li>
+                  <li>Reliable data transfer</li>
+                  <li>Multi-streaming support</li>
+                  <li>Multihoming capability</li>
+                  <li>Four-way handshake for connection</li>
+                </ul>
+              </div>
+              <div class="text-section">
+                <h3>Advantages over TCP</h3>
+                <ul>
+                  <li>Preserves message boundaries</li>
+                  <li>Reduces head-of-line blocking</li>
+                  <li>Enhanced fault tolerance</li>
+                  <li>Better security features</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/sctp/400/300.jpg"
+                  alt="SCTP Protocol"
+                /> -->
+              </div>
+              <div class="info-card">
+                <h4>Use Cases</h4>
+                <ul>
+                  <li>Telephony signaling</li>
+                  <li>Financial trading systems</li>
+                  <li>Power grid communications</li>
+                  <li>Railway signaling</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              SCTP's multihoming feature allows endpoints to maintain multiple
+              IP addresses and network interfaces, enhancing fault tolerance and
+              resilience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Transport Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Transport Services</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Core Services Provided by the Transport Layer</h3>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Connection Establishment</h4>
+                <p>
+                  Setting up a logical connection between sender and receiver
+                  before data transmission begins.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Data Segmentation</h4>
+                <p>
+                  Breaking large data blocks into smaller, manageable packets
+                  for efficient transmission.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Error Detection and Correction</h4>
+                <p>
+                  Adding error-checking codes to detect and correct errors
+                  during transmission.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Flow Control</h4>
+                <p>
+                  Regulating the rate of data transmission to prevent
+                  overwhelming the receiver.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Congestion Control</h4>
+                <p>
+                  Managing network congestion by adjusting transmission rates
+                  based on network conditions.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Multiplexing/Demultiplexing</h4>
+                <p>
+                  Enabling multiple applications to share the same network
+                  connection.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Connection-oriented and Connectionless Services -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">
+            Connection-oriented vs. Connectionless Services
+          </h2>
+        </div>
+        <div class="slide-content">
+          <div class="comparison-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Connection-oriented (TCP)</th>
+                  <th>Connectionless (UDP)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Connection Setup</td>
+                  <td>Required (three-way handshake)</td>
+                  <td>Not required</td>
+                </tr>
+                <tr>
+                  <td>Reliability</td>
+                  <td>High (guaranteed delivery)</td>
+                  <td>Low (best effort)</td>
+                </tr>
+                <tr>
+                  <td>Ordering</td>
+                  <td>Sequenced delivery</td>
+                  <td>No ordering guarantee</td>
+                </tr>
+                <tr>
+                  <td>Flow Control</td>
+                  <td>Sliding window protocol</td>
+                  <td>Not provided</td>
+                </tr>
+                <tr>
+                  <td>Overhead</td>
+                  <td>Higher</td>
+                  <td>Lower</td>
+                </tr>
+                <tr>
+                  <td>Use Cases</td>
+                  <td>Web browsing, email, file transfer</td>
+                  <td>Video streaming, online gaming, VoIP</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/connectiontypes/800/300.jpg"
+              alt="Connection Types"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Port Number and Multiplexing/Demultiplexing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">
+            Port Number and Multiplexing/Demultiplexing
+          </h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Port Numbers</h3>
+                <p>
+                  Port numbers serve as endpoints for communication sessions,
+                  enabling the transport layer to distinguish between different
+                  applications or services on the same device.
+                </p>
+              </div>
+              <div class="text-section">
+                <h3>Port Number Ranges</h3>
+                <ul>
+                  <li>Well-known ports: 0-1023</li>
+                  <li>Registered ports: 1024-49151</li>
+                  <li>Dynamic/Private ports: 49152-65535</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/portnumbers/400/300.jpg"
+                  alt="Port Numbers"
+                /> -->
+              </div>
+              <div class="text-section">
+                <h3>Multiplexing/Demultiplexing</h3>
+                <p>
+                  Multiplexing combines multiple data streams from different
+                  applications into a single stream for transmission, while
+                  demultiplexing separates the combined stream back into
+                  individual data streams at the receiving end.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              By using port numbers, the transport layer can ensure that data is
+              directed to the correct application on the receiving host,
+              enabling multiple applications to share the same network
+              connection without interference.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Flow Control Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Flow Control Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Sliding Window Protocol</h3>
+            <p>
+              The sliding window mechanism allows the sender to transmit
+              multiple data packets without waiting for acknowledgment from the
+              receiver for each packet.
+            </p>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/slidingwindow/800/300.jpg"
+              alt="Sliding Window Protocol"
+            /> -->
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>How It Works</h4>
+                <ul>
+                  <li>
+                    Sender maintains a window of acceptable sequence numbers
+                  </li>
+                  <li>Receiver advertises available buffer space</li>
+                  <li>
+                    Sender adjusts transmission rate based on receiver's
+                    capacity
+                  </li>
+                  <li>Window size can be dynamically adjusted</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Benefits</h4>
+                <ul>
+                  <li>Prevents receiver buffer overflow</li>
+                  <li>Optimizes network bandwidth utilization</li>
+                  <li>Improves overall transmission efficiency</li>
+                  <li>Adapts to varying network conditions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Error Control Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Error Control Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Error Detection and Correction Techniques</h3>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Checksums</h4>
+                <p>
+                  Calculated based on the contents of the packet and used by the
+                  receiver to verify the integrity of the received data.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Acknowledgments (ACK)</h4>
+                <p>
+                  Receiver sends ACK messages to confirm successful receipt of
+                  data packets.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Negative Acknowledgments (NAK)</h4>
+                <p>
+                  Receiver sends NAK messages to request retransmission of any
+                  lost or corrupted packets.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Sequence Numbers</h4>
+                <p>
+                  Used to identify and order packets, ensuring they are
+                  reassembled in the correct order.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/errorcontrol/800/300.jpg"
+              alt="Error Control Mechanisms"
+            /> -->
+          </div>
+          <div class="highlight-box">
+            <p>
+              Through error control mechanisms, the Transport Layer enhances the
+              robustness and reliability of network communication systems,
+              mitigating the impact of errors and ensuring seamless delivery of
+              data.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Congestion Control Mechanisms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Congestion Control Mechanisms</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>TCP Congestion Control Algorithms</h3>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Slow Start</h4>
+                <p>
+                  Begins with a small congestion window and increases it
+                  exponentially until packet loss occurs.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Congestion Avoidance</h4>
+                <p>
+                  After detecting congestion, the algorithm increases the
+                  congestion window linearly rather than exponentially.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Fast Retransmit</h4>
+                <p>
+                  When multiple duplicate ACKs are received, the sender
+                  retransmits the missing packet without waiting for timeout.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Fast Recovery</h4>
+                <p>
+                  After fast retransmit, the algorithm reduces the congestion
+                  window but doesn't return to slow start.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/congestioncontrol/800/300.jpg"
+              alt="Congestion Control"
+            /> -->
+          </div>
+          <div class="highlight-box">
+            <p>
+              Congestion control mechanisms ensure efficient and equitable
+              utilization of network resources, minimize packet loss, and
+              maintain stable network performance even under challenging
+              conditions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Transport Layer Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Transport Layer Security</h2>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="text-section">
+                <h3>Security Features</h3>
+                <ul>
+                  <li>Encryption for data confidentiality</li>
+                  <li>Authentication of communicating parties</li>
+                  <li>Data integrity verification</li>
+                  <li>Protection against eavesdropping</li>
+                  <li>Prevention of tampering</li>
+                </ul>
+              </div>
+              <div class="text-section">
+                <h3>TLS Handshake Process</h3>
+                <ul>
+                  <li>Client Hello</li>
+                  <li>Server Hello & Certificate</li>
+                  <li>Key Exchange</li>
+                  <li>Finished Messages</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="image-container">
+                <!-- <img
+                  src="https://picsum.photos/seed/tlssecurity/400/300.jpg"
+                  alt="TLS Security"
+                /> -->
+              </div>
+              <div class="info-card">
+                <h4>Applications of TLS</h4>
+                <ul>
+                  <li>HTTPS (Secure Web Browsing)</li>
+                  <li>SMTPS (Secure Email)</li>
+                  <li>FTPS (Secure File Transfer)</li>
+                  <li>VPNs (Virtual Private Networks)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Transport Layer Security provides end-to-end encryption and robust
+              authentication mechanisms, safeguarding sensitive information and
+              ensuring the privacy and integrity of data exchanged between
+              endpoints.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Conclusion</h2>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Key Takeaways</h3>
+            <p>
+              The Transport Layer plays a crucial role in ensuring reliable,
+              secure, and efficient communication across networks. By providing
+              a range of protocols and services, it facilitates the seamless
+              transmission of data between endpoints while addressing various
+              challenges.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Protocol Diversity</h4>
+                <p>
+                  TCP, UDP, and SCTP offer different approaches to data
+                  transmission, allowing applications to choose the most
+                  suitable protocol based on their requirements.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Control Mechanisms</h4>
+                <p>
+                  Flow control, error control, and congestion control mechanisms
+                  enhance the reliability and efficiency of data transmission.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Security</h4>
+                <p>
+                  Transport Layer Security adds an extra layer of protection to
+                  network communication, ensuring confidentiality,
+                  authentication, and data integrity.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Service Provision</h4>
+                <p>
+                  Services like multiplexing, demultiplexing, and connection
+                  management enable efficient network communication.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              As networks continue to grow in complexity and scale, the
+              transport layer's role in maintaining efficient, secure, and
+              reliable communication becomes increasingly vital.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Questions and Answers -->
+      <div class="slide">
+        <div class="slide-header">
+          <h2 class="slide-title">Questions and Answers</h2>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              Q1. What is the primary function of the transport layer in the OSI
+              model?
+            </div>
+            <div class="answer">
+              A1. The primary function of the transport layer is to provide
+              reliable data transfer services to the upper layers of the OSI
+              model. This includes error detection and correction, data flow
+              control, and ensuring that data is delivered in the correct
+              sequence.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q2. How does the Transmission Control Protocol (TCP) ensure
+              reliable data transmission?
+            </div>
+            <div class="answer">
+              A2. TCP ensures reliable data transmission through mechanisms such
+              as error detection with checksums, data retransmission for lost
+              packets, sequencing of packets to maintain the correct order, and
+              flow control using the sliding window protocol to manage data flow
+              between sender and receiver.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q3. What distinguishes User Datagram Protocol (UDP) from TCP?
+            </div>
+            <div class="answer">
+              A3. UDP is a connectionless protocol that does not guarantee
+              reliable delivery, sequencing, or data integrity. Unlike TCP, UDP
+              does not establish a connection before data transfer, which makes
+              it faster but less reliable. It is suitable for applications where
+              speed is critical and some data loss is acceptable.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q4. What is the purpose of port numbers in transport layer
+              protocols?
+            </div>
+            <div class="answer">
+              A4. Port numbers serve as endpoints for communication sessions,
+              enabling the transport layer to distinguish between different
+              applications or services on the same device. They facilitate
+              multiplexing and demultiplexing, ensuring that data is directed to
+              the correct application.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Transport Layer Protocols and Services - Network Communications
+        Fundamentals
+      </p>
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

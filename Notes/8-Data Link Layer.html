@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Link Layer - Data Communication and Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      .bit-position {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+      }
+
+      .bit-position-number {
+        width: 30px;
+        height: 30px;
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .bit-position-value {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 5px 10px;
+        min-width: 30px;
+        text-align: center;
+      }
+
+      .bit-position.parity {
+        background-color: #e8f0fe;
+      }
+
+      .bit-position.data {
+        background-color: #f8f9fa;
+      }
+
+      .byte-stuffing-example {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .byte {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 0 5px;
+        min-width: 40px;
+        text-align: center;
+      }
+
+      .byte.flag {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.esc {
+        background-color: #f1c40f;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.stuffed {
+        background-color: #e8f0fe;
+        border: 1px dashed #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">
+        <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Data Link Layer</h1>
+          <p class="slide-subtitle">
+            Framing, Error Control, Flow Control, and Network Protocols
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20250128105440836652/30.webp"
+              alt="Data Link Layer"
+            />
+          </div>
+          <div class="highlight-box">
+            <p>
+              The Data Link Layer is the second layer of the OSI model,
+              responsible for converting data streams to signals, framing,
+              addressing, error control, and flow control between directly
+              connected hosts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Introduction to Data Link Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Data Link Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Data Link Layer is the second layer of the OSI Layered Model.
+              This layer is one of the most complicated layers and has complex
+              functionalities and responsibilities.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Data link layer hides the details of underlying hardware and
+              represents itself to upper layer as the medium to communicate.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Data link layer works between two hosts which are directly
+              connected in some sense. This direct connection could be point to
+              point or broadcast. Systems on broadcast network are said to be on
+              same link.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Data link layer is responsible for converting data stream to
+              signals bit by bit and to send that over the underlying hardware.
+              At the receiving end, Data link layer picks up data from hardware
+              which are in the form of electrical signals, assembles them in a
+              recognizable frame format, and hands over to upper layer.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              The work of data link layer tends to get more complex when it is
+              dealing with multiple hosts on single collision domain.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-layers of Data Link Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Sub-layers of Data Link Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>Data link layer has two sub-layers:</p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-link"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Logical Link Control (LLC)</h4>
+              <p>It deals with protocols, flow-control, and error control</p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Media Access Control (MAC)</h4>
+              <p>It deals with actual control of media</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These two sub-layers work together to ensure reliable and
+              efficient data transmission over the physical medium.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Functionality of Data Link Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Functionality of Data Link Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Data link layer does many tasks on behalf of upper layer. These
+              are:
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-cube"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Framing</h4>
+              <p>
+                Takes packets from Network Layer and encapsulates them into
+                Frames, then sends each frame bit-by-bit on the hardware
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Addressing</h4>
+              <p>
+                Provides layer-2 hardware addressing mechanism. Hardware address
+                is assumed to be unique on the link and is encoded into hardware
+                at the time of manufacturing
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Synchronization</h4>
+              <p>
+                When data frames are sent on the link, both machines must be
+                synchronized in order for transfer to take place
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Error Control</h4>
+              <p>
+                Detects and attempts to recover actual data bits when signals
+                have encountered problems in transition and bits are flipped
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Flow Control</h4>
+              <p>
+                Ensures both machine can exchange data at the same speed when
+                stations on same link may have different speed or capacity
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Multi-Access</h4>
+              <p>
+                Provides mechanism such as CSMA/CD to equip capability of
+                accessing a shared media among multiple Systems when host on
+                shared link tries to transfer data
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flow Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Flow Control</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              When a data frame (Layer-2 data) is sent from one host to another
+              over a single medium, it is required that the sender and receiver
+              should work at the same speed. What if the speed
+              (hardware/software) of the sender or receiver differs?
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              If sender is sending too fast the receiver may be overloaded
+              (swamped) and data may be lost.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>Two types of mechanisms can be deployed to control the flow:</p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Stop and Wait</h4>
+                <p>
+                  This flow control mechanism forces the sender after
+                  transmitting a data frame to stop and wait until the
+                  acknowledgement of the data-frame sent is received.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Sliding Window</h4>
+                <p>
+                  In this flow control mechanism, both sender and receiver agree
+                  on the number of data-frames after which the acknowledgement
+                  should be sent. This protocol tries to make use of underlying
+                  resources as much as possible.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Stop and wait flow control mechanism wastes resources, while
+              sliding window protocol optimizes resource utilization.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Control -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Error Control</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              When data-frame is transmitted, there is a probability that
+              data-frame may be lost in the transit or it is received corrupted.
+              In both cases, the receiver does not receive the correct
+              data-frame and sender does not know anything about any loss.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              In such case, both sender and receiver are equipped with some
+              protocols which helps them to detect transit errors such as loss
+              of data-frame. Hence, either the sender retransmits the data-frame
+              or the receiver may request to resend the previous data-frame.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Requirements for error control mechanism:</h3>
+            <ul>
+              <li>
+                <strong>Error detection:</strong> The sender and receiver must
+                ascertain that there is some error in the transit
+              </li>
+              <li>
+                <strong>Positive ACK:</strong> When the receiver receives a
+                correct frame, it should acknowledge it
+              </li>
+              <li>
+                <strong>Negative ACK:</strong> When the receiver receives a
+                damaged frame or a duplicate frame, it sends a NACK back to the
+                sender
+              </li>
+              <li>
+                <strong>Retransmission:</strong> The sender maintains a clock
+                and sets a timeout period. If an acknowledgement does not arrive
+                before timeout, the sender retransmits the frame
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These error control mechanisms ensure reliable data transmission
+              across the network by detecting and correcting errors that may
+              occur during transmission.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stop-and-Wait ARQ -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Stop-and-Wait ARQ</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>The following transitions may occur in Stop-and-Wait ARQ:</p>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">Sender sends frame</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">Starts timeout</div>
+            <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+            <div class="process-step">Waits for ACK</div>
+          </div>
+
+          <div class="text-section">
+            <ul>
+              <li>The sender maintains a timeout counter</li>
+              <li>
+                When a frame is sent, the sender starts the timeout counter
+              </li>
+              <li>
+                If acknowledgement of frame comes in time, the sender transmits
+                the next frame in queue
+              </li>
+              <li>
+                If acknowledgement does not come in time, the sender assumes
+                that either the frame or its acknowledgement is lost in transit.
+                Sender retransmits the frame and starts the timeout counter
+              </li>
+              <li>
+                If a negative acknowledgement is received, the sender
+                retransmits the frame
+              </li>
+            </ul>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/stop-and-wait-arq/600/300.jpg"
+              alt="Stop and Wait ARQ"
+            /> -->
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Stop and Wait ARQ is simple but inefficient as it wastes resources
+              while waiting for acknowledgments.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Go-Back-N ARQ -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Go-Back-N ARQ</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Stop and wait ARQ mechanism does not utilize the resources at
+              their best. When the acknowledgement is received, the sender sits
+              idle and does nothing. In Go-Back-N ARQ method, both sender and
+              receiver maintain a window.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The sending-window size enables the sender to send multiple frames
+              without receiving the acknowledgement of the previous ones. The
+              receiving-window enables the receiver to receive multiple frames
+              and acknowledge them. The receiver keeps track of incoming frames
+              sequence number.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              When the sender sends all the frames in window, it checks up to
+              what sequence number it has received positive acknowledgement. If
+              all frames are positively acknowledged, the sender sends next set
+              of frames. If sender finds that it has received NACK or has not
+              receive any ACK for a particular frame, it retransmits all the
+              frames after which it does not receive any positive ACK.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/go-back-n-arq/600/300.jpg"
+              alt="Go-Back-N ARQ"
+            /> -->
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Go-Back-N ARQ is more efficient than Stop-and-Wait ARQ but may
+              waste bandwidth by retransmitting frames that were correctly
+              received.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selective Repeat ARQ -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Selective Repeat ARQ</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In Go-Back-N ARQ, it is assumed that the receiver does not have
+              any buffer space for its window size and has to process each frame
+              as it comes. This enforces the sender to retransmit all the frames
+              which are not acknowledged.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              In Selective-Repeat ARQ, the receiver while keeping track of
+              sequence numbers, buffers the frames in memory and sends NACK for
+              only frame which is missing or damaged.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The sender in this case, sends only packet for which NACK is
+              received.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/selective-repeat-arq/600/300.jpg"
+              alt="Selective Repeat ARQ"
+            /> -->
+          </div>
+
+          <div class="text-section">
+            <h3>Advantages of Selective Repeat ARQ</h3>
+            <ul>
+              <li>More efficient use of bandwidth compared to Go-Back-N ARQ</li>
+              <li>Only retransmits lost or damaged frames</li>
+              <li>Requires more buffer space at the receiver</li>
+              <li>More complex implementation</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Selective Repeat ARQ provides better performance but requires more
+              complex logic and buffer management at both sender and receiver.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RMON in Computer Networks -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">RMON in Computer Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              RMON stands for Remote Network Monitoring. It is an extension of
+              the Simple Network Management Protocol (SNMP) that allows detailed
+              monitoring of network statistics for Ethernet networks.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              RMON was initially developed to address remote site and local area
+              network (LAN) segment management from a centralized location. The
+              RMON standard determines a group of functions and statistics
+              exchanged between RMON compatible network probes and console
+              managers.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>RMON Versions</h3>
+            <div class="two-column">
+              <div class="column">
+                <div class="info-card">
+                  <h4>RMON1 MIB</h4>
+                  <p>
+                    Has defined 10 MIB groups for basic network monitoring. It
+                    operates on the MAC layer and the physical layer.
+                  </p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="info-card">
+                  <h4>RMON 2 MIB Group</h4>
+                  <p>
+                    Operates on the above protocol layers of the OSI model:
+                    application, presentation, session, transport, and Network
+                    layer.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              RMON provides network administrators with comprehensive monitoring
+              capabilities to analyze network performance and troubleshoot
+              issues.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RMON1 MIB Groups -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">RMON1 MIB Groups</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              RMON1 MIB has defined 10 MIB groups for basic network monitoring.
+              It operates on the MAC layer and the physical layer.
+            </p>
+          </div>
+
+          <div class="list-section">
+            <ul>
+              <li>
+                <strong>Statistics MIB Group:</strong> Contains statistics
+                measured by the probe for each monitored interface, including
+                packets dropped, packets sent, bytes sent, broadcast packets,
+                multicast packets, CRC errors, giants, packet fragments
+              </li>
+              <li>
+                <strong>History:</strong> Records periodic statistical samples
+                from a network and stores them for retrieval. Contains the
+                number of samples, items sampled in different periods
+              </li>
+              <li>
+                <strong>Alarm:</strong> Periodically takes statistical samples
+                and compares them with threshold set for events generation.
+                Includes alarm table, alarm type, interval, starting threshold,
+                stop threshold
+              </li>
+              <li>
+                <strong>HOST:</strong> Contains statistics associated with each
+                host discovered on the network. Statistics include host address,
+                packets & bytes received and transmitted, broadcast packets,
+                multicast packets, error packets
+              </li>
+              <li>
+                <strong>HOST top N:</strong> Prepares tables that describe the
+                top hosts. Contains statistics on hosts, sample, start and stop
+                period, rate base duration
+              </li>
+              <li>
+                <strong>Matrix:</strong> Stores and retrieves statistics for
+                conversations between sets of two addresses. Elements are source
+                & destination address pairs, their packets, bytes & errors for
+                each pair
+              </li>
+              <li>
+                <strong>Filters:</strong> Enables packets to be matched by a
+                filter equation for capturing packets or events. Elements
+                include bit-filter type, filter expression, conditional
+                expression to other filters
+              </li>
+              <li>
+                <strong>Packet Capture:</strong> Enables packets to be captured
+                after they flow through a channel. Elements include buffer size
+                for captured packets, full status, and number of captured
+                packets
+              </li>
+              <li>
+                <strong>Events:</strong> Controls the generation and
+                notification of events from a device. Elements include event
+                type, description, last time event sent
+              </li>
+              <li><strong>Token ring:</strong> Supports token rings</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These MIB groups provide comprehensive monitoring capabilities for
+              Ethernet networks, enabling detailed analysis of network
+              performance and troubleshooting.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RMON2 MIB Groups -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">RMON2 MIB Groups</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              RMON 2 MIB Group operates on the above protocol layers of the OSI
+              model: application, presentation, session, transport, and Network
+              layer.
+            </p>
+          </div>
+
+          <div class="list-section">
+            <ul>
+              <li>
+                <strong>Protocol Delivery:</strong> Provides a simple and
+                interoperable way for an RMON 2 application to establish which
+                protocols a particular RMON 2 agent implements
+              </li>
+              <li>
+                <strong>Protocol Distribution:</strong> Maps the data collected
+                by a probe to the correct protocol name displayed to the network
+                manager
+              </li>
+              <li>
+                <strong>Address Mapping:</strong> Helps address translation from
+                the MAC layer to network layer addresses that are easier to
+                read. Also supports the SNMP management platform and improves
+                topology
+              </li>
+              <li>
+                <strong>Network Layer host:</strong> Contains statistics for
+                network layer traffic to or from each host
+              </li>
+              <li>
+                <strong>Network Layer Matrix:</strong> Contains network layer
+                traffic statistics for conversations between pairs of hosts
+              </li>
+              <li>
+                <strong>Application Layer Host:</strong> Contains statistics for
+                application layer traffic to or from each host
+              </li>
+              <li>
+                <strong>Application Layer Matrix:</strong> Stores and retrieves
+                application layer statistics for conversation between sets of
+                two addresses
+              </li>
+              <li>
+                <strong>Probe Configuration:</strong> Provides a standard way to
+                remotely configure probe parameters such as trap destination and
+                out-of-band management
+              </li>
+              <li>
+                <strong>User History Collection:</strong> Contains periodic
+                samples of user-specified variables
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              RMON2 extends monitoring capabilities to higher layers of the OSI
+              model, providing more comprehensive network analysis and
+              management.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Token Ring Network -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Token Ring Network (IEEE Standard 802.5)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In a token ring, a special bit pattern, known as a token,
+              circulates around the ring when all the stations are idle. Token
+              Ring is formed by the nodes connected in ring format.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The principle used in the token ring network is that a token is
+              circulating in the ring, and whichever node grabs that token will
+              have the right to transmit the data.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Whenever a station wants to transmit a frame, it inverts a single
+              bit of the 3-byte token, which instantaneously changes it into a
+              normal data packet. As there is only one token, there can be only
+              one transmission at a time.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Since the token rotates in the ring, it is guaranteed that every
+              node gets the token within some specified time. So there is an
+              upper bound on the time of waiting to grab the token so that
+              starvation is avoided. There is also an upper limit of 250 on the
+              number of nodes in the network.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/token-ring-network/600/300.jpg"
+              alt="Token Ring Network"
+            /> -->
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Token Ring networks provide deterministic access to the medium,
+              ensuring that all stations have equal opportunity to transmit data
+              without collisions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modes of Operation in Token Ring -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Modes of Operation in Token Ring Network</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              There are various modes of operation in Token Ring Network (IEEE
+              Standard 802.5):
+            </p>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-headphones"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Listen Mode</h4>
+              <p>
+                In the listen mode, the incoming bits are simply transmitted to
+                the output line with no further action taken.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-microphone"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>Talk or Transmit Node</h4>
+              <p>
+                The ring interface is set to the talk or transmit node when the
+                station has acquired a token. The direct input to output
+                connection through the single bit buffer is disconnected.
+              </p>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-icon">
+              <i class="fas fa-forward"></i>
+            </div>
+            <div class="protocol-info">
+              <h4>By-pass Mode</h4>
+              <p>
+                This mode reaches when the node is down. Any data is just
+                bypassed. There is no one-bit delay in this mode.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These modes allow for efficient operation of the token ring
+              network, ensuring proper data flow and fault tolerance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Handling Breakage in Token Ring -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Handling Breakage</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The main problem with a ring network is that the network goes down
+              when the ring cable breaks down or gets tempered. The solution to
+              this problem is the use of a wire center.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The wire center bypasses the terminals that have gone down from
+              the ring. This is done by connecting the bypass relay for that
+              station. These relays are generally controlled by the software
+              that operates automatically in case of station failure.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The use of a wire center improves the reliability and
+              maintainability of the ring network.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/token-ring-breakage-handling/600/300.jpg"
+              alt="Handling Breakage in Token Ring"
+            /> -->
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Wire centers provide fault tolerance in token ring networks by
+              automatically bypassing failed stations, maintaining network
+              connectivity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Priority and Reservation in Token Ring -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Priority and Reservation</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In IEEE 802.5, each station has a priority code. As a token
+              circulates on the ring, any station which wants to transmit the
+              frame may reserve the token by entering its priority code in the
+              Access Control (AC) field of the token frame or data frame.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Time Bounding</h3>
+            <p>
+              A station that is in possession of the token only can transmit his
+              frames. It may transmit one or more data frames but before the
+              expiry of Token Holding Time (THT). Typically, this time is 10
+              milliseconds. After the THT, the token frame must be handed over
+              to some other station.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>The Monitor Station</h3>
+            <p>
+              The monitor station sets the timer on when each time the token
+              passes. If the token does not regenerate in the allotted time, it
+              is assumed to be lost, and then the monitor station generates a
+              new token and sends it to the ring. If the monitor fails, a second
+              station is designated as back-up.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Priority mechanisms ensure that high-priority stations can access
+              the token more frequently, while time bounding prevents any single
+              station from monopolizing the network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hamming Code -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hamming Code in Computer Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In Computer Networks, Hamming code is used for the set of
+              error-correction codes which may occur when the data is moved from
+              the sender to the receiver. The hamming method corrects the error
+              by finding the state at which the error has occurred.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Redundant Bits</h3>
+            <p>
+              Redundant bits are extra binary bits that are generated and added
+              to the information-carrying bits of data transfer to ensure that
+              no bits were lost during the data transfer. The redundancy bits
+              are placed at certain calculated positions to eliminate the errors
+              and the distance between the two redundancy bits is called
+              "Hamming Distance".
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Error Correction Code</h3>
+            <p>
+              This is the relationship between data bits and redundancy bits to
+              correct a single-bit error. A-frame consists of M data bits and R
+              redundant bits. Suppose the total length of the frame be N
+              (N=M+R). An N-bit unit containing data and the check bit is often
+              referred to as an N-bit codeword.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The following formula is used to find the number of redundant
+              bits:
+            </p>
+            <p>2^R ≥ M + R + 1</p>
+            <p>where R = Redundant bit, and M = data bit.</p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Hamming code provides a simple and effective method for detecting
+              and correcting single-bit errors in data transmission.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steps to Find Hamming Code -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Steps to Find Hamming Code</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The hamming method uses the extra parity bits to allow the
+              identification of a single-bit error.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Step 1</h3>
+            <p>
+              First write the bit positions starting from 1 in a binary form (1,
+              10, 11, 100, etc.)
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Step 2</h3>
+            <p>
+              Mark all the bit positions that are powers of two as parity bits
+              (1, 2, 4, 8, 16, 32, 64, etc.)
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Step 3</h3>
+            <p>
+              All other bit positions are for the data to be encoded using (3,
+              5, 6, 7, 9, 10 and 11, etc.)
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Parity Bit Positions</h3>
+            <ul>
+              <li>
+                <strong>Position 1:</strong> Check 1 bit, then skip 1 bit, check
+                1 bit and then skip 1 bit (Ex 1,3,5,7,11, etc.)
+              </li>
+              <li>
+                <strong>Position 2:</strong> Check 2 bit, then skip 2 bit, check
+                2 bit, then skip 2 bit (Ex 2,3,6,7,10,11,14,15, etc.)
+              </li>
+              <li>
+                <strong>Position 4:</strong> Check 4 bit, then skip 4 bit, check
+                4 bit, then skip 4 bit (Ex 4, 5, 6, 7, 12, 13, 14, 15, etc.)
+              </li>
+              <li>
+                <strong>Position 8:</strong> Check 8 bit, then skip 8 bit, check
+                8 bit, then skip 8 bit (Ex 8, 9, 10, 11, 12, 13, 14, 15, 24, 25,
+                26, 27, 28, 29, 30, 31)
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Set the parity bit to 1 if the total number of 1s in the positions
+              it checks is odd, or set to 0 if the total number of 1s is even
+              (for even parity).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hamming Code Example -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Hamming Code Example</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Construct the even parity Hamming code word for a data byte
+              1001101.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>The number (1001101) of bits is 7.</p>
+            <p>The value of r is calculated as 2^R ≥ M + R + 1</p>
+            <p>2^4 ≥ 7 + 4 + 1 = 16 ≥ 12</p>
+            <p>Therefore, the number of redundancy bits = 4</p>
+          </div>
+
+          <div class="text-section">
+            <h3>Calculating Parity Bits</h3>
+            <div class="bit-position">
+              <div class="bit-position-number">1</div>
+              <div class="bit-position-value parity">?</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">?</div>
+            </div>
+            <p>
+              Position 1: checks bits 1,3,5,7,9,11 - Even parity so set position
+              1 to 0
+            </p>
+
+            <div class="bit-position">
+              <div class="bit-position-number">2</div>
+              <div class="bit-position-value parity">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">?</div>
+            </div>
+            <p>
+              Position 2: checks bits 2,3,6,7,10,11 - Odd parity so set position
+              2 to 1
+            </p>
+
+            <div class="bit-position">
+              <div class="bit-position-number">4</div>
+              <div class="bit-position-value parity">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">?</div>
+            </div>
+            <p>
+              Position 4: checks bits 4,5,6,7,12 - Odd parity so set position 4
+              to 1
+            </p>
+
+            <div class="bit-position">
+              <div class="bit-position-number">8</div>
+              <div class="bit-position-value parity">?</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">1</div>
+              <div class="bit-position-value data">0</div>
+              <div class="bit-position-value data">?</div>
+            </div>
+            <p>
+              Position 8: checks bits 8,9,10,11,12 - Even parity so set position
+              8 to 0
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>Final Code Word = 011100101010</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Byte Stuffing -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Byte Stuffing in Computer Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Purpose of Byte Stuffing</h3>
+            <p>
+              In Data link layer, the stream of bits from physical layer are
+              divided into data frames. The data frames can be of fixed length
+              or variable length. In variable length framing, the size of each
+              frame to be transmitted may be different. So, a pattern of bits is
+              used as a delimiter to mark the end of one frame and the beginning
+              of the next frame.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              If the pattern of the flag byte is present in the message byte,
+              there should be a strategy so that the receiver does not consider
+              the pattern as the end of the frame.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>The two common approaches are:</p>
+            <ul>
+              <li>
+                <strong>Byte Stuffing:</strong> A byte is stuffed in the message
+                to differentiate from the delimiter. This is also called
+                character-oriented framing.
+              </li>
+              <li>
+                <strong>Bit Stuffing:</strong> A pattern of bits of arbitrary
+                length is stuffed in the message to differentiate from the
+                delimiter. This is also called bit oriented framing.
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-section">
+            <h3>Frame in a Character Oriented Framing</h3>
+            <ul>
+              <li>
+                <strong>Frame Header:</strong> Contains the source and the
+                destination addresses of the frame
+              </li>
+              <li>
+                <strong>Payload field:</strong> Contains the message to be
+                delivered
+              </li>
+              <li>
+                <strong>Trailer:</strong> Contains the error detection and error
+                correction bits
+              </li>
+              <li>
+                <strong>Flags:</strong> 1-byte (8-bits) flag at the beginning
+                and at end of the frame. It is a protocol dependent special
+                character, signalling the start and end of the frame
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Byte stuffing is used in character-oriented protocols to ensure
+              that flag patterns in the data are not mistaken for frame
+              delimiters.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Byte Stuffing Mechanism -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Byte Stuffing Mechanism</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              If the pattern of the flag byte is present in the message byte,
+              there should be a strategy so that the receiver does not consider
+              the pattern as the end of the frame. In character oriented
+              protocol, the mechanism adopted is byte stuffing.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              In byte stuffing, a special byte called the escape character (ESC)
+              is stuffed before every byte in the message with the same pattern
+              as the flag byte. If the ESC sequence is found in the message
+              byte, then another ESC byte is stuffed before it.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Example of Byte Stuffing</h3>
+            <p>Original message: A FLAG B FLAG C</p>
+            <p>After byte stuffing: A FLAG B ESC FLAG C</p>
+          </div>
+
+          <div class="byte-stuffing-example">
+            <div class="byte flag">F</div>
+            <div class="byte">A</div>
+            <div class="byte">B</div>
+            <div class="byte flag">F</div>
+            <div class="byte">C</div>
+            <div class="byte flag">F</div>
+          </div>
+
+          <div class="byte-stuffing-example">
+            <div class="byte flag">F</div>
+            <div class="byte">A</div>
+            <div class="byte">B</div>
+            <div class="byte esc">ESC</div>
+            <div class="byte flag">F</div>
+            <div class="byte">C</div>
+            <div class="byte flag">F</div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Byte stuffing ensures that special flag characters in the data are
+              properly handled, preventing misinterpretation of frame
+              boundaries.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <!-- <p>Data Communication and Computer Networks &copy; 2023</p> -->
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

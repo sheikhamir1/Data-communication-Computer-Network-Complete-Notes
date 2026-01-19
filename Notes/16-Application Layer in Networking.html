@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application Layer in Networking</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      .bit-position {
+        display: flex;
+        align-items: center;
+        margin: 5px 0;
+      }
+
+      .bit-position-number {
+        width: 30px;
+        height: 30px;
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .bit-position-value {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 5px 10px;
+        min-width: 30px;
+        text-align: center;
+      }
+
+      .bit-position.parity {
+        background-color: #e8f0fe;
+      }
+
+      .bit-position.data {
+        background-color: #f8f9fa;
+      }
+
+      .byte-stuffing-example {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .byte {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 0 5px;
+        min-width: 40px;
+        text-align: center;
+      }
+
+      .byte.flag {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.esc {
+        background-color: #f1c40f;
+        color: white;
+        font-weight: bold;
+      }
+
+      .byte.stuffed {
+        background-color: #e8f0fe;
+        border: 1px dashed #1a73e8;
+      }
+
+      .error-types {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .error-type {
+        text-align: center;
+        width: 200px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .error-type img {
+        max-width: 100%;
+        height: 100px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+      }
+
+      .error-type h4 {
+        color: #1a73e8;
+        margin-bottom: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Application Layer in Networking</h1>
+          <p class="slide-subtitle">
+            The Interface Between Users and Network Applications
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://media.geeksforgeeks.org/wp-content/uploads/20250127103912860245/1.webp"
+              alt="Application Layer Diagram"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              The topmost layer in both OSI and TCP/IP models, enabling direct
+              interaction between users and network applications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Introduction to Application Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Application Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The application layer sits at the top of both the OSI and TCP/IP
+              layered models, highlighting its important role in enabling
+              interactions between users and network applications.
+            </p>
+            <p>
+              Its primary function is to support applications that are directly
+              involved in communication processes on a network.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Not all applications are part of the application layer - only
+              those that interact with the network communication system. For
+              example, text editors or standalone design tools do not qualify as
+              layer programs because they don't communicate on the network.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              Applications like web browsers rely on layer protocols such as
+              HTTP (Hypertext Transfer Protocol) to fetch and display web
+              content. Similarly, FTP allows users to transfer files over the
+              network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Functions of the Application Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Functions of the Application Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The application layer serves as an interface between end users and
+              the network, providing necessary functions for effective
+              communication and data exchange.
+            </p>
+          </div>
+          <div class="list-section">
+            <ul>
+              <li>
+                <strong>User Interface:</strong> Allows users to interact with
+                lower-level layers and multiple application processes
+              </li>
+              <li>
+                <strong>Security:</strong> Executes security checks at
+                endpoints, ensuring only authorized users access network
+                resources
+              </li>
+              <li>
+                <strong>File Transfer, Access, and Management (FTAM):</strong>
+                Enables users to create, retrieve, and manage files on remote
+                systems
+              </li>
+              <li>
+                <strong>Email Services:</strong> Provides foundation for
+                forwarding, storage, and retrieval of messages
+              </li>
+              <li>
+                <strong>Database Access:</strong> Supports structured
+                information access for distributed applications
+              </li>
+              <li>
+                <strong>Directory Services:</strong> Maintains distributed
+                databases of network resources
+              </li>
+              <li>
+                <strong>Addressing:</strong> Ensures proper routing of
+                information between endpoints
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Services of Application Layers -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Services of Application Layers</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Network Virtual Terminal</h4>
+            <p>
+              Allows a user to log on to a remote host by creating a software
+              emulation of a terminal at the remote host.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>File Transfer, Access, and Management (FTAM)</h4>
+            <p>
+              Enables users to access files on remote computers, retrieve files,
+              and manage files remotely.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Addressing</h4>
+            <p>
+              Facilitates communication between client and server by including
+              both source and destination addresses in requests.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Mail Services</h4>
+            <p>Provides email forwarding and storage capabilities.</p>
+          </div>
+          <div class="info-card">
+            <h4>Directory Services</h4>
+            <p>
+              Contains distributed databases providing access to global
+              information about various objects and services.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Authentication</h4>
+            <p>Authenticates the sender or receiver's message or both.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Network Application Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Application Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Application architecture is different from network architecture.
+              While network architecture is fixed and provides services to
+              applications, application architecture is designed by application
+              developers and defines how applications should be structured over
+              various end systems.
+            </p>
+          </div>
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Client-Server Architecture</h4>
+                <p>
+                  An application program running on the local machine (client)
+                  sends a request to another application program (server).
+                </p>
+                <p>
+                  Example: Web server responding to requests from client hosts.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>P2P (Peer-to-Peer) Architecture</h4>
+                <p>
+                  No dedicated server in a data center. Peers communicate with
+                  each other without passing information through a dedicated
+                  server.
+                </p>
+                <p>
+                  Example: File sharing and internet telephony applications.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Client-Server Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client-Server Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In Client-server architecture, clients do not directly communicate
+              with each other. For example, in a web application, two browsers
+              do not directly communicate with each other.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              A server has a fixed, well-known address (IP address) because the
+              server is always on, while the client can always contact the
+              server by sending a packet to the server's IP address.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Disadvantage</h3>
+            <p>
+              It is a single-server based architecture which is incapable of
+              holding all the requests from the clients. For example, a social
+              networking site can become overwhelmed when there is only one
+              server exists.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: P2P Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">P2P (Peer-to-Peer) Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              P2P architecture has no dedicated server in a data center. The
+              peers are computers not owned by the service provider, typically
+              residing in homes, offices, schools, and universities.
+            </p>
+          </div>
+          <div class="text-section">
+            <h3>Features of P2P Architecture</h3>
+          </div>
+          <div class="info-card">
+            <h4>Self Scalability</h4>
+            <p>
+              In a file sharing system, although each peer generates a workload
+              by requesting files, each peer also adds service capacity by
+              distributing files to other peers.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Cost-Effective</h4>
+            <p>
+              It is cost-effective as it does not require significant server
+              infrastructure and server bandwidth.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Client and Server Processes -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client and Server Processes</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A network application consists of a pair of processes that send
+              messages to each other over a network.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              In P2P file sharing, a file is transferred from a process in one
+              peer to a process in another peer. We label one of the two
+              processes as the client and another process as the server.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              With P2P file sharing, the peer downloading the file is known as a
+              client, and the peer uploading the file is known as a server.
+            </p>
+            <p>
+              However, in some applications such as P2P file sharing, a process
+              can be both a client and server. Therefore, a process can both
+              download and upload files.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Protocols of the Application Layer -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Protocols of the Application Layer</h1>
+        </div>
+        <div class="slide-content">
+          <div class="protocol-card">
+            <div class="protocol-icon">HTTP</div>
+            <div class="protocol-info">
+              <h4>HTTP (Hypertext Transfer Protocol)</h4>
+              <p>
+                Foundation of the World Wide Web, operates on a client-server
+                model. Used for transmitting hypermedia documents like HTML.
+                Typically uses Port 80.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon">DNS</div>
+            <div class="protocol-info">
+              <h4>DNS (Domain Name System)</h4>
+              <p>
+                Translates human-readable domain names into IP addresses. Uses
+                Port 53.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon">FTP</div>
+            <div class="protocol-info">
+              <h4>FTP (File Transfer Protocol)</h4>
+              <p>
+                Enables reliable and efficient file transfers between devices
+                over a network. Uses Port 20 for data transfer and Port 21 for
+                control commands.
+              </p>
+            </div>
+          </div>
+          <div class="protocol-card">
+            <div class="protocol-icon">SMTP</div>
+            <div class="protocol-info">
+              <h4>SMTP (Simple Mail Transfer Protocol)</h4>
+              <p>Used for sending emails across the Internet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Real-world Use Cases -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Real-world Use Cases of the Application Layer
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Web Browsing</h4>
+            <p>
+              Protocols such as HTTP and HTTPS are fundamental to accessing and
+              exchanging web content. HTTPS adds encryption to secure sensitive
+              information.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Email Communication</h4>
+            <p>
+              Relies on protocols including SMTP (for sending), POP3 (for
+              downloading to local devices), and IMAP (for accessing emails on
+              the server).
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>File Transfer</h4>
+            <p>
+              Protocols such as FTP and SFTP facilitate file transfers between
+              systems on a network.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>API and Web Services</h4>
+            <p>
+              Enable communication and data exchange between software
+              applications, with RESTful services typically using HTTP/HTTPS.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Cloud Computing</h4>
+            <p>
+              Enables IaaS, PaaS, and SaaS models, allowing users to access
+              software applications and computing resources over the Internet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Challenges and Solutions -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Challenges and Solutions in the Application Layer
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Security Concerns</h4>
+                <p>
+                  The application layer is a common target for cyber-attacks,
+                  including data breaches and DDoS attacks.
+                </p>
+                <p>
+                  <strong>Mitigation:</strong> Firewalls, intrusion
+                  detection/prevention systems (IDS/IPS), regular updates, and
+                  patching.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Performance Optimization</h4>
+                <p>
+                  High network traffic can overwhelm servers if not effectively
+                  managed.
+                </p>
+                <p>
+                  <strong>Solution:</strong> Load balancers distribute workloads
+                  across multiple servers, and protocol optimization reduces
+                  overhead.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <p>
+              Encryption and authentication are critical for ensuring data
+              privacy and integrity. Protocols like HTTPS include SSL/TLS
+              encryption, while strong authentication mechanisms like OAuth or
+              two-factor authentication (2FA) verify user identity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Client and Server Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client and Server Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The client-server model can be understood through a simple
+              analogy: imagine walking into a library. You act as a visitor
+              (client), while the librarian serves as a server. When you request
+              a specific book, the librarian finds it and hands it to you.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              In the client-server setup, the client sends a request for data or
+              services, and the server processes the request and distributes the
+              response. This structured interaction ensures efficiency and
+              organization in network communication.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              The client-server architecture is a distributed computing model
+              where tasks are divided between two entities: the client, which
+              initiates requests, and the server, which responds to them. The
+              server serves as a central system that stores, manages, and
+              provides resources to multiple clients.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Components of the Client-Server Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Components of the Client-Server Model</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>1. Client</h4>
+            <p>
+              A device or application that initiates a request for a service or
+              resource from the server. Examples include web browsers, email
+              applications, and mobile apps.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>2. Server</h4>
+            <p>
+              Acts as a provider of services or resources requested by clients.
+              It stores, manages, and processes data, ensuring that the client
+              receives the correct response.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>3. Communication Protocol</h4>
+            <p>
+              Standardized protocols that define how data is formatted,
+              transmitted, and interpreted during an exchange. Examples include
+              HTTP, TCP/IP, and SMTP.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>4. Network</h4>
+            <p>
+              The medium that connects clients and servers, allowing information
+              to flow between them. Can be a local area network (LAN) or the
+              Internet.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: How Client-Server Model Works -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">How Client-Server Model Works</h1>
+        </div>
+        <div class="slide-content">
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 1</h4>
+              <p>Client sends a request to the server</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 2</h4>
+              <p>Server processes the request</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 3</h4>
+              <p>Server sends response back to client</p>
+            </div>
+          </div>
+          <div class="text-section">
+            <p>
+              The operation of the client-server model follows a systematic
+              flow:
+            </p>
+            <ol>
+              <li>
+                First, the client sends a request to the server, specifying the
+                desired service or data.
+              </li>
+              <li>
+                Next, the server processes the request, compiles the necessary
+                information, or retrieves data from its database.
+              </li>
+              <li>
+                Once processed, the server sends a response back to the client.
+              </li>
+              <li>
+                Finally, the client displays the response to the user through an
+                application or interface.
+              </li>
+            </ol>
+          </div>
+          <div class="highlight-box">
+            <p>
+              This continuous exchange forms the backbone of most online
+              services and digital interactions used today.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Steps to Implement the Client-Server Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Steps to Implement the Client-Server Model
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <ol>
+              <li>
+                <strong>Define Objectives:</strong> Clearly define the purpose
+                and scope of the client-server system.
+              </li>
+              <li>
+                <strong>Select Technologies:</strong> Choose appropriate
+                hardware, software, and communication protocols.
+              </li>
+              <li>
+                <strong>Develop the Server:</strong> Design and implement the
+                server-side application that handles requests and processes
+                data.
+              </li>
+              <li>
+                <strong>Develop the Client:</strong> Create client-side
+                applications or interfaces that interact with users.
+              </li>
+              <li>
+                <strong>Establish Communication:</strong> Configure and test the
+                network and communication protocols.
+              </li>
+              <li>
+                <strong>Testing and Optimization:</strong> Perform extensive
+                tests to identify and solve potential issues.
+              </li>
+              <li>
+                <strong>Deployment:</strong> Deploy the client-server system in
+                a production environment.
+              </li>
+              <li>
+                <strong>Monitoring and Maintenance:</strong> Regularly monitor
+                system performance and apply updates.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: Client-Server Architecture Types -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Client-Server Architecture Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>1-Tier Architecture</h4>
+            <p>
+              Combines all components (user interface, business logic, and data
+              storage) in a single device or software package. Suitable for
+              small-scale applications but challenging to manage due to lack of
+              separation.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>2-Tier Architecture</h4>
+            <p>
+              The client handles the presentation layer (user interface), while
+              the server manages the database and possibly business logic.
+              Communication is more direct and faster than 1-tier systems.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>3-Tier Architecture</h4>
+            <p>
+              Introduces a middleware layer between the client and the server.
+              When a client sends a request, the middleware processes it and
+              forwards it to the server. Provides enhanced security and data
+              integrity.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>N-Tier (Multi-tier) Architecture</h4>
+            <p>
+              Expands the 3-tier model by separating each function into
+              different layers. Provides maximum scalability, flexibility, and
+              fault tolerance, ideal for complex enterprise systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Difference Between P2P and Client-Server -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Peer-to-Peer vs. Client-Server Architecture
+          </h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Client-Server Architecture</th>
+                <th>Peer-to-Peer Architecture</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Has clearly defined clients and servers</td>
+                <td>
+                  No distinction between clients and servers; all nodes are
+                  equal
+                </td>
+              </tr>
+              <tr>
+                <td>Enables centralized data management through the server</td>
+                <td>
+                  Each peer maintains its own data and applications
+                  independently
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Primary goal is to share resources from server to client
+                </td>
+                <td>
+                  Focuses on peer connectivity and direct sharing between
+                  devices
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Data and services are provided only in response to client
+                  requests
+                </td>
+                <td>
+                  Peers can both request and provide services, offering mutual
+                  interaction
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Suitable for small and large networks due to centralized
+                  control
+                </td>
+                <td>
+                  Best suited for small networks, usually fewer than ten devices
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 18: Benefits of Client-Server Networks -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Benefits of Client-Server Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Centralized Management</h4>
+                <p>
+                  Servers can manage resources, applications, and data from one
+                  point, simplifying network administration.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Enhanced Security</h4>
+                <p>
+                  Centralized authentication, authorization, and access control
+                  improve security protocols.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Performance and Efficiency</h4>
+                <p>
+                  Servers handle resource-intensive tasks, freeing client
+                  devices to focus on user-level operations.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Reliability and Availability</h4>
+                <p>
+                  Centralized servers allow disaster recovery plans and regular
+                  backups, reducing downtime.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Scalability</h4>
+                <p>
+                  Supports seamless integration of additional clients, servers,
+                  or resources as the system grows.
+                </p>
+              </div>
+              <div class="info-card">
+                <h4>Remote Access and Mobility</h4>
+                <p>
+                  Users can access resources from any location, supporting
+                  flexible work environments.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Challenges in the Client-Server Model -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Challenges in the Client-Server Model and Solutions
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Server Overload</h4>
+            <p>
+              <strong>Challenge:</strong> When many clients send requests
+              simultaneously, the server may be overwhelmed.
+            </p>
+            <p>
+              <strong>Solution:</strong> Apply load balancers to distribute
+              traffic across multiple servers and use caching mechanisms.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Network Dependence</h4>
+            <p>
+              <strong>Challenge:</strong> The client-server model heavily
+              depends on network connectivity.
+            </p>
+            <p>
+              <strong>Solution:</strong> Ensure robust network infrastructure
+              with redundant connections and failover systems.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Security Risk</h4>
+            <p>
+              <strong>Challenge:</strong> Centralized servers are attractive
+              targets for cyber-attacks.
+            </p>
+            <p>
+              <strong>Solution:</strong> Use strong encryption, conduct regular
+              security audits, and deploy firewalls.
+            </p>
+          </div>
+          <div class="info-card">
+            <h4>Single Point of Failure</h4>
+            <p>
+              <strong>Challenge:</strong> If a server goes down, all connected
+              clients may lose access.
+            </p>
+            <p>
+              <strong>Solution:</strong> Introduce redundancy through backup
+              servers, clustering, and failover mechanisms.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: Examples of Client-Server Networks -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Examples of Client-Server Networks</h1>
+        </div>
+        <div class="slide-content">
+          <div class="list-section">
+            <ul>
+              <li>
+                <strong>Web Apps:</strong> Web browsers (clients) requesting web
+                pages from web servers
+              </li>
+              <li>
+                <strong>Email Services:</strong> Email clients connecting to
+                email servers to send, receive, and store messages
+              </li>
+              <li>
+                <strong>DNS (Domain Name System):</strong> DNS servers providing
+                clients with routing information to locate websites
+              </li>
+              <li>
+                <strong>DHCP (Dynamic Host Configuration Protocol):</strong>
+                DHCP servers providing network configuration details to clients
+              </li>
+              <li>
+                <strong>File Sharing:</strong> Applications like Dropbox relying
+                on file servers for storage and access
+              </li>
+              <li>
+                <strong>Database Management Systems:</strong> Clients
+                communicating with database servers to manage queries and data
+              </li>
+              <li>
+                <strong>Online Gaming:</strong> Game clients connecting to
+                servers to interact with other players
+              </li>
+              <li>
+                <strong>Online Banking:</strong> Banking applications allowing
+                customers to access accounts through centralized servers
+              </li>
+              <li>
+                <strong>Enterprise Resource Planning (ERP):</strong> Solutions
+                like SAP using centralized servers to manage resources
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: Summary and FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Summary and FAQs</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Summary</h3>
+            <p>
+              The application layer is the topmost layer in both OSI and TCP/IP
+              models, acting as an interface between end-user applications and
+              the network. It enables communication, data exchange, and
+              interactions with services such as web browsing, email, and file
+              transfer.
+            </p>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q1. What is an application layer in networking?
+            </div>
+            <div class="answer">
+              The application layer is the top layer in both the OSI and TCP/IP
+              models. It acts as an interface between the end-user application
+              and the network.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q2. What are some common protocols used in application layers?
+            </div>
+            <div class="answer">
+              Popular protocols include HTTP/HTTPS for web browsing, FTP/SFTP
+              for file transfer, SMTP, POP3, IMAP for email communication, and
+              DNS for translating domain names into IP addresses.
+            </div>
+          </div>
+          <div class="qa-pair">
+            <div class="question">
+              Q3. How does the client-server model differ from peer-to-peer
+              networking?
+            </div>
+            <div class="answer">
+              In the client-server model, a centralized server provides
+              resources and services, while in Peer-to-Peer (P2P) networking,
+              all nodes can act as both clients and servers.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Application Layer in Networking - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

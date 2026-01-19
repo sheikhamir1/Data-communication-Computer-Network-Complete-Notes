@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DNS and FTP in Computer Networks</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .protocol-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .protocol-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 60px;
+        text-align: center;
+      }
+
+      .protocol-info {
+        flex: 1;
+      }
+
+      .protocol-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .frame-structure {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .frame-field {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        flex-grow: 1;
+        min-width: 100px;
+      }
+
+      .frame-field.primary {
+        background-color: #1a73e8;
+        color: white;
+        font-weight: bold;
+      }
+
+      .process-flow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 150px;
+      }
+
+      .process-arrow {
+        color: #1a73e8;
+        font-size: 1.5rem;
+        margin: 0 10px;
+      }
+
+      .dns-hierarchy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px 0;
+      }
+
+      .dns-level {
+        background-color: #e8f0fe;
+        border: 1px solid #1a73e8;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        width: 80%;
+        text-align: center;
+        position: relative;
+      }
+
+      .dns-level.root {
+        width: 40%;
+        background-color: #1a73e8;
+        color: white;
+      }
+
+      .dns-level.tld {
+        width: 60%;
+      }
+
+      .dns-level.authoritative {
+        width: 80%;
+      }
+
+      .dns-arrow {
+        color: #1a73e8;
+        font-size: 2rem;
+        margin: -10px 0;
+      }
+
+      .dns-record-type {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .record-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .record-info {
+        flex: 1;
+      }
+
+      .record-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .ftp-connection {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+
+      .ftp-component {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        width: 45%;
+      }
+
+      .ftp-arrow {
+        color: #1a73e8;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .ftp-mode {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .mode-icon {
+        font-size: 2rem;
+        color: #1a73e8;
+        margin-right: 15px;
+      }
+
+      .mode-info {
+        flex: 1;
+      }
+
+      .mode-info h4 {
+        color: #1a73e8;
+        margin-bottom: 5px;
+      }
+
+      .command-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .command-table th,
+      .command-table td {
+        border: 1px solid #e1e8ed;
+        padding: 10px;
+        text-align: left;
+      }
+
+      .command-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .command-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS and FTP in Computer Networks</h1>
+          <p class="slide-subtitle">
+            Domain Name System and File Transfer Protocol
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://www.windmillstrategy.com/wp-content/uploads/dns-hosting-overview.png"
+              alt="Network Protocols"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              A comprehensive overview of two fundamental protocols in computer
+              networking: DNS for translating domain names to IP addresses, and
+              FTP for transferring files between systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Introduction to DNS -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to DNS</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              DNS stands for Domain Name System, which is used in computer
+              networks (especially the Internet) to translate human-readable
+              domain names (like www.Tpointtech.com) into IP addresses (like
+              142.250.190.14) that computers use to identify each other on a
+              network.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <p>
+              When you type a website name in your browser, the DNS acts like a
+              phone book of the Internet. It helps your computer find the
+              correct server by converting the domain name into its
+              corresponding IP address.
+            </p>
+          </div>
+          <div class="text-section">
+            <p>
+              DNS is a directory service that provides a mapping between the
+              name of a host on the network and its numerical address. It is
+              required for the functioning of the internet.
+            </p>
+            <p>
+              Each node in a tree has a domain name, and a full domain name is a
+              sequence of symbols specified by dots.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: DNS Domain Types -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Domain Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The domain name space is divided into three different sections:
+              generic domains, country domains, and inverse domain.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Generic Domains</h4>
+            <p>
+              It defines the registered hosts according to their generic
+              behavior. Each node in a tree defines the domain name, which is an
+              index to the DNS database. It uses three-character labels that
+              describe the organization type.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Country Domain</h4>
+            <p>
+              The format of country domain is the same as a generic domain, but
+              it uses two-character country abbreviations (e.g., us for the
+              United States) in place of three-character organizational
+              abbreviations.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Inverse Domain</h4>
+            <p>
+              The inverse domain is used for mapping an address to a name. When
+              the server has received a request from the client, and the server
+              contains the files of only authorized clients, it sends a query to
+              the DNS server to ask for mapping an address to the name.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Generic Domain Labels -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Generic Domain Labels</h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Label</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>aero</td>
+                <td>Airlines and aerospace companies</td>
+              </tr>
+              <tr>
+                <td>biz</td>
+                <td>Businesses or firms</td>
+              </tr>
+              <tr>
+                <td>com</td>
+                <td>Commercial Organizations</td>
+              </tr>
+              <tr>
+                <td>coop</td>
+                <td>Cooperative business Organizations</td>
+              </tr>
+              <tr>
+                <td>edu</td>
+                <td>Educational institutions</td>
+              </tr>
+              <tr>
+                <td>gov</td>
+                <td>Government institutions</td>
+              </tr>
+              <tr>
+                <td>info</td>
+                <td>Information service providers</td>
+              </tr>
+              <tr>
+                <td>int</td>
+                <td>International Organizations</td>
+              </tr>
+              <tr>
+                <td>mil</td>
+                <td>Military groups</td>
+              </tr>
+              <tr>
+                <td>museum</td>
+                <td>Museum & other nonprofit organizations</td>
+              </tr>
+              <tr>
+                <td>name</td>
+                <td>Personal names</td>
+              </tr>
+              <tr>
+                <td>net</td>
+                <td>Network Support centers</td>
+              </tr>
+              <tr>
+                <td>org</td>
+                <td>Nonprofit Organizations</td>
+              </tr>
+              <tr>
+                <td>pro</td>
+                <td>Professional individual Organizations</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 5: How DNS Works -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">How DNS Works</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              With the help of the DNS process, users can access websites by
+              simply entering a domain name into their web browser. The DNS
+              process can be divided into multiple parts:
+            </p>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 1</h4>
+              <p>User Input</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 2</h4>
+              <p>Local Cache Check</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 3</h4>
+              <p>DNS Resolver Query</p>
+            </div>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 4</h4>
+              <p>Root DNS Server</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 5</h4>
+              <p>TLD DNS Server</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 6</h4>
+              <p>Authoritative DNS Server</p>
+            </div>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 7</h4>
+              <p>Final Response</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This entire process takes milliseconds to load webpages, enabling
+              a quick and effective browsing experience.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Structure of DNS -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Structure of DNS</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A hierarchical structure underpins DNS, guaranteeing scalability
+              and dependability throughout the global internet infrastructure:
+            </p>
+          </div>
+
+          <div class="dns-hierarchy">
+            <div class="dns-level root">
+              <h3>Root DNS Servers</h3>
+              <p>
+                The highest-level DNS servers that know where to find the TLD
+                servers
+              </p>
+            </div>
+            <div class="dns-arrow">↓</div>
+            <div class="dns-level tld">
+              <h3>TLD Servers</h3>
+              <p>
+                Top-Level Domain servers that manage domain extensions like
+                .com, .org, .in, .edu, etc.
+              </p>
+            </div>
+            <div class="dns-arrow">↓</div>
+            <div class="dns-level authoritative">
+              <h3>Authoritative DNS Servers</h3>
+              <p>
+                Servers that hold the actual DNS records for domain names and
+                provide the appropriate IP addresses
+              </p>
+            </div>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The client computer makes a request to the local name server. If
+              the root does not find the address in its database, it forwards
+              the request to the root name server, which forwards it to an
+              authoritative name server or TLD.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: DNS Lookup and Resolver -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Lookup and Resolver</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>DNS Lookup</h3>
+            <p>
+              The process of converting a human-readable domain name, such as
+              www.tpointtech.com, into its matching IP address, such as
+              192.0.2.1, which computers use to find and connect with one
+              another on the internet, is known as DNS Lookup. It is also called
+              DNS Resolution.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              When a user enters a domain name into their browser, DNS Lookup
+              starts. The query passes through servers like the DNS resolver,
+              Root server, TLD server, and authoritative server. After locating
+              the IP address, the browser establishes a connection with the
+              website's server and loads the page.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>DNS Resolver</h3>
+            <p>
+              Simply referred to as a DNS Client, a DNS Resolver is capable of
+              starting the process of DNS Lookup. The DNS Resolver makes it
+              simple for apps to access various websites and services on the
+              Internet by utilizing user-friendly domain names, which also
+              resolves the problem of remembering IP addresses.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Types of DNS Queries -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Types of DNS Queries</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The DNS Queries occur in DNS Lookup, which are basically of three
+              types that define how this communication takes place:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Recursive Query</h4>
+            <p>
+              In a recursive query, the DNS client requests the DNS server to
+              provide a complete answer - either the IP address of the requested
+              domain or an error message. The DNS server takes full
+              responsibility for querying other servers if needed until it finds
+              the final answer.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Iterative Query</h4>
+            <p>
+              In an iterative query, the DNS server does not fetch the complete
+              answer itself. Instead, if it doesn't have the information, it
+              responds with a referral, the address of another DNS server that
+              might know the answer. The client then continues querying these
+              servers one by one until it gets the result.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Non-Recursive Query</h4>
+            <p>
+              When a DNS resolver asks a DNS server for a record that it has
+              access to due to a record that is in its cache, this is known as a
+              non-recursive query.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: DNS Caching and TTL -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Caching and TTL</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>DNS Caching</h3>
+            <p>
+              DNS Caching is the process of storing DNS query results
+              temporarily on a device or DNS server. When you revisit a website,
+              your system can use the cached DNS record instead of performing a
+              new DNS lookup, saving time and improving performance.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>TTL (Time-to-Live)</h3>
+            <p>
+              TTL is a setting in DNS records that defines how long a DNS record
+              should be stored in the cache before it expires and needs to be
+              refreshed from the authoritative DNS server.
+            </p>
+            <ul>
+              <li>TTL is measured in seconds</li>
+              <li>
+                A lower TTL means more frequent updates (useful when DNS records
+                change often)
+              </li>
+              <li>
+                A higher TTL improves speed but delays propagation of changes
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              For example, if the TTL for www.example.com is 3600 seconds, the
+              item is cached for one hour before a new lookup is required.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: DNS Security and DNSSEC -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Security and DNSSEC</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Domain Name System (DNS) is a crucial part of the internet,
+              but traditional DNS was not designed with strong security
+              features, making it vulnerable to various attacks such as DNS
+              spoofing or cache poisoning.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>DNS Security Extensions (DNSSEC)</h3>
+            <p>
+              To protect DNS data integrity and authenticity, the DNS Security
+              Extensions (DNSSEC) were introduced:
+            </p>
+            <ul>
+              <li>This protocol was created to solve security issues in DNS</li>
+              <li>
+                It enables resolvers to verify the integrity and authenticity of
+                DNS answers by including cryptographic signatures to DNS entries
+              </li>
+              <li>
+                DNSSEC ensures that the data a user gets back from a DNS query
+                has not been changed
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              By comprehending DNSSEC, students can help protect websites from
+              DNS-based attacks and guarantee secure and genuine browsing
+              experiences.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Reverse DNS Lookup -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Reverse DNS Lookup</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A Reverse DNS Lookup (rDNS) is the process of finding the domain
+              name associated with a given IP address. This is the reverse of a
+              normal DNS lookup, which resolves a domain name to an IP address.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Typical Uses for Reverse DNS:</h4>
+            <ul>
+              <li>Email spam filtering</li>
+              <li>Network troubleshooting</li>
+              <li>Logging and analytics</li>
+              <li>Server authentication</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Reverse DNS is particularly useful for email servers to verify
+              that incoming mail is coming from a legitimate server. Many email
+              systems will reject messages from servers that don't have proper
+              reverse DNS records.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: DNS Record Types -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Record Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A DNS record is an entry in the DNS database that tells the
+              internet how to handle requests for a domain name. Each record
+              type defines a specific function:
+            </p>
+          </div>
+
+          <div class="dns-record-type">
+            <div class="record-icon">A</div>
+            <div class="record-info">
+              <h4>A Record</h4>
+              <p>
+                Maps an IPv4 address to a domain name (e.g., tpointtech.com to
+                185.197.109.153). It is the most popular DNS record, used for
+                directing a domain to the IP address of its website.
+              </p>
+            </div>
+          </div>
+
+          <div class="dns-record-type">
+            <div class="record-icon">CNAME</div>
+            <div class="record-info">
+              <h4>CNAME Record</h4>
+              <p>
+                Maps one domain name (alias) to another domain name (canonical
+                name). For instance, www.tpointtech.com can be an alias for
+                tpointtech.com.
+              </p>
+            </div>
+          </div>
+
+          <div class="dns-record-type">
+            <div class="record-icon">MX</div>
+            <div class="record-info">
+              <h4>MX Record</h4>
+              <p>
+                Tells the internet where to deliver emails for a particular
+                domain. It specifies the mail server responsible for handling
+                incoming emails.
+              </p>
+            </div>
+          </div>
+
+          <div class="dns-record-type">
+            <div class="record-icon">TXT</div>
+            <div class="record-info">
+              <h4>TXT Record</h4>
+              <p>
+                Stores text-based data, frequently used to implement email
+                security protocols like DKIM and SPF and to confirm domain
+                ownership.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: DNS Caching Locations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">DNS Caching Locations</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              DNS caching occurs at multiple levels to improve performance and
+              reduce DNS query traffic:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Browser DNS Caching</h4>
+            <p>
+              Web browsers are developed by default to cache DNS records for a
+              set amount of time. The browser cache is the first location looked
+              up for the requested record when a request is made for a DNS
+              record.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Operating System (OS) Level DNS Caching</h4>
+            <p>
+              Your computer's operating system stores recently resolved domain
+              name to IP address mappings in memory. This helps speed up future
+              requests to the same domains without needing to query the DNS
+              server again.
+            </p>
+            <p>
+              A "stub resolver" or DNS client is the term used to describe the
+              operating system process designed to handle this query.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              A stub resolver first determines whether it has the record in its
+              own cache before responding to a request from an application. If
+              not, it sends a DNS query to a DNS recursive resolver within the
+              Internet service provider (ISP) outside the local network.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Introduction to FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              FTP stands for File Transfer Protocol. It is a standard network
+              protocol used to transfer files between a client and a server over
+              a TCP/IP network such as the Internet or a local network.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              FTP is a standard communication protocol. There are also other
+              protocols, such as HTTP, which are used to move files between
+              computers, but they are less focused and clear as compared to FTP.
+            </p>
+          </div>
+
+          <div class="list-section">
+            <h3>Key Points of FTP:</h3>
+            <ul>
+              <li>
+                FTP is a standard internet protocol provided by TCP/IP used for
+                transmitting files from one host to another
+              </li>
+              <li>
+                It is mainly used for transferring web page files from their
+                creator to the computer that acts as a server for other
+                computers on the internet
+              </li>
+              <li>
+                It is also used for downloading files to a computer from other
+                servers
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: Why FTP and Mechanism -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Why FTP and Its Mechanism</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Why FTP?</h3>
+            <p>
+              Although transferring files from one system to another is simple,
+              it can cause problems:
+            </p>
+            <ul>
+              <li>Two systems may have different file conventions</li>
+              <li>
+                Two systems may have different ways to represent text and data
+              </li>
+              <li>Two systems may have different directory structures</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              FTP protocol overcomes these problems by establishing two
+              connections between hosts: one for data transfer and another for
+              the control connection.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Mechanism of FTP</h3>
+            <p>
+              The FTP client has three components: the user interface, control
+              process, and data transfer process. The server has two components:
+              the server control process and the server data transfer process.
+            </p>
+          </div>
+
+          <div class="ftp-connection">
+            <div class="ftp-component">
+              <h4>FTP Client</h4>
+              <p>
+                User Interface<br />Control Process<br />Data Transfer Process
+              </p>
+            </div>
+            <div class="ftp-arrow">⇄</div>
+            <div class="ftp-component">
+              <h4>FTP Server</h4>
+              <p>Server Control Process<br />Server Data Transfer Process</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: FTP Connection Types -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP Connection Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>There are two types of connections in FTP:</p>
+          </div>
+
+          <div class="info-card">
+            <h4>Control Connection</h4>
+            <p>
+              The control connection uses very simple rules for communication.
+              Through the control connection, we can transfer a line of command
+              or line of response at a time. The control connection is made
+              between the control processes and remains connected during the
+              entire interactive FTP session.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Data Connection</h4>
+            <p>
+              The Data Connection uses very complex rules as data types may
+              vary. The data connection is made between data transfer processes.
+              The data connection opens when a command comes for transferring
+              the files and closes when the file is transferred.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This dual-connection approach allows FTP to separate control
+              information from actual data transfer, improving efficiency and
+              reliability.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: FTP Clients and Advantages/Disadvantages -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP Clients and Advantages/Disadvantages</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>FTP Clients</h3>
+            <p>
+              FTP client is a program that implements a file transfer protocol
+              which allows you to transfer files between two hosts on the
+              internet. It allows a user to connect to a remote host and upload
+              or download files.
+            </p>
+            <p>
+              The FTP program is also available as a built-in component in a Web
+              browser. This GUI-based FTP client makes file transfer very easy
+              and does not require remembering FTP commands.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Advantages of FTP</h4>
+                <ul>
+                  <li>
+                    <strong>Speed:</strong> One of the fastest ways to transfer
+                    files
+                  </li>
+                  <li>
+                    <strong>Efficient:</strong> No need to complete all
+                    operations to get the entire file
+                  </li>
+                  <li>
+                    <strong>Security:</strong> Requires login with username and
+                    password
+                  </li>
+                  <li>
+                    <strong>Back & forth movement:</strong> Allows transferring
+                    files in both directions
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Disadvantages of FTP</h4>
+                <ul>
+                  <li>Not all FTP providers offer encryption</li>
+                  <li>File size limit of 2GB</li>
+                  <li>Passwords and file contents are sent in clear text</li>
+                  <li>Not compatible with every system</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: Working with FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Working with FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              File Transfer Protocol (FTP) is a client-server application. This
+              means that a client computer requests a service and a server
+              computer provides that service.
+            </p>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 1</h4>
+              <p>Connection Establishment</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 2</h4>
+              <p>Authentication</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 3</h4>
+              <p>Command and Response Exchange</p>
+            </div>
+          </div>
+
+          <div class="process-flow">
+            <div class="process-step">
+              <h4>Step 4</h4>
+              <p>Data Transfer</p>
+            </div>
+            <div class="process-arrow">→</div>
+            <div class="process-step">
+              <h4>Step 5</h4>
+              <p>Termination of Connection</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Once the FTP connection is activated, the client and server
+              communicate with each other by a specific sequence of commands and
+              corresponding responses. The client issues commands, and the
+              server answers with a number corresponding to the request status.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: FTP Modes of Operation -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP Modes of Operation</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              An FTP server can work in either an Active or Passive Mode. They
+              differ mainly in how each connection is set up.
+            </p>
+          </div>
+
+          <div class="ftp-mode">
+            <div class="mode-icon">🔴</div>
+            <div class="mode-info">
+              <h4>Active Mode</h4>
+              <p>
+                An FTP client in Active Mode opens a random port (above 1023)
+                and tells the server the port number with the PORT command. Then
+                the server opens a connection from port 20 to the client's
+                defined port to set up the data connection.
+              </p>
+              <p>
+                <strong>Control Connection:</strong> Client → Server (Port
+                21)<br />
+                <strong>Data Connection:</strong> Server → Client (Port 20)
+              </p>
+              <p>
+                This method is ideal when the client's firewall is not set to
+                block incoming connections.
+              </p>
+            </div>
+          </div>
+
+          <div class="ftp-mode">
+            <div class="mode-icon">🔵</div>
+            <div class="mode-info">
+              <h4>Passive Mode</h4>
+              <p>
+                This Mode is used to bypass firewall restrictions. Here, the
+                server randomly opens a port for data transfer and tells the
+                client the port number using the PASV command. The client then
+                initiates the connection to that port, establishing the data
+                connection.
+              </p>
+              <p>
+                <strong>Control Connection:</strong> Client → Server (Port
+                21)<br />
+                <strong>Data Connection:</strong> Client → Server (Random Port)
+              </p>
+              <p>
+                Most FTP clients today default to Passive Mode, which is more
+                effective in the presence of firewalls and NAT devices.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: FTP Commands and Responses -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP Commands and Responses</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              FTP operates on a structured template of text commands, which are
+              issued by the client to the server. Each command issued is
+              followed by a server response, which contains a three-digit code
+              that indicates the output of the command.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <h3>Common FTP Commands</h3>
+              <table class="command-table">
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>USER</td>
+                  <td>Sends the username to the server</td>
+                </tr>
+                <tr>
+                  <td>PASS</td>
+                  <td>Sends the password for authentication</td>
+                </tr>
+                <tr>
+                  <td>LIST</td>
+                  <td>Lists files and directories</td>
+                </tr>
+                <tr>
+                  <td>CWD</td>
+                  <td>Changes the working directory</td>
+                </tr>
+                <tr>
+                  <td>RETR</td>
+                  <td>Retrieves (downloads) a file</td>
+                </tr>
+                <tr>
+                  <td>STOR</td>
+                  <td>Stores (uploads) a file</td>
+                </tr>
+                <tr>
+                  <td>QUIT</td>
+                  <td>Ends the session</td>
+                </tr>
+              </table>
+            </div>
+            <div class="column">
+              <h3>Common Server Response Codes</h3>
+              <table class="command-table">
+                <tr>
+                  <th>Code</th>
+                  <th>Meaning</th>
+                </tr>
+                <tr>
+                  <td>200</td>
+                  <td>Command okay</td>
+                </tr>
+                <tr>
+                  <td>220</td>
+                  <td>Service ready for new user</td>
+                </tr>
+                <tr>
+                  <td>221</td>
+                  <td>Service closing control connection</td>
+                </tr>
+                <tr>
+                  <td>331</td>
+                  <td>Username okay, need password</td>
+                </tr>
+                <tr>
+                  <td>425</td>
+                  <td>Can't open data connection</td>
+                </tr>
+                <tr>
+                  <td>450</td>
+                  <td>Requested file action not taken</td>
+                </tr>
+                <tr>
+                  <td>550</td>
+                  <td>File not found or access denied</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: Types of FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Types of FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              There are different types of FTP based on how authentication and
+              encryption are handled:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>1. Anonymous FTP</h4>
+            <p>
+              In this type of FTP, there is no requirement to have a
+              user-specific login. Anyone can log into the server using a
+              generic username ("anonymous") and an email address as a password.
+              It is mainly used for public file sharing when the security level
+              is negligible.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>2. Password-Protected FTP</h4>
+            <p>
+              In this type, users are required to log in with a specified
+              username and password, which ensures that only authorized users
+              can access the server.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>3. Secure FTP (SFTP)</h4>
+            <p>
+              It is important to note that SFTP (SSH File Transfer Protocol) is
+              not the same as FTP. SFTP operates over the Secure Shell (SSH)
+              protocol and provides encryption for commands and data, ensuring
+              confidentiality and integrity in file transfers.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>4. FTP Secure (FTPS)</h4>
+            <p>
+              FTPS expands the conventional FTP functionality by integrating
+              Transport Layer Security (TLS) or Secure Sockets Layer (SSL)
+              encryption. Depending on how the security layer is engaged, it can
+              function in implicit or explicit modes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 22: FTP Architecture -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP Architecture</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The File Transfer Protocol (FTP) follows a client-server model
+              where the client starts the conversation and the server listens to
+              the requests.
+            </p>
+          </div>
+
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>FTP Client</h4>
+                <p>
+                  Requests file operations (like uploading, downloading, or
+                  listing a directory) and presents the output to the user.
+                </p>
+                <h5>Components:</h5>
+                <ul>
+                  <li>
+                    <strong>User Interface (UI):</strong> The graphical or
+                    command-line interface
+                  </li>
+                  <li>
+                    <strong>Control Process:</strong> Manages the administrative
+                    link
+                  </li>
+                  <li>
+                    <strong>Data Transfer Process:</strong> Manages the data
+                    connection
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>FTP Server</h4>
+                <p>
+                  Responds, verifies the client's user credentials, and executes
+                  the requested file operations.
+                </p>
+                <h5>Components:</h5>
+                <ul>
+                  <li>
+                    <strong>Server Control Process:</strong> Listens for
+                    connections, authenticates users
+                  </li>
+                  <li>
+                    <strong>Server Data Transfer Process:</strong> Facilitates
+                    uploading, downloading, and directory listing
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 23: Security Issues in FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Security Issues in FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The original FTP design was implemented with little concern for
+              security. Consequently, the original FTP protocol passes data,
+              including usernames, passwords, and file data, in unprotected
+              plain text:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Eavesdropping</h4>
+            <p>
+              FTP lacks encrypted traffic, so unprotected sensitive data may be
+              intercepted by malicious actors monitoring the network connection.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Brute Force Attacks</h4>
+            <p>
+              FTP accounts may be accessed with unprotected passwords, and file
+              data may be fraudulently accessed through repeated login attempts.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Data Integrity Issues</h4>
+            <p>
+              Losing file data in transit may go undetected. The original FTP
+              protocol may relay lost packets without being detected,
+              irrespective of transmission.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Firewall Conflicts</h4>
+            <p>
+              The active mode and multi-connection features of FTP can
+              complicate reliable firewall security configurations.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 24: FTP vs. SFTP vs. FTPS -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FTP vs. SFTP vs. FTPS</h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>FTP</th>
+                <th>SFTP</th>
+                <th>FTPS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Encryption</td>
+                <td>None</td>
+                <td>SSH-based encryption</td>
+                <td>SSL/TLS encryption</td>
+              </tr>
+              <tr>
+                <td>Port</td>
+                <td>21 (Control)</td>
+                <td>22</td>
+                <td>21 (Explicit), 990 (Implicit)</td>
+              </tr>
+              <tr>
+                <td>Security</td>
+                <td>Low</td>
+                <td>High</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td>Authentication</td>
+                <td>Username & Password</td>
+                <td>SSH Keys / Password</td>
+                <td>Certificate & Password</td>
+              </tr>
+              <tr>
+                <td>Compatibility</td>
+                <td>High</td>
+                <td>Medium</td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td>Performance</td>
+                <td>Fast (unencrypted)</td>
+                <td>Slower (due to encryption)</td>
+                <td>Moderate</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="highlight-box">
+            <p>
+              SFTP and FTPS are preferred for secure file transfer operations,
+              especially in enterprise environments where data security is
+              critical.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 25: Applications of FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              FTP is commonly used in multiple industries and organizations for
+              many purposes:
+            </p>
+          </div>
+
+          <div class="list-section">
+            <ul>
+              <li>
+                <strong>Website Management:</strong> Web developers send pages,
+                images, and scripts to web servers using FTP, helpful for
+                website updating and maintenance
+              </li>
+              <li>
+                <strong>Data Backup:</strong> Organizations routinely back up
+                important files to remote servers or to the cloud
+              </li>
+              <li>
+                <strong>Software Distribution:</strong> Software vendors
+                distribute updates and patches through FTP servers
+              </li>
+              <li>
+                <strong>Collaboration:</strong> FTP enables the sharing of files
+                between geographically distant teams working on a common project
+              </li>
+              <li>
+                <strong>Education and Research:</strong> FTP servers are used to
+                facilitate the exchange of large datasets and academic work in
+                universities and research organizations
+              </li>
+              <li>
+                <strong>Media and Entertainment:</strong> FTP is used for large
+                file transfers in video and audio production, as well as for the
+                transfer of graphics and sound files
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 26: Future of FTP -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Future of FTP</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Because of advancements in cybersecurity, traditional FTP is being
+              phased out and replaced with secure versions of FTP, such as SFTP
+              and FTPS. However, due to simplicity, reliability, and almost
+              universal support, FTP still performs many invaluable functions.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <h3>Key Developments in Modern FTP Systems:</h3>
+          </div>
+
+          <div class="info-card">
+            <h4>Integration with Cloud Services</h4>
+            <p>
+              Many FTP systems now interface with cloud systems such as AWS,
+              Azure, and Google Cloud for hybrid data management.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Automation</h4>
+            <p>
+              Automation of uploads and downloads using scripts and tools like
+              WinSCP, FileZilla, and cURL increases efficiency.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Enhanced Security</h4>
+            <p>Modern systems protect data using 2FA and secure tunneling.</p>
+          </div>
+
+          <div class="info-card">
+            <h4>Web-Based FTP Clients</h4>
+            <p>
+              Available browser-based FTP interfaces lessen the need for
+              dedicated software, making access easier and more portable.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 27: Conclusion and FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion and FAQs</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <h3>Conclusion</h3>
+            <p>
+              The Domain Name System (DNS) and File Transfer Protocol (FTP) are
+              fundamental components of computer networking. DNS acts as the
+              "phonebook for the internet," translating human-readable domain
+              names into machine-readable IP addresses, while FTP provides a
+              reliable method for transferring files between systems.
+            </p>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">Q1. What is FTP, and how does it work?</div>
+            <div class="answer">
+              File Transfer Protocol (FTP) is an Internet-based protocol to
+              transfer files from one system to another over a TCP/IP network.
+              It is based on a client-server architecture whereby one system,
+              the client, requests file operations and the other system, the
+              server, responds.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q2. What are the main differences between FTP, SFTP, and FTPS?
+            </div>
+            <div class="answer">
+              FTP is the least secure because it sends data in plain text. SFTP
+              operates over SSH and provides encryption for commands and data.
+              FTPS places SSL/TLS encryption over standard FTP.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              Q3. What security measures should be taken while using FTP?
+            </div>
+            <div class="answer">
+              Always use SFTP or FTPS over plain FTP, use strong passwords,
+              enable 2FA, and keep the FTP software updated. Also, disabling
+              anonymous access and setting restrictive directory permissions
+              assist in securing log access.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      DNS and FTP in Computer Networks - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

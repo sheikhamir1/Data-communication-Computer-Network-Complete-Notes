@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer Network Privacy and Digital Signatures</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .encryption-type {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .type-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .type-info {
+        flex: 1;
+      }
+
+      .type-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .process-step {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+
+      .step-number {
+        background-color: #1a73e8;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 15px;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .algorithm-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .algorithm-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .benefit-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .benefit-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .benefit-info {
+        flex: 1;
+      }
+
+      .benefit-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .application-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .app-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .app-info {
+        flex: 1;
+      }
+
+      .app-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .math-formula {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+        font-family: "Courier New", monospace;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Computer Network Privacy and Digital Signatures
+          </h1>
+          <p class="slide-subtitle">
+            Encryption, Decryption, and Authentication Techniques
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://softwareg.com.au/cdn/shop/articles/3-56_45270b98-5036-40b9-a31d-b4f69dc68c69.png?v=1707796129"
+              alt="Network Privacy and Digital Signatures"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              Exploring the fundamental concepts of network privacy through
+              encryption/decryption techniques and the implementation of digital
+              signatures for authentication, integrity, and non-repudiation in
+              computer networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Introduction to Computer Network Privacy -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Introduction to Computer Network Privacy</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The concept of how to achieve privacy has not been changed for
+              thousands of years: the message cannot be encrypted. The message
+              must be rendered as opaque to all the unauthorized parties. A good
+              encryption/decryption technique is used to achieve privacy to some
+              extent.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This technique ensures that the eavesdropper cannot understand the
+              contents of the message.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Encryption and decryption make up the heart of how we protect data
+              these days. The whole idea of encryption involves taking plain
+              text that anyone can read and scrambling it into something called
+              ciphertext that looks like nonsense. Only people who have the
+              right key for decryption get to turn it back into the original
+              stuff.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Encryption and Decryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Encryption and Decryption</h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <div class="info-card">
+                <h4>Encryption</h4>
+                <p>
+                  Encryption means that the sender converts the original
+                  information into another form and sends the unintelligible
+                  message over the network.
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="info-card">
+                <h4>Decryption</h4>
+                <p>
+                  Decryption reverses the Encryption process in order to
+                  transform the message back to the original form.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The data which is to be encrypted at the sender site is known as
+              plaintext, and the encrypted data is known as ciphertext. The data
+              is decrypted at the receiver site.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>There are two types of Encryption/Decryption techniques:</p>
+            <ul>
+              <li>Privacy with secret key Encryption/Decryption</li>
+              <li>Privacy with public key Encryption/Decryption</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: Secret Key Encryption/Decryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Secret Key Encryption/Decryption Technique
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In Secret Key Encryption/Decryption technique, the same key is
+              used by both the parties, i.e., the sender and receiver.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/secretkeyencryption/600/300.jpg"
+              alt="Secret Key Encryption"
+            /> -->
+          </div>
+
+          <div class="text-section">
+            <ul>
+              <li>
+                The sender uses the secret key and encryption algorithm to
+                encrypt the data; the receiver uses this key and decryption
+                algorithm to decrypt the data.
+              </li>
+              <li>
+                In Secret Key Encryption/Decryption technique, the algorithm
+                used for encryption is the inverse of the algorithm used for
+                decryption.
+              </li>
+              <li>
+                The secret key encryption algorithm is also known as symmetric
+                encryption algorithm because the same secret key is used in
+                bidirectional communication.
+              </li>
+              <li>
+                The secret key requires that we should know which computers are
+                talking to each other so that we can install the key on each
+                computer.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Symmetric and Asymmetric Encryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Symmetric and Asymmetric Encryption</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encryption splits into two big kinds. Symmetric and asymmetric,
+              which are the two pillars of data protection and both help lock
+              down digital talks a lot.
+            </p>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🔑</div>
+            <div class="type-info">
+              <h4>Symmetric Encryption</h4>
+              <p>
+                Symmetric encryption sticks with one key for both the scrambling
+                and unscrambling. It runs quickly and smoothly. People use it in
+                standards like AES (Advanced Encryption Standard) and DES (Data
+                Encryption Standard). Still, the tough part comes with handing
+                out that key.
+              </p>
+            </div>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🔐</div>
+            <div class="type-info">
+              <h4>Asymmetric Encryption</h4>
+              <p>
+                Asymmetric encryption goes further with two keys. One public key
+                handles the encryption. The private one does the decryption.
+                That setup boosts safety on networks, particularly for sending
+                touchy info over lines that are not secure. Algorithms like RSA
+                and ECC tie those keys together with tough math.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Each type brings its own good points. They often team up in
+              practice. Symmetric handles the fast parts. Asymmetric takes care
+              of swapping keys safely. Together, they mix speed, trust, and
+              solid protection for data.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Encryption Process Explained -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Encryption Process Explained</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The way encryption works follows a step-by-step plan to keep info
+              safe and talks secure:
+            </p>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Key Selection</h4>
+              <p>
+                First off, you pick or make a key. That key fits the algorithm
+                you choose. It sets up how everything gets changed and then
+                changed back later.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Plaintext Preparation</h4>
+              <p>
+                Then the plain text gets ready. You format that original data
+                for the scramble.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Encryption</h4>
+              <p>
+                In the main step, the algorithm grabs the key and turns plain
+                text into ciphertext. That hides the real info from anyone not
+                allowed to see it.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Transmission/Storage</h4>
+              <p>
+                Last, you send or store the ciphertext in a safe spot. It could
+                go over a network or sit in a database with locks. Without the
+                right key, it stays confusing.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              This whole setup keeps sensitive things hidden and unchanged from
+              start to finish. It cuts down the chances of someone grabbing it,
+              breaking in, or peeking without permission.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: Decryption Mechanism -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Decryption Mechanism</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Decryption undoes what encryption did. It changes the ciphertext
+              back to plain text, which makes sense. When the scrambled data
+              shows up, the process starts.
+            </p>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Receive Ciphertext</h4>
+              <p>
+                The system receives the encrypted data that needs to be
+                decrypted.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Key Application</h4>
+              <p>
+                The system uses the right key and the matching algorithm to read
+                the code.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Decryption</h4>
+              <p>The ciphertext is transformed back into readable plaintext.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Only cleared users can get to it and make sense of it. Even if it
+              got snagged in transit, that does not help. The whole thing holds
+              up privacy, realness, and steadiness in safe channels.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Symmetric setups use the same key for both sides. That keeps
+              things speedy and simple. Asymmetric ones need the pair. Public
+              for locking, private for unlocking. It adds more safety layers.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Data Encryption Standard (DES) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Data Encryption Standard (DES)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Data Encryption Standard (DES) was designed by IBM and adopted
+              by the U.S. government as the standard encryption method for
+              nonmilitary and nonclassified use.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              The Data Encryption Standard is a standard used for encryption,
+              and it is a form of Secret Key Cryptography.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/desencryption/600/300.jpg"
+              alt="Data Encryption Standard"
+            /> -->
+          </div>
+
+          <div class="text-section">
+            <p>
+              DES uses a 56-bit key to encrypt blocks of data. While it was once
+              a strong standard, it is now considered vulnerable to brute-force
+              attacks due to its relatively short key length. It has been
+              largely replaced by more secure algorithms like AES (Advanced
+              Encryption Standard).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Public Key Encryption/Decryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Public Key Encryption/Decryption Technique
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              There are two keys in public key encryption: a private key and a
+              public key. The private key is given to the receiver while the
+              public key is provided to the public.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/publickeyencryption/600/300.jpg"
+              alt="Public Key Encryption"
+            /> -->
+          </div>
+
+          <div class="text-section">
+            <p>
+              In the above figure, we see that A is sending the message to user
+              B. 'A' uses the public key to encrypt the data while 'B' uses the
+              private key to decrypt the data.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              In public key Encryption/Decryption, the public key used by the
+              sender is different from the private key used by the receiver. The
+              public key is available to the public while the private key is
+              kept by each individual. The most commonly used public key
+              algorithm is known as RSA.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Difference between Private Key and Public Key -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Difference between Private Key and Public Key
+          </h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Private Key Cryptography</th>
+                <th>Public Key Cryptography</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Speed</td>
+                <td>Operates faster compared to public key encryption.</td>
+                <td>
+                  Generally slower due to complex mathematical operations.
+                </td>
+              </tr>
+              <tr>
+                <td>Key Usage</td>
+                <td>
+                  Uses a single secret key for both encryption and decryption.
+                </td>
+                <td>
+                  Uses a pair of keys - a public key for encryption and a
+                  private key for decryption.
+                </td>
+              </tr>
+              <tr>
+                <td>Confidentiality</td>
+                <td>
+                  The encryption key must remain secret and shared securely
+                  between parties.
+                </td>
+                <td>
+                  The public key can be openly shared, while the private key
+                  remains confidential.
+                </td>
+              </tr>
+              <tr>
+                <td>Type of Encryption</td>
+                <td>
+                  Known as symmetric encryption, since one key performs both
+                  operations.
+                </td>
+                <td>
+                  Known as asymmetric encryption, as it relies on two different
+                  keys.
+                </td>
+              </tr>
+              <tr>
+                <td>Key Sharing</td>
+                <td>
+                  Requires secure sharing of the same key between sender and
+                  receiver.
+                </td>
+                <td>
+                  Does not require key sharing between the sender and receiver.
+                </td>
+              </tr>
+              <tr>
+                <td>Efficiency</td>
+                <td>More efficient and suitable for large volumes of data.</td>
+                <td>
+                  Less efficient but provides stronger security and
+                  authentication.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 11: More Differences between Private and Public Key -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            More Differences between Private and Public Key
+          </h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Private Key Cryptography</th>
+                <th>Public Key Cryptography</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Data Size Handling</td>
+                <td>Ideal for encrypting large amounts of data.</td>
+                <td>
+                  Typically used for smaller data sets or for encrypting
+                  symmetric keys.
+                </td>
+              </tr>
+              <tr>
+                <td>Risk of Key Loss</td>
+                <td>
+                  If the private key is lost or exposed, all encrypted data
+                  becomes inaccessible.
+                </td>
+                <td>
+                  Lower risk since only the private key must be protected; the
+                  public key is openly available.
+                </td>
+              </tr>
+              <tr>
+                <td>Key Accessibility</td>
+                <td>The private key is kept secret between trusted parties.</td>
+                <td>The public key is freely distributed for anyone to use.</td>
+              </tr>
+              <tr>
+                <td>Common Algorithms</td>
+                <td>
+                  Used in algorithms such as AES-128, AES-192, and AES-256.
+                </td>
+                <td>Used in algorithms such as RSA, DSA, and ECC.</td>
+              </tr>
+              <tr>
+                <td>Use Cases</td>
+                <td>
+                  Commonly used to secure local storage systems and disk
+                  encryption.
+                </td>
+                <td>
+                  Used to protect emails, digital certificates, and secure web
+                  communications (HTTPS).
+                </td>
+              </tr>
+              <tr>
+                <td>Encryption/Decryption Role</td>
+                <td>
+                  The recipient's private key is used to decrypt messages.
+                </td>
+                <td>The recipient's public key is used to encrypt messages.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 12: Importance of Encryption in Cybersecurity -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Importance of Encryption in Cybersecurity</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encryption ranks high as a key part of cybersecurity now. It
+              blocks unauthorized eyes from sensitive info. That covers privacy,
+              safe chats, and trust online. No encryption means things like
+              passwords, money details, or private notes could get snatched or
+              twisted easily.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Threats keep changing with stuff like ransomware, fake emails to
+              trick you, and sneaky cyber breaches. Encryption fights back
+              strongly. It wraps data so even stolen bits look like junk to bad
+              guys.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              It goes beyond just stopping attacks, too. Companies use it to
+              follow rules on data safety. That avoids huge fines from leaks and
+              keeps customers believing in them. When mixed with other defenses
+              like good code, who gets access, and handling risks, encryption
+              builds a full shield.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Encryption makes digital spaces tough and reliable, providing a
+              foundation for secure communication in our connected world.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Encryption Standards -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Encryption Standards: AES, RSA, and Beyond
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encryption standards serve as widely accepted frameworks around
+              the world. They outline how encryption algorithms need to work for
+              better security, compatibility, and reliability in different
+              systems.
+            </p>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🔒</div>
+            <div class="type-info">
+              <h4>AES (Advanced Encryption Standard)</h4>
+              <p>
+                The U.S. government adopted it, and now the world trusts it too.
+                AES secures classified data along with financial transactions.
+                It runs fast, works efficiently, and stands strong against
+                brute-force attacks.
+              </p>
+            </div>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🔐</div>
+            <div class="type-info">
+              <h4>RSA (Rivest-Shamir-Adleman)</h4>
+              <p>
+                It forms a basic part of public key cryptography. RSA handles
+                secure data transmission, digital signatures, and encryption in
+                Public Key Infrastructures (PKIs).
+              </p>
+            </div>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🌐</div>
+            <div class="type-info">
+              <h4>TLS/SSL (Transport Layer Security/Secure Sockets Layer)</h4>
+              <p>
+                These protocols guard data sent over the internet. They make
+                sure web servers and browsers communicate safely.
+              </p>
+            </div>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">📧</div>
+            <div class="type-info">
+              <h4>PGP (Pretty Good Privacy)</h4>
+              <p>
+                It commonly encrypts emails and protects files. PGP checks
+                message authenticity and keeps privacy between users.
+              </p>
+            </div>
+          </div>
+
+          <div class="encryption-type">
+            <div class="type-icon">🔗</div>
+            <div class="type-info">
+              <h4>IPSec (Internet Protocol Security)</h4>
+              <p>
+                It works at the network layer to encrypt data in Virtual Private
+                Networks (VPNs). This ensures safe, private connections over
+                public networks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Encryption vs Decryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Encryption vs Decryption</h1>
+        </div>
+        <div class="slide-content">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Aspect</th>
+                <th>Encryption</th>
+                <th>Decryption</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Definition</td>
+                <td>
+                  The process of converting readable data (plaintext) into an
+                  unreadable format called ciphertext.
+                </td>
+                <td>
+                  The process of converting ciphertext back into its original
+                  readable form (plaintext).
+                </td>
+              </tr>
+              <tr>
+                <td>Purpose</td>
+                <td>
+                  Ensures data confidentiality by making information
+                  inaccessible to unauthorized users.
+                </td>
+                <td>
+                  Restores encrypted data to its original form for access by
+                  authorized users.
+                </td>
+              </tr>
+              <tr>
+                <td>Process Location</td>
+                <td>Performed at the sender's end before transmission.</td>
+                <td>
+                  Performed at the receiver's end after receiving the
+                  ciphertext.
+                </td>
+              </tr>
+              <tr>
+                <td>Key Usage</td>
+                <td>
+                  Uses either a secret key (in symmetric encryption) or a public
+                  key (in asymmetric encryption).
+                </td>
+                <td>
+                  Uses either a secret key (in symmetric encryption) or a
+                  private key (in asymmetric encryption).
+                </td>
+              </tr>
+              <tr>
+                <td>Output</td>
+                <td>
+                  Produces a ciphertext, which appears meaningless without the
+                  decryption key.
+                </td>
+                <td>
+                  Produces plaintext, the original and understandable message.
+                </td>
+              </tr>
+              <tr>
+                <td>Core Function</td>
+                <td>Focuses on data protection and privacy preservation.</td>
+                <td>
+                  Focuses on data recovery and information accessibility for
+                  legitimate users.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Slide 15: Advantages of Symmetric Encryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Advantages of Symmetric Encryption</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Symmetric encryption runs at high speed. It uses the same key for
+              both encrypting and decrypting, so the whole process ends up much
+              faster than what you get with asymmetric encryption.
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-info">
+              <h4>High Speed</h4>
+              <p>
+                Symmetric encryption algorithms are computationally less
+                intensive than asymmetric ones, making them much faster for both
+                encryption and decryption operations.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">💾</div>
+            <div class="benefit-info">
+              <h4>Resource Efficiency</h4>
+              <p>
+                Symmetric methods need less power for computing and smaller
+                amounts of memory. That makes them perfect for handling big
+                batches of data or working on systems that do not have many
+                resources.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📊</div>
+            <div class="benefit-info">
+              <h4>Suitable for Large Data</h4>
+              <p>
+                Because of its efficiency, symmetric encryption is ideal for
+                encrypting large amounts of data, such as files, databases, or
+                streaming media.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Still, symmetric key encryption runs into some real problems
+              despite these strengths. Securely sharing and managing keys
+              becomes tricky, particularly in large networks or ones spread
+              across different places. Asymmetric encryption steps in to handle
+              those kinds of issues.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: Disadvantages of Symmetric Encryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Disadvantages of Symmetric Encryption</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Symmetric encryption runs fast and handles things efficiently. But
+              it has some clear limitations that impact data security and how
+              well it scales up.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Key Distribution Challenge</h4>
+            <p>
+              One major issue comes with distributing the secret key securely
+              between the sender and receiver. If someone intercepts that key
+              while it's being sent, the whole encryption setup gets compromised
+              right away.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Scalability Issues</h4>
+            <p>
+              Scaling this up brings more problems, too. Keeping track of unique
+              keys for a bunch of users turns complicated fast. In a large
+              group, the keys multiply quickly since each pair of people needs
+              their own separate key.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Lack of Authentication</h4>
+            <p>
+              Symmetric encryption also misses out on built-in authentication.
+              It does not check who actually sent the message or if anyone
+              changed the data along the way.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Complex Key Management</h4>
+            <p>
+              Key management adds another layer of hassle over time. Keys need
+              to be rotated or swapped out regularly to stay secure. Handling
+              those updates across different systems and users takes a lot of
+              time and often leads to mistakes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: Applications of Encryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of Encryption</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encryption finds use in many industries and digital spaces. It
+              keeps information confidential and intact.
+            </p>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🏦</div>
+            <div class="app-info">
+              <h4>Online Banking</h4>
+              <p>
+                Online banking relies on it heavily. Encryption guards financial
+                transactions and sensitive details like account info, passwords,
+                and payments. This stops interception or fraud.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">📧</div>
+            <div class="app-info">
+              <h4>Email Security</h4>
+              <p>
+                Email security benefits from encryption, too. It protects email
+                contents so only approved recipients see confidential messages.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💬</div>
+            <div class="app-info">
+              <h4>Secure Messaging</h4>
+              <p>
+                Secure messaging platforms use encryption for private talks.
+                This blocks outsiders from reading personal or business chats.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💾</div>
+            <div class="app-info">
+              <h4>Data Storage</h4>
+              <p>
+                Data storage gets protection through encryption. It shields
+                files and databases from unauthorized eyes. Even if a system
+                breaks, sensitive data stays safe.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Encryption builds the base for digital trust. It covers personal
+              chats to big enterprise protections. In a connected world, it
+              enables safe interactions and user safety.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: Real-Life Examples of Encryption and Decryption -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Real-Life Examples of Encryption and Decryption
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Encryption and decryption blend into daily tech without much
+              notice. They keep data and communications secure in real ways.
+            </p>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💬</div>
+            <div class="app-info">
+              <h4>WhatsApp</h4>
+              <p>
+                WhatsApp handles messaging with end-to-end encryption. Only the
+                sender and receiver read the conversation. The platform itself
+                cannot touch the encrypted data.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🌐</div>
+            <div class="app-info">
+              <h4>HTTPS Websites</h4>
+              <p>
+                HTTPS websites encrypt data between browsers and servers. This
+                covers login credentials and payment details. It prevents
+                interception of sensitive info.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">📧</div>
+            <div class="app-info">
+              <h4>Encrypted Email Services</h4>
+              <p>
+                Encrypted email services like ProtonMail use strong methods.
+                They secure email content and block unauthorized access.
+                Messages stay confidential.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These cases show encryption and decryption at work behind the
+              scenes. They protect privacy, build trust, and secure digital
+              communications in everyday use.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Introduction to Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">What is Digital Signature?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The Digital Signature is a technique which is used to validate the
+              authenticity and integrity of the message. We know that there are
+              four aspects of security: privacy, authentication, integrity, and
+              non-repudiation.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              We have already discussed the first aspect of security and other
+              three aspects can be achieved by using a digital signature.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The basic idea behind the Digital Signature is to sign a document.
+              When we send a document electronically, we can also sign it. We
+              can sign a document in two ways: to sign a whole document and to
+              sign a digest.
+            </p>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/digitalsignature/600/300.jpg"
+              alt="Digital Signature"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: Signing the Whole Document -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Signing the Whole Document</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              In Digital Signature, a public key encryption technique is used to
+              sign a document. However, the roles of a public key and private
+              key are different here.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <ul>
+              <li>
+                The sender uses a private key to encrypt the message while the
+                receiver uses the public key of the sender to decrypt the
+                message.
+              </li>
+              <li>
+                In Digital Signature, the private key is used for encryption
+                while the public key is used for decryption.
+              </li>
+              <li>
+                Digital Signature cannot be achieved by using secret key
+                encryption.
+              </li>
+            </ul>
+          </div>
+
+          <div class="image-container">
+            <!-- <img
+              src="https://picsum.photos/seed/signingdocument/600/300.jpg"
+              alt="Signing a Document"
+            /> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: Aspects Achieved by Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Aspects Achieved by Digital Signatures</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital Signature is used to achieve the following three aspects:
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">✅</div>
+            <div class="benefit-info">
+              <h4>Integrity</h4>
+              <p>
+                The Digital Signature preserves the integrity of a message
+                because, if any malicious attack intercepts a message and
+                partially or totally changes it, then the decrypted message
+                would be impossible.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">👤</div>
+            <div class="benefit-info">
+              <h4>Authentication</h4>
+              <p>
+                We can use the following reasoning to show how the message is
+                authenticated. If an intruder (user X) sends a message
+                pretending that it is coming from someone else (user A), user X
+                uses her own private key to encrypt the message. The message is
+                decrypted by using the public key of user A. Therefore this
+                makes the message unreadable.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📝</div>
+            <div class="benefit-info">
+              <h4>Non-Repudiation</h4>
+              <p>
+                Digital Signature also provides non-repudiation. If the sender
+                denies sending the message, then her private key corresponding
+                to her public key is tested on the plaintext. If the decrypted
+                message is the same as the original message, then we know that
+                the sender has sent the message.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Note: Digital Signature does not provide privacy. If there is a
+              need for privacy, then another layer of encryption/decryption is
+              applied.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 22: Signing the Digest -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Signing the Digest</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Public key encryption is efficient if the message is short. If the
+              message is long, a public key encryption is inefficient to use.
+              The solution to this problem is to let the sender sign a digest of
+              the document instead of the whole document.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The sender creates a miniature version (digest) of the document
+              and then signs it, the receiver checks the signature of the
+              miniature version.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The hash function is used to create a digest of the message. The
+              hash function creates a fixed-size digest from the variable-length
+              message.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              The two most common hash functions used: MD5 (Message Digest 5)
+              and SHA-1 (Secure Hash Algorithm 1). The first one produces
+              120-bit digest while the second one produces 160-bit digest.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              A hash function must have two properties to ensure the success:
+            </p>
+            <ul>
+              <li>
+                First, the digest must be one way, i.e., the digest can only be
+                created from the message but not vice versa.
+              </li>
+              <li>
+                Second, hashing is a one-to-one function, i.e., two messages
+                should not create the same digest.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 23: Process of Signing the Digest -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Process of Signing the Digest</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>Following are the steps taken to ensure security:</p>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Create Digest</h4>
+              <p>
+                The miniature version (digest) of the message is created by
+                using a hash function.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Encrypt Digest</h4>
+              <p>The digest is encrypted by using the sender's private key.</p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Attach and Send</h4>
+              <p>
+                After the digest is encrypted, then the encrypted digest is
+                attached to the original message and sent to the receiver.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Verify at Receiver</h4>
+              <p>
+                The receiver receives the original message and encrypted digest
+                and separates the two. The receiver implements the hash function
+                on the original message to create the second digest, and it also
+                decrypts the received digest by using the public key of the
+                sender.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              If both the digests are same, then all the aspects of security are
+              preserved.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 24: Working of Digital Signature -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Working of Digital Signature</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital signatures utilize a simultaneous combination of
+              cryptographic techniques, hash functions, and key pairs to ensure
+              the authenticity of and to confirm that electronic messages and
+              documents have not been tampered with. We can split the entire
+              process into three main stages, which are Key Generation, Signing,
+              and Verification.
+            </p>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Key Generation</h4>
+              <p>
+                In order to create a digital signature, a pair of cryptographic
+                keys to be generated first, which include a public, and a
+                private key. The private key gets used to sign documents, and
+                the owner gets to keep this one secret and to themselves. The
+                public key gets used to authenticate the signature, and this one
+                gets shared with everyone.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Signing Process</h4>
+              <p>
+                Whenever a document is to be signed by the sender, the document
+                or message gets sent through a hash function, which gets the
+                message digest, and generates a fixed-length representation. The
+                sender then encrypts this digest using their private key. The
+                result from this type of encryption will be a digital signature.
+                The signed message and the digital signature are sent together
+                and sent to the user.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Verification Process</h4>
+              <p>
+                The receiver of the signed message performs the following steps
+                once they have the message: The receiver will apply the same
+                hash function to the message they have received to create a
+                digest. The receiver will use the public key from the sender to
+                decrypt the digital signature to extract the digest they sent.
+                The receiver will check both digests. If they are the same,
+                meaning the message is not altered, and the sender is verified.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 25: Mathematical Representation -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Mathematical Representation</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              To illustrate this process in a more formal way, let the message
+              be M. This message will have the following it a hash function H,
+              such that:
+            </p>
+          </div>
+
+          <div class="math-formula">H(M) = h</div>
+
+          <div class="text-section">
+            <p>h will be the digest of the message.</p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              When a person uses the private key PRa and encrypts the message
+              digest:
+            </p>
+          </div>
+
+          <div class="math-formula">S = E(PRa, h)</div>
+
+          <div class="text-section">
+            <p>This S is the digital signature.</p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              After receiving M and S, the recipient uses a hash function on the
+              message:
+            </p>
+          </div>
+
+          <div class="math-formula">H(M) = h₁</div>
+
+          <div class="text-section">
+            <p>
+              Then, they use the sender's public key PUa to decrypt the
+              signature:
+            </p>
+          </div>
+
+          <div class="math-formula">D(PUa, S) = h₂</div>
+
+          <div class="highlight-box">
+            <p>
+              If h₁ = h₂, the signature is valid. Otherwise, the signature is
+              invalid. The mathematics involved shows the relation of the steps
+              taken to the number of digital signatures.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 26: Digital Signature Algorithms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Digital Signature Algorithms</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              There are several different algorithms, and each uses varying
+              levels of security, performance, and the algorithms being used are
+              more or less accepted.
+            </p>
+          </div>
+
+          <div class="algorithm-card">
+            <h4>1. RSA (Rivest-Shamir-Adleman)</h4>
+            <p>
+              RSA is one of the oldest and most well-used asymmetric algorithms
+              used in cryptography, works with both encryption and digital
+              signatures.
+            </p>
+            <ul>
+              <li>
+                <strong>Key size:</strong> A key size is usually 2048 or 4096
+                bits.
+              </li>
+              <li>
+                <strong>Operation:</strong> The signer uses private key
+                exponentiation to sign the hash. The verifier uses public key
+                exponentiation to check validity.
+              </li>
+              <li>
+                <strong>Advantages:</strong> High compatibility, it is simple,
+                and widely deployed.
+              </li>
+              <li>
+                <strong>Disadvantages:</strong> The disadvantage of this
+                approach is that it is slower. It is signed with large amounts
+                of data.
+              </li>
+            </ul>
+          </div>
+
+          <div class="algorithm-card">
+            <h4>2. DSA (Digital Signature Algorithm)</h4>
+            <p>
+              Digital Signature algorithm (DSA) is an algorithm developed by the
+              US's National Institute of Standards and Technology (NIST) used
+              for digital signatures.
+            </p>
+            <ul>
+              <li><strong>Key size:</strong> 1024-3072 bits.</li>
+              <li>
+                <strong>Operation:</strong> It employs concepts of modular
+                arithmetic and discrete logarithm.
+              </li>
+              <li>
+                <strong>Advantages:</strong> While this algorithm is efficient
+                for signing operations, verification is slow, and therefore, it
+                relies on proper randomness.
+              </li>
+              <li>
+                <strong>Disadvantages:</strong> A weak random function may lead
+                to the leaking of the signing private key.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 27: More Digital Signature Algorithms -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Digital Signature Algorithms</h1>
+        </div>
+        <div class="slide-content">
+          <div class="algorithm-card">
+            <h4>3. ECDSA (Elliptic Curve Digital Signature Algorithm)</h4>
+            <p>
+              ECDSA is a variant of the DSA that employs elliptic curve (ECC)
+              cryptography, of which the key size is:
+            </p>
+            <ul>
+              <li>
+                <strong>Key size:</strong> 256 to 521 bits (a smaller but
+                stronger key size than RSA).
+              </li>
+              <li>
+                <strong>Advantages:</strong> The advantages of this algorithm
+                are that it is faster, more secure, and thus more suitable for
+                modern mobile and IoT applications.
+              </li>
+              <li>
+                <strong>Disadvantages:</strong> ECDSA is more complex to
+                implement than DSA, and this has historically led to patent
+                issues that slow down its adoption.
+              </li>
+            </ul>
+          </div>
+
+          <div class="algorithm-card">
+            <h4>4. EdDSA (Edwards-curve Digital Signature Algorithm)</h4>
+            <p>
+              The EdDSA is a more recent design based on twisted Edwards curves,
+              e.g., Ed25519.
+            </p>
+            <ul>
+              <li>
+                <strong>Advantages:</strong> EdDSA has a very fast signing and
+                verification time, as well as being resistant to side-channel
+                attacks. It also has a safer default configuration.
+              </li>
+              <li>
+                <strong>Disadvantages:</strong> Not as universally supported as
+                RSA
+              </li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Given Systems today's system designs favor the ECDSA and EdDSA
+              algorithms due to better performance and smaller key sizes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 28: Benefits of Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Benefits of Digital Signatures</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital signatures provide a wide range of benefits, such are as
+              follows:
+            </p>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">🔐</div>
+            <div class="benefit-info">
+              <h4>Strong Authentication</h4>
+              <p>
+                For digital signatures and in real time, the impersonation of
+                the signer is assessed, and identity is verified, establishing
+                identity, reliability, and trust in communication.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">✅</div>
+            <div class="benefit-info">
+              <h4>Integrity Assurance</h4>
+              <p>
+                Digital signatures ensure a valid way to guarantee that a
+                document or a message has not been changed in any way during
+                transmission and that the document/message is in the same format
+                and content.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">📝</div>
+            <div class="benefit-info">
+              <h4>Non-Repudiation and Proof of Origin</h4>
+              <p>
+                Digital signatures, especially in cases where a unique signature
+                is also document-verified, confirm the approval of the signer of
+                that document and reduce the possibility of disputes.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">⚙️</div>
+            <div class="benefit-info">
+              <h4>Support for Automation</h4>
+              <p>
+                Digital signatures can easily be integrated into large automated
+                systems for the efficient processing of digital forms and
+                workflows.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">🌱</div>
+            <div class="benefit-info">
+              <h4>Environmental Benefits</h4>
+              <p>
+                The business practice of digital signatures helps and
+                contributes to the efforts to reduce waste and paper-based
+                processes and negative effects on the environment.
+              </p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-info">
+              <h4>Faster Business Processes</h4>
+              <p>
+                Digital signatures speed up approval processes, operations, and
+                transactions and provide a more convenient system for multiple
+                industries.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 29: Applications of Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of Digital Signatures</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital signatures are evident in many applications and modern
+              life aspects. Below are more applications:
+            </p>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">📧</div>
+            <div class="app-info">
+              <h4>Email Security</h4>
+              <p>
+                To prevent potential hackers from accessing email accounts, most
+                email service providers give their customers the choice and the
+                ability to order email address verification services. One
+                example of email address verification services is the S/MIME
+                (Secure Multipurpose Internet Mail Extension).
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">💻</div>
+            <div class="app-info">
+              <h4>Software Distribution</h4>
+              <p>
+                Most software providers give their customers the option of
+                downloading their software and software updates that have been
+                digitally signed. Software vendors apply digital signatures, and
+                customers know the software is safe and not installed with
+                harmful software or viruses.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🛒</div>
+            <div class="app-info">
+              <h4>E-Commerce and Online Contracts</h4>
+              <p>
+                E-commerce and Online Services guarantee mutual digitally signed
+                online contracts and invoices to close prevention of editing and
+                ensure that both parties have proper authority to engage in the
+                transactions.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🏛️</div>
+            <div class="app-info">
+              <h4>Government Services</h4>
+              <p>
+                E-Governance has implemented digital signature systems in a
+                number of governments. For instance: Online income tax filing,
+                Electronic submission of tenders, Official documents obtained
+                and accessed in a secure manner.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 30: More Applications of Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Applications of Digital Signatures</h1>
+        </div>
+        <div class="slide-content">
+          <div class="application-card">
+            <div class="app-icon">⛓️</div>
+            <div class="app-info">
+              <h4>Blockchain and Cryptocurrencies</h4>
+              <p>
+                Within the Blockchain and Digital Currency systems, electronic
+                signatures are used to guarantee transactions. As an
+                illustration, if a bitcoin holder wishes to transfer funds to
+                another account, the holder has to digitally sign the transfer
+                request using a unique secret key.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🏥</div>
+            <div class="app-info">
+              <h4>Medical and Health Records</h4>
+              <p>
+                In the healthcare industry, digital signatures help maintain the
+                privacy and security of patient records, prescriptions, and
+                diagnostic reports, thus guarding confidentiality and trust.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">⚖️</div>
+            <div class="app-info">
+              <h4>Legal and Financial Documents</h4>
+              <p>
+                Digital signatures are accepted as binding for financial
+                documents, contracts, and wills, provided they are accompanied
+                by digital certificates from recognized issuers. Most
+                jurisdictions regard them as legally binding.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Digital signatures have become an integral part of modern digital
+              transactions, providing security, authenticity, and legal validity
+              across various industries and applications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 31: Digital Certificates and Certificate Authorities -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Digital Certificates and Certificate Authorities (CA)
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A digital signature is dependent on public key infrastructure
+              (PKI) for key management and authentication, and digital
+              certificates and Certificate Authorities (CAs) are important at
+              this point.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Digital Certificate</h4>
+            <p>
+              A digital certificate is an electronic document that is issued by
+              a trusted authority certifying the association of an individual,
+              an organization, or a device to a public key.
+            </p>
+            <p>It typically contains:</p>
+            <ul>
+              <li>The owner's name and public key</li>
+              <li>Certificate serial number</li>
+              <li>Expiration date</li>
+              <li>Name of the issuing CA</li>
+              <li>The CA's digital signature</li>
+            </ul>
+            <p>
+              A digital certificate guarantees that the public key is indeed
+              that of the individual or organization to whom it is attributed.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Certificate Authority (CA)</h4>
+            <p>
+              A CA is a trusted third party that is responsible for the
+              dissemination and supervision of digital certificates. Some of the
+              popular CAs are DigiCert, Comodo, and GlobalSign.
+            </p>
+            <p>
+              CAs issue certificates after verifying the identity of the
+              concerned parties, and maintain Certificate Revocation Lists
+              (CRLs) to manage revoked or expired certificates.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 32: Advantages and Limitations of Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Advantages and Limitations of Digital Signatures
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="two-column">
+            <div class="column">
+              <h3>Advantages</h3>
+              <div class="benefit-card">
+                <div class="benefit-icon">🔒</div>
+                <div class="benefit-info">
+                  <h4>Enhanced Security</h4>
+                  <p>Forgery and tampering are impossible due to encryption.</p>
+                </div>
+              </div>
+
+              <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <div class="benefit-info">
+                  <h4>Speed and Efficiency</h4>
+                  <p>
+                    Speeds up the approval of documents by eliminating the need
+                    for a manual signature.
+                  </p>
+                </div>
+              </div>
+
+              <div class="benefit-card">
+                <div class="benefit-icon">💰</div>
+                <div class="benefit-info">
+                  <h4>Cost Savings</h4>
+                  <p>Reduces the need for paper, printing, and postage.</p>
+                </div>
+              </div>
+
+              <div class="benefit-card">
+                <div class="benefit-icon">🌱</div>
+                <div class="benefit-info">
+                  <h4>Environmental Benefits</h4>
+                  <p>
+                    Promotes a paperless operation and reduces the carbon
+                    footprint.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="column">
+              <h3>Limitations</h3>
+              <div class="info-card">
+                <h4>Dependence on PKI</h4>
+                <p>
+                  Digital signatures put all their trust in Certificate
+                  Authorities. A trust framework can be completely collapsed
+                  when a CA is breached or acts in a malicious manner.
+                </p>
+              </div>
+
+              <div class="info-card">
+                <h4>Revocation Problems</h4>
+                <p>
+                  Revocation and expiration of certificates is always a
+                  headache, and becomes more complicated the larger the
+                  organization is.
+                </p>
+              </div>
+
+              <div class="info-card">
+                <h4>Key Management Issues</h4>
+                <p>
+                  All users need to protect their private keys. If a user loses
+                  their private key, they can no longer sign documents.
+                </p>
+              </div>
+
+              <div class="info-card">
+                <h4>Compatibility Issues</h4>
+                <p>
+                  Not all platforms and applications support every standard of
+                  digital signatures, which makes interoperability difficult.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 33: Future of Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Future of Digital Signatures</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital signatures are going to continue to evolve as technology
+              to help combat security issues. Some of these include:
+            </p>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">⚛️</div>
+            <div class="app-info">
+              <h4>Post-Quantum Cryptography</h4>
+              <p>
+                Quantum computing is here, and it threatens the use of RSA and
+                ECDSA, which are heavy cryptographic algorithms. There is a need
+                for algorithms that are quantum-resistant for digital
+                signatures.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">👆</div>
+            <div class="app-info">
+              <h4>Biometric Integration</h4>
+              <p>
+                A combination of digital signatures and a biometric, like a
+                fingerprint or facial recognition, can improve verification of
+                identity.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">⛓️</div>
+            <div class="app-info">
+              <h4>Blockchain-Based Signatures</h4>
+              <p>
+                Using blockchain technology, verification can be done in a
+                decentralized manner, and there is no longer a need to rely on
+                traditional CAs.
+              </p>
+            </div>
+          </div>
+
+          <div class="application-card">
+            <div class="app-icon">🤖</div>
+            <div class="app-info">
+              <h4>AI-Powered Fraud Detection</h4>
+              <p>
+                Fraudulent behaviors can be detected by AI through recognizing
+                anomalies in signing patterns and differentiating between
+                legitimate and illegitimate signed activities.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 34: Best Practices for Using Digital Signatures -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Best Practices for Using Digital Signatures
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The following best practices should be observed to achieve best
+              standards practices and best digital signatures:
+            </p>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>Use modern algorithms</h4>
+              <p>
+                The best to use for digital signatures is to use the strong
+                cryptographic algorithms that are widely accepted and trusted,
+                like RSA-2048, ECDSA-P256, or the advanced Ed25519 algorithms.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>Secure private keys</h4>
+              <p>
+                HSMs, TPMs, and smart cards act as hardware security modules to
+                mitigate the risks related to unauthorized access and/or theft.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>Use strong hash functions</h4>
+              <p>
+                Newer versions of dense SHA, specifically SHA-256 and SHA-3,
+                mitigate the odds of overcoming vulnerabilities in collision
+                attacks.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <h4>Validate certificate chains</h4>
+              <p>
+                Always ensure to trust the full certificate chain and trust the
+                absence of the certificate to avoid revocation.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-step">
+            <div class="step-number">5</div>
+            <div class="step-content">
+              <h4>Rotate keys regularly</h4>
+              <p>
+                Intervals of key rotation minimize the period of exposure and
+                increase the security of the system.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Plan for quantum resistance: Updating the system is designed to
+              accommodate the future of updated, post-quantum crypto-systems.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 35: Conclusion -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Conclusion</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Digital signatures have helped shape modern digital security to
+              include more features and services authentication, integrity, and
+              non-repudiation, to a host of functions.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Digital signatures, with the aid of strong cryptographic
+              techniques and PKI, have kept current with digital signatures'
+              advances and are likely to continue to do so with post-quantum
+              algorithms, biometrics, blockchain, and others.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              With little to no key management, digital signatures will continue
+              to be a fundamental aspect of the security of digital
+              interactions.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Both encryption and digital signatures play crucial roles in
+              ensuring network privacy and security. They work together to
+              provide confidentiality, integrity, authentication, and
+              non-repudiation in digital communications.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 36: FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Frequently Asked Questions (FAQs)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              1. What is a digital signature, and how does it differ from an
+              electronic signature?
+            </div>
+            <div class="answer">
+              Digital signatures are a type of legally accepted cryptographic
+              verification of documents. Digital signatures are created,
+              verified, and secured with a unique cryptography function (e.g.,
+              RSA, ECDSA, or EdDSA) and hash functions (e.g., SHA-256). An
+              electronic signature, by contrast, can refer to electronic forms
+              of signatures, such as printed names or scanned signatures, as
+              well as other cryptographically secured options, which do not
+              necessarily give any cryptographic protection.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. How does a digital signature verify the identity of the signer?
+            </div>
+            <div class="answer">
+              Digital signatures are a verification of the identity of the
+              signer by means of asymmetric encryption, which is a type of
+              cryptography. Each signer is given a unique pair of private and
+              public cryptography keys, which are used to digitally sign and
+              validate documents. The private key is used to sign the document,
+              and the public key is used to validate the signature.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">3. Are digital signatures legally valid?</div>
+            <div class="answer">
+              Digital signatures are accepted all over the world as valid
+              signatures, with no alterations to the validity of documents.
+              Digital signatures are legally accepted documents in India (IT
+              Act), the European Union (eIDAS), and in the United States, all
+              legal documents require e e-signature (ESIGN Act). Digital
+              signatures are as legitimate as a handwritten signature if the
+              digital signatures are verified with a digital certificate from a
+              recognized Certificate Authority (CA).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. What are the main limitations of digital signatures?
+            </div>
+            <div class="answer">
+              Some limitations are dependent on PKI infrastructure, issues with
+              certifying revocation and managing keys, dissimilarities between
+              formats and compatibility, and the cost of implementation for
+              small organizations. Vulnerabilities can be exposed if adequate
+              structures and mechanisms secured keys are not used.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. Where are digital signatures commonly used?
+            </div>
+            <div class="answer">
+              Digital signatures are integrated with (S/MIME) for email
+              security, software distribution, e-commerce, governmental
+              services, transactions on the blockchain, healthcare records, and
+              legal or monetary documents. They facilitate workflow, lessen the
+              amount of paper used, and trust digital transactions.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Computer Network Privacy and Digital Signatures - Professional
+      Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computer Network Security</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .presentation-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .slide {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin-bottom: 30px;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e1e8ed;
+        padding-bottom: 15px;
+      }
+
+      .slide-title {
+        font-family: "Montserrat", sans-serif;
+        font-size: 2.5rem;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .slide-subtitle {
+        font-size: 1.2rem;
+        color: #5f6368;
+      }
+
+      .slide-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .text-section {
+        margin-bottom: 20px;
+      }
+
+      .text-section h3 {
+        font-family: "Montserrat", sans-serif;
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .text-section p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .list-section {
+        margin-bottom: 20px;
+      }
+
+      .list-section ul {
+        padding-left: 25px;
+      }
+
+      .list-section li {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .two-column {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+      }
+
+      .column {
+        flex: 1;
+      }
+
+      .highlight-box {
+        background-color: #e8f0fe;
+        border-left: 4px solid #1a73e8;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .navigation {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover {
+        background-color: #0d47a1;
+        transform: scale(1.1);
+      }
+
+      .progress-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 5px;
+        background-color: #1a73e8;
+        z-index: 101;
+        transition: width 0.3s ease;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #5f6368;
+        font-size: 0.9rem;
+      }
+
+      .info-card {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        border: 1px solid #e1e8ed;
+        padding: 12px;
+        text-align: left;
+      }
+
+      .comparison-table th {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+      }
+
+      .comparison-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .qa-pair {
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .question {
+        font-weight: 500;
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .answer {
+        padding-left: 20px;
+      }
+
+      .security-aspect {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .aspect-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .aspect-info {
+        flex: 1;
+      }
+
+      .aspect-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .cryptography-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .cryptography-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .security-tool {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .tool-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .tool-info {
+        flex: 1;
+      }
+
+      .tool-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .attack-type {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .attack-icon {
+        font-size: 1.5rem;
+        color: #e53935;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .attack-info {
+        flex: 1;
+      }
+
+      .attack-info h4 {
+        margin-bottom: 5px;
+        color: #e53935;
+      }
+
+      .security-layer {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .security-layer h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .modern-tech {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .tech-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .tech-info {
+        flex: 1;
+      }
+
+      .tech-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      .framework-card {
+        background-color: #f8f9fa;
+        border: 1px solid #e1e8ed;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      .framework-card h4 {
+        color: #1a73e8;
+        margin-bottom: 10px;
+      }
+
+      .future-trend {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+      }
+
+      .trend-icon {
+        font-size: 1.5rem;
+        color: #1a73e8;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center;
+      }
+
+      .trend-info {
+        flex: 1;
+      }
+
+      .trend-info h4 {
+        margin-bottom: 5px;
+        color: #1a73e8;
+      }
+
+      @media (max-width: 768px) {
+        .slide {
+          padding: 20px;
+        }
+
+        .slide-title {
+          font-size: 1.8rem;
+        }
+
+        .two-column {
+          flex-direction: column;
+        }
+
+        .navigation {
+          bottom: 20px;
+          top: auto;
+          flex-direction: row;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="topBtn" title="Go to top">↑</button>
+      <button class="nav-btn" id="downBtn" title="Go to bottom">↓</button>
+    </div>
+
+    <div class="presentation-container">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Computer Network Security</h1>
+          <p class="slide-subtitle">
+            Protecting Networks from Unauthorized Access and Threats
+          </p>
+        </div>
+        <div class="slide-content">
+          <div class="image-container">
+            <img
+              src="https://snb.thesagenext.com/blog/wp-content/uploads/2021/04/Network-Security-4.png"
+              alt="Network Security"
+            />
+          </div>
+          <div class="text-section">
+            <p>
+              Computer network security consists of measures taken by businesses
+              or organizations to monitor and prevent unauthorized access from
+              outside attackers.
+            </p>
+            <p>
+              Different approaches to computer network security management have
+              different requirements depending on the size of the computer
+              network. For example, a home office requires basic network
+              security while large businesses require high maintenance to
+              prevent the network from malicious attacks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: What is Network Security? -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">What is Network Security?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              All the measures used to safeguard a computer network's integrity
+              and the data on it are collectively referred to as network
+              security. Network security is crucial because it protects
+              sensitive data from online threats and guarantees the network's
+              dependability.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Multiple security measures are used in successful network security
+              plans to shield users and organizations from malware and online
+              threats like distributed denial of service.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Computers, servers, wireless networks, and other associated
+              devices make up a network. Many of these gadgets are open to
+              possible intruders. Utilizing a range of hardware and software
+              tools on a network or as software as a service is necessary for
+              network security.
+            </p>
+            <p>
+              As networks get increasingly complicated and businesses rely more
+              on their networks and data to operate, security becomes more
+              crucial. As threat actors develop new ways to target these more
+              complex networks, security techniques must change.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Aspects of Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Aspects of Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Following are the desirable properties to achieve secure
+              communication:
+            </p>
+          </div>
+
+          <div class="security-aspect">
+            <div class="aspect-icon">🔒</div>
+            <div class="aspect-info">
+              <h4>Privacy</h4>
+              <p>
+                Privacy means both the sender and the receiver expects
+                confidentiality. The transmitted message should be sent only to
+                the intended receiver while the message should be opaque for
+                other users.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-aspect">
+            <div class="aspect-icon">✅</div>
+            <div class="aspect-info">
+              <h4>Message Integrity</h4>
+              <p>
+                Data integrity means that the data must arrive at the receiver
+                exactly as it was sent. There must be no changes in the data
+                content during transmission, either maliciously or accident.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-aspect">
+            <div class="aspect-icon">👤</div>
+            <div class="aspect-info">
+              <h4>End-point Authentication</h4>
+              <p>
+                Authentication means that the receiver is sure of the sender's
+                identity, i.e., no imposter has sent the message.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-aspect">
+            <div class="aspect-icon">📝</div>
+            <div class="aspect-info">
+              <h4>Non-Repudiation</h4>
+              <p>
+                Non-Repudiation means that the receiver must be able to prove
+                that the received message has come from a specific sender. The
+                sender must not deny sending a message that he or she sent.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: How Network Security is Implemented -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">How is Network Security Implemented?</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Hardware and software technologies are used in conjunction to
+              ensure network security. Network security's main objective is to
+              stop unauthorized access to or communication inside a network.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              A security officer or team decides upon an organization's network
+              security plans and policies to assist the organization in meeting
+              security requirements. These security guidelines must be followed
+              by everyone using the network.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              In the modern environment, no method can guarantee complete
+              security. However, measures may be taken to protect data when it
+              is sent across an unprotected network or the internet. The most
+              popular method is cryptography.
+            </p>
+            <p>
+              Encrypting plain-text data using cryptography makes it more
+              difficult to decipher and understand. Today, a variety of
+              cryptographic algorithms are accessible.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Cryptography Methods -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Cryptography Methods</h1>
+        </div>
+        <div class="slide-content">
+          <div class="cryptography-card">
+            <h4>1. Secret Key Cryptography</h4>
+            <p>
+              The sender and the receiver share one secret key. The data is
+              encrypted at the sender's end using this secret key. Data is
+              encrypted before being transferred to the recipient via a public
+              network. The recipient may readily decipher the encrypted data
+              packets because they are both aware of and possess the Secret Key.
+            </p>
+            <p>
+              The Data Encryption Standard (DES) is an illustration of secret
+              key encryption. It is challenging to administer Secret Key
+              encryption since each computer on the network needs a unique key.
+            </p>
+          </div>
+
+          <div class="cryptography-card">
+            <h4>2. Public Key Cryptography</h4>
+            <p>
+              Each user in this encryption scheme has a unique Secret Key that
+              is not kept in the common domain. The secret key is kept from the
+              public. Every user has a unique but public key in addition to a
+              secret key.
+            </p>
+            <p>
+              Senders encrypt the data using a public key that is always made
+              available to the public. Using the user's personal Secret Key, he
+              can quickly decode the encrypted data once he receives it.
+              Rivest-Shamir-Adleman (RSA), a kind of public key encryption, is
+              an illustration.
+            </p>
+          </div>
+
+          <div class="cryptography-card">
+            <h4>3. Message Digest</h4>
+            <p>
+              In this approach, a hash value is computed and delivered in place
+              of actual data. The second end user generates its hash value and
+              contrasts it with the most recent one. It is approved if both hash
+              values match; otherwise, it is refused.
+            </p>
+            <p>
+              Message Digest example using MD5 hashing. It is mostly utilized in
+              authentication processes when server passwords are compared
+              against user passwords.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 6: Tools and Software for Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Tools and Software for Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network to network, and with time, there are changes in the
+              security tools and rules available. Strong security frequently
+              requires various strategies, sometimes known as layered security
+              or defence, to provide organizations with the most feasible
+              security controls.
+            </p>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">🛡️</div>
+            <div class="tool-info">
+              <h4>Firewalls</h4>
+              <p>
+                Web pages, pop-ups, and other service entry and departure
+                decisions are made by firewalls, which are guardian services or
+                devices. Depending on the needs, these firewalls utilize a
+                preset set of rules to help block or allow traffic.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">🔑</div>
+            <div class="tool-info">
+              <h4>Access Control</h4>
+              <p>
+                Access control enables businesses to stop unauthorized people
+                and devices from connecting to a specific network and to stop
+                prospective attackers from accessing sensitive data.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">🌐</div>
+            <div class="tool-info">
+              <h4>Virtual Private Networks (VPN)</h4>
+              <p>
+                In most cases, a VPN encrypts the communication between an
+                endpoint device and a network via the internet. Additionally,
+                VPN enables experts to verify the connection between the network
+                and the device.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">🚨</div>
+            <div class="tool-info">
+              <h4>Intrusion Prevention Systems</h4>
+              <p>
+                Intrusion prevention systems scan network traffic to identify
+                and stop assaults. This is accomplished by connecting network
+                activity with databases of attack methods that experts are
+                familiar with.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 7: More Security Tools -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Security Tools</h1>
+        </div>
+        <div class="slide-content">
+          <div class="security-tool">
+            <div class="tool-icon">📶</div>
+            <div class="tool-info">
+              <h4>Wireless Security</h4>
+              <p>
+                In comparison to wireless networks, wired networks could be more
+                secure. It would help if you had control over the computers and
+                people who may access the network of your business. It would
+                help if you had wireless security, especially in light of the
+                fact that fraudsters are increasingly extorting people for their
+                private information.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">📱</div>
+            <div class="tool-info">
+              <h4>Application Security</h4>
+              <p>
+                Applications' weak points may be tracked down and secured using
+                a combination of software, hardware, and processes, which makes
+                it harder for hackers to access your network.
+              </p>
+            </div>
+          </div>
+
+          <div class="security-tool">
+            <div class="tool-icon">📊</div>
+            <div class="tool-info">
+              <h4>Behavioural Analysis</h4>
+              <p>
+                You need to have a solid understanding of the typical behaviour
+                of your network if you want to be able to spot abnormalities and
+                different network breaches as they happen. Different behavioural
+                analytics solutions are available that may quickly identify
+                unusual activity.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 8: Applications of Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Applications of Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Network security measures differ by sector due to data sensitivity
+              and regulation. Below are a few core examples:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Banking and Financial Services</h4>
+            <p>
+              Banks process a large volume of sensitive customer and transaction
+              data. To secure online banking, banks use end-to-end encryption
+              for online banking, multi-layer firewalls and SIEM for fraud
+              detection, and biometric authentication in mobile banking apps.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Healthcare</h4>
+            <p>
+              All health care institutions are obliged by HIPAA regulations to
+              ensure the confidentiality of patient information. The most common
+              methods are encrypting Electronic Health Records (EHRs),
+              implementing strong access controls, and intrusion detection
+              systems to avert breaches.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Education</h4>
+            <p>
+              Universities are unique in their approach to data security by
+              trying to balance the unique challenge of open access. The common
+              defenses used are implementing secure campus Wi-Fi networks and
+              student data protection under privacy legislation (FERPA).
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Government and Defense</h4>
+            <p>
+              Robust network defenses are critical in providing the backbone for
+              national security. For this reason, governments employ advanced
+              intrusion prevention systems, classified network segmentation, and
+              cyber threat intelligence sharing across agencies.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>E-Commerce and Retail</h4>
+            <p>
+              As digital transactions increase, e-commerce companies prioritize
+              securing payment gateways with TLS/SSL, protecting credit card
+              data through tokenization, and AI-driven analytics as a monitoring
+              system for the detection of fraudulent behavior.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Attacks Against Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Attacks Against Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Cybercriminals' malicious attempts to undermine a network's
+              security are known as network security attacks. These assaults are
+              the main causes of the critical need for network security. These
+              assaults on the network infrastructure must be stopped via network
+              security.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Let's find out more about these types of assaults so you can
+              determine how to stop them. Understanding the various attack types
+              is crucial for implementing effective defense mechanisms.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Network security attacks come in many forms, each with its own
+              method of compromising network security. From viruses and malware
+              to sophisticated phishing and ransomware attacks, organizations
+              must be prepared to defend against a wide range of threats.
+            </p>
+            <p>
+              By understanding these attack types, network administrators can
+              better protect their systems and data from unauthorized access and
+              damage.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Attack Types (Part 1) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Attack Types in Network Security (Part 1)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="attack-type">
+            <div class="attack-icon">🦠</div>
+            <div class="attack-info">
+              <h4>Virus</h4>
+              <p>
+                It is a malicious file that may be downloaded, and after a user
+                has opened it, it begins to overwrite the computer's code with a
+                new set of codes. The system files on the computer will become
+                corrupt as the infection spreads, which may cause the files on
+                other computer systems in the network to become corrupt as well.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">💻</div>
+            <div class="attack-info">
+              <h4>Malware</h4>
+              <p>
+                It is one of the swiftest, most severe, and worst attack methods
+                that aid in gaining unauthorized access to a system or network
+                of systems. The majority of malware is self-replicating, which
+                means that once it infects one system, it may quickly infect all
+                other computers linked to the network through the internet.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">🐛</div>
+            <div class="attack-info">
+              <h4>Worms</h4>
+              <p>
+                Worms are programs capable of self-replication and widening
+                propagation without the need to attach to a host file. They take
+                advantage of weak network services, operating systems, and
+                applications to spread, wasting bandwidth and consuming system
+                resources.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">🐴</div>
+            <div class="attack-info">
+              <h4>Trojans</h4>
+              <p>
+                A Trojan that acts as a legitimate software program conceals
+                malicious code. After being installed (usually through social
+                engineering), it opens a backdoor or otherwise provides remote
+                access to the system. Trojans are frequently used to deliver
+                other malicious packages, such as ransomware.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 11: Attack Types (Part 2) -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Attack Types in Network Security (Part 2)</h1>
+        </div>
+        <div class="slide-content">
+          <div class="attack-type">
+            <div class="attack-icon">🔒</div>
+            <div class="attack-info">
+              <h4>Ransomware</h4>
+              <p>
+                The ransomware epidemic is characterized by the encryption of
+                files or entire systems, with a decryption key being held for
+                ransom to be paid in cryptocurrency. Ransomware is primarily
+                delivered through phishing schemes, compromised RDP access, or
+                exploitation of software vulnerabilities.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">🎣</div>
+            <div class="attack-info">
+              <h4>Phishing and Spear Phishing</h4>
+              <p>
+                Phishing attempts to use fraudulent emails or messages to
+                convince users to disclose credentials or download malware.
+                Spear phishing aims to obtain the same goals as phishing, but
+                targets specific individuals and crafts personalized mail
+                messages to increase the probability of success.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">🚫</div>
+            <div class="attack-info">
+              <h4>Distributed Denial of Service (DDoS)</h4>
+              <p>
+                A DDoS attack attempts to overwhelm the resources of a network
+                or service to cause legitimate requests to fail by flooding it
+                with traffic from numerous compromised machines (botnets). DDoS
+                is used for primary intrusions, extortion, and to disrupt
+                competitors and their services.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">👥</div>
+            <div class="attack-info">
+              <h4>Man-in-the-Middle (MITM)</h4>
+              <p>
+                An adversary can covertly intercept and manipulate the
+                communication of two parties without their knowledge.
+                Communication can be altered by compromised routers, public
+                Wi-Fi, or through ARP spoofing. Without encryption and adequate
+                authentication, credentials and sensitive data fall prey to
+                MITM.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: More Attack Types -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Attack Types</h1>
+        </div>
+        <div class="slide-content">
+          <div class="attack-type">
+            <div class="attack-icon">💾</div>
+            <div class="attack-info">
+              <h4>SQL Injection and Web Application Attacks</h4>
+              <p>
+                Web application vulnerabilities (like unsanitized input) can be
+                exploited by attackers to perform unauthorized SQL queries,
+                steal data, and gain control over back-end systems. SQL
+                injections are also web application attacks, with others being
+                cross-site scripting (XSS), cross-site request forgery (CSRF),
+                and insecure deserialization.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">📅</div>
+            <div class="attack-info">
+              <h4>Zero-Day Exploits</h4>
+              <p>
+                Vendors do not know about zero-day vulnerabilities. Because of
+                not being aware of these vulnerabilities, they go without being
+                patched. Before defenders can respond, attackers discovering and
+                weaponizing these vulnerabilities can gain access. Zero-day
+                exploits can be used in targeted attacks and are extremely
+                valuable.
+              </p>
+            </div>
+          </div>
+
+          <div class="attack-type">
+            <div class="attack-icon">👤</div>
+            <div class="attack-info">
+              <h4>Insider Threats</h4>
+              <p>
+                Intentional or unintentional harm caused by authorized users
+                includes insider threats. Data exfiltration, privilege misuse,
+                and malware introduction are actions that can harm the
+                organization or system. Because there is legitimate access by
+                insiders, the detection of these can be more difficult.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Understanding these attack types is the first step in building a
+              robust network security strategy. By knowing how attackers
+              operate, organizations can implement appropriate defenses and
+              monitoring systems to detect and prevent these threats.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Layers of Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Layers of Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              A modern organization's network security architecture is often
+              described using the concept of defence in depth. This means there
+              are multiple network security layers, and each network or
+              information layer is treated in depth. Each layer is assumed to
+              protect the next layer in case of failures.
+            </p>
+          </div>
+
+          <div class="security-layer">
+            <h4>1. Physical Layer</h4>
+            <p>
+              Ensuring the safety of routers, servers, and network components
+              against theft or tampering is vital. Entry to the server room
+              should be gated with biometrics or smart cards. Assets should also
+              be protected with environmental controls, like temperature
+              regulation and fire suppression systems.
+            </p>
+          </div>
+
+          <div class="security-layer">
+            <h4>2. Network Layer</h4>
+            <p>
+              This layer manages the traffic between networks and the outside
+              world with firewalls, routers, and intrusion detection systems.
+              Network segmentation helps to contain breaches, and the network is
+              divided into zones like internal, external, and DMZ zones.
+            </p>
+          </div>
+
+          <div class="security-layer">
+            <h4>3. Application Layer</h4>
+            <p>
+              Protecting software applications and APIs against exploitations
+              like SQL injection and cross-site scripting (XSS), and secure
+              software development practices are vital, along with web
+              application firewalls (WAFs).
+            </p>
+          </div>
+
+          <div class="security-layer">
+            <h4>4. Data Layer</h4>
+            <p>
+              Sensitive data in storage and in transit is protected using
+              encryption, data masking, and access controls. Data loss
+              prevention (DLP) systems are used to monitor and control the
+              transfer of unauthorized data.
+            </p>
+          </div>
+
+          <div class="security-layer">
+            <h4>5. User Layer</h4>
+            <p>
+              One of the primary causes of security incidents is human blunder.
+              To protect the user layer, security awareness training,
+              multi-factor authentication, and role-based access controls should
+              be implemented.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Modern Techniques and Technologies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Modern Techniques and Technologies in Network Security
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="modern-tech">
+            <div class="tech-icon">🤖</div>
+            <div class="tech-info">
+              <h4>Artificial Intelligence (AI) and Machine Learning (ML)</h4>
+              <p>
+                AI and ML algorithms learn to detect abnormal behaviour and
+                respond to threats in real-time. They scan network traffic and
+                analyze data for patterns indicating possible attack scenarios
+                at a speed no human could match.
+              </p>
+            </div>
+          </div>
+
+          <div class="modern-tech">
+            <div class="tech-icon">🚫</div>
+            <div class="tech-info">
+              <h4>Zero Trust Architecture (ZTA)</h4>
+              <p>
+                Most security systems are based on the premise that everything
+                within a network is safe and can be trusted. The Zero Trust
+                framework is built on the contrary notion: "Never Trust, Always
+                Verify."
+              </p>
+            </div>
+          </div>
+
+          <div class="modern-tech">
+            <div class="tech-icon">🔐</div>
+            <div class="tech-info">
+              <h4>Network Access Control (NAC)</h4>
+              <p>
+                Network access control (NAC) solutions ensure that network
+                access is granted only to authenticated and compliant devices.
+                The NAC assesses devices for criteria such as antivirus status,
+                OS version, and configuration compliance before network access
+                is granted.
+              </p>
+            </div>
+          </div>
+
+          <div class="modern-tech">
+            <div class="tech-icon">☁️</div>
+            <div class="tech-info">
+              <h4>Cloud Security</h4>
+              <p>
+                With the transition to Cloud environments, tools such as Cloud
+                Access Security Brokers (CASBs), Secure Access Service Edge
+                (SASE), and Identity and Access Management (IAM) systems become
+                necessary.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 15: More Modern Technologies -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Modern Technologies</h1>
+        </div>
+        <div class="slide-content">
+          <div class="modern-tech">
+            <div class="tech-icon">💻</div>
+            <div class="tech-info">
+              <h4>Endpoint Detection and Response (EDR)</h4>
+              <p>
+                EDR tools help monitor the endpoints (computers, servers, and
+                mobile devices) to identify and take action in real-time in
+                response to threats. EDR incorporates behavioural analytics,
+                threat intelligence, and automated response.
+              </p>
+            </div>
+          </div>
+
+          <div class="modern-tech">
+            <div class="tech-icon">📊</div>
+            <div class="tech-info">
+              <h4>Security Information and Event Management (SIEM)</h4>
+              <p>
+                SIEM systems gather information from disparate sources,
+                including firewalls, applications, and servers, and examine them
+                for possible indicators of compromise (IoCs). By real-time event
+                correlation, SIEM systems facilitate threat detection and
+                incident response.
+              </p>
+            </div>
+          </div>
+
+          <div class="modern-tech">
+            <div class="tech-icon">🔗</div>
+            <div class="tech-info">
+              <h4>Network Segmentation and Micro-Segmentation</h4>
+              <p>
+                Segmentation prevents attackers from making lateral movements
+                within the system. Micro-segmentation takes this to an even
+                finer level by isolating data centre or cloud workloads,
+                applications, and resources from each other.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These modern technologies represent the cutting edge of network
+              security, providing organizations with advanced tools to protect
+              against increasingly sophisticated cyber threats.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 16: Challenges and Limitations -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">
+            Challenges and Limitations of Network Security
+          </h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              Technologies may be rapidly advancing, yet the ongoing challenges
+              of network security will always make it an uphill battle:
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Evolving Threat Landscape</h4>
+            <p>
+              Cyber risks are live and ever-changing. Attackers use artificial
+              intelligence, automation, and machine learning to disguise their
+              threats. The ever-growing sophistication of ransomware and
+              phishing campaigns will leave security teams perpetually chasing
+              the attackers.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Lack of Skilled Cybersecurity Professionals</h4>
+            <p>
+              There is a lack of trained cybersecurity personnel worldwide.
+              Organizations are unable to fill core roles such as security
+              analyst, incident responder, or network defender. The lack of such
+              roles means there will always be a blind spot in the defense.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Remote Work and BYOD (Bring Your Own Device)</h4>
+            <p>
+              Remote work has changed the ends of the network frontiers.
+              Employees are accessing corporate systems through home internet
+              and even public Wi-Fi. The attack surface is widened beyond
+              control with unsecured BYOD policies.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Complexity of Hybrid and Multi-Cloud Environments</h4>
+            <p>
+              Today, the enterprise is multi-cloud, has numerous SaaS
+              applications, and a mix of on-premises and remote IT
+              infrastructure. The need to secure such disparate hybrid
+              environments rests on streamlined policies and centralized
+              oversight.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 17: More Challenges -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Challenges</h1>
+        </div>
+        <div class="slide-content">
+          <div class="info-card">
+            <h4>Insider Threats and Human Error</h4>
+            <p>
+              Employees who disregard security best practices do not need to
+              have bad intentions. Clicking on unsafe links and reusing
+              passwords are careless behaviours that breach security.
+              Organisations need to promote security awareness and
+              accountability.
+            </p>
+          </div>
+
+          <div class="info-card">
+            <h4>Cost and Resource Constraints</h4>
+            <p>
+              Budgetary constraints are common at SMEs, and they tend to have
+              limited resources to spend on comprehensive network security.
+              Because SMEs need to allocate budget to multiple areas within the
+              business, they often spend only on minimal network security
+              defences.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              Despite these challenges, organizations must continue to invest in
+              network security to protect their assets, data, and reputation. A
+              proactive approach to security, combined with the right
+              technologies and practices, can help mitigate these challenges.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              By understanding these challenges, organizations can better
+              prepare and implement strategies to address them, ensuring a more
+              robust and resilient network security posture.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 18: Network Security Frameworks and Standards -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Network Security Frameworks and Standards</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              To ensure consistency, alignment to internationally recognized
+              frameworks, best practices, and regulatory standards is key:
+            </p>
+          </div>
+
+          <div class="framework-card">
+            <h4>1. NIST Cybersecurity Framework (CSF)</h4>
+            <p>
+              This is offered by the U.S. National Institute of Standards and
+              Technology and is touted to provide the most flexible framework.
+              It is built on five functions: Identify, Protect, Detect, Respond,
+              and Recover. It assists in risk management.
+            </p>
+          </div>
+
+          <div class="framework-card">
+            <h4>2. ISO/IEC 27001</h4>
+            <p>
+              This standard is part of the 27000 series and focuses on the
+              definitions and standards related to an Information Security
+              Management System (ISMS). The major objective of the framework is
+              to ensure continuous improvement of the ISMS in place to maintain
+              the confidentiality, integrity, and availability of information
+              assets.
+            </p>
+          </div>
+
+          <div class="framework-card">
+            <h4>3. GDPR and Data Protection Regulations</h4>
+            <p>
+              The General Data Protection Regulation (GDPR) in the European
+              Union outlines the utmost requirements in terms of security and
+              privacy of personal data, and the associated risks of
+              non-compliance. Other parts of the world have similar laws: the
+              CCPA in California, the PDPA in Singapore, and HIPAA in the US
+              healthcare system.
+            </p>
+          </div>
+
+          <div class="framework-card">
+            <h4>4. CIS Controls</h4>
+            <p>
+              The Center for Internet Security (CIS) Controls consists of a
+              prioritized list of best practices, among them the asset
+              inventory, continuous vulnerability management, and the management
+              of administrative privileges. CIS Controls have become a popular
+              starting point for many organizations looking to harden their
+              networks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 19: Future Trends in Network Security -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">Future Trends in Network Security</h1>
+        </div>
+        <div class="slide-content">
+          <div class="text-section">
+            <p>
+              The forces of automation, decentralization, and quantum
+              technologies will define the future of network security. Some
+              emerging trends include:
+            </p>
+          </div>
+
+          <div class="future-trend">
+            <div class="trend-icon">🌐</div>
+            <div class="trend-info">
+              <h4>Cybersecurity Mesh Architecture (CSMA)</h4>
+              <p>
+                Proposed by Gartner, Cybersecurity Mesh Architecture is a new
+                way of thinking about security that decentralizes and allows
+                integration of disparate security tools and systems. It goes
+                beyond the traditional single perimeter and perimeter-centric
+                security.
+              </p>
+            </div>
+          </div>
+
+          <div class="future-trend">
+            <div class="trend-icon">🔐</div>
+            <div class="trend-info">
+              <h4>Secure Access Service Edge (SASE)</h4>
+              <p>
+                SASE is a convergence of networking and security functions -
+                including SD-WAN, CASB, and ZTNA - into a single,
+                cloud-delivered service. SASE addresses the needs of a
+                distributed remote workforce by offering secure and scalable
+                access to cloud resources.
+              </p>
+            </div>
+          </div>
+
+          <div class="future-trend">
+            <div class="trend-icon">🤖</div>
+            <div class="trend-info">
+              <h4>AI-Driven Threat Hunting</h4>
+              <p>
+                AI will perform more self-driven threat hunting through hidden
+                patterns and anomaly detection. Predictive AI simulates possible
+                attack paths and possible attack steps, regressively, enabling a
+                proactive attack defense.
+              </p>
+            </div>
+          </div>
+
+          <div class="future-trend">
+            <div class="trend-icon">⚛️</div>
+            <div class="trend-info">
+              <h4>Quantum Key Distribution (QKD)</h4>
+              <p>
+                QKD securely exchanges encryption keys, based on different
+                principles of quantum mechanics. Any interception attempt alters
+                a quantum state, informing the keys' owners of possible
+                eavesdropping. In the following decades, QKD will definitely
+                reshape secure communications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 20: More Future Trends -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">More Future Trends</h1>
+        </div>
+        <div class="slide-content">
+          <div class="future-trend">
+            <div class="trend-icon">🔍</div>
+            <div class="trend-info">
+              <h4>Ethical Hacking and Bug Bounty Programs</h4>
+              <p>
+                Proactive cooperation with Ethical Hacker Bug Bounty Programs
+                (e.g., HackerOne, Bugcrowd) enables organizations to find and
+                fix cyber weaknesses before malicious cyber actors strike. This
+                cooperation becomes a solid foundation for global collective
+                action to improve cyber resilience.
+              </p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <p>
+              These emerging trends represent the future direction of network
+              security, where technologies like AI, quantum computing, and
+              decentralized architectures will play increasingly important roles
+              in protecting networks from sophisticated threats.
+            </p>
+          </div>
+
+          <div class="text-section">
+            <p>
+              Organizations that stay ahead of these trends and adopt these
+              technologies will be better positioned to protect their networks
+              and data in the face of evolving cyber threats.
+            </p>
+            <p>
+              The future of network security will be characterized by greater
+              automation, more intelligent threat detection, and stronger
+              encryption methods that can withstand even quantum computing
+              attacks.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 21: FAQs -->
+      <div class="slide">
+        <div class="slide-header">
+          <h1 class="slide-title">FAQs</h1>
+        </div>
+        <div class="slide-content">
+          <div class="qa-pair">
+            <div class="question">
+              1. What is Computer Network Security, and why is it important?
+            </div>
+            <div class="answer">
+              Network Security is the set of practices, tools, and measures put
+              in place to ensure the integrity, confidentiality, and
+              availability of the data in a network. Computers, mobile devices,
+              and other digital products that use networks make up modern
+              communication technologies that can be compromised by malware and
+              data loss.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              2. What are the main types of network security attacks?
+            </div>
+            <div class="answer">
+              Common attacks include viruses, worms, malware, ransomware,
+              Trojans, phishing, Denial of Service (DDoS), and Man-in-the-Middle
+              (MITM) attacks, SQL injections, insider threats, and Advanced
+              Persistent Threats (APTs).
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              3. How is network security implemented in organizations?
+            </div>
+            <div class="answer">
+              Network security incorporates the use of specialized hardware and
+              software. The main components include firewalls, Virtual Private
+              Networks (VPNs), Intrusion Prevention Systems (IPS), and various
+              access controls.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              4. What are the latest trends and technologies in network
+              security?
+            </div>
+            <div class="answer">
+              The use of AI and ML for anomaly detection, Zero Trust
+              Architecture (ZTA), hub and spoke Cloud security frameworks (like
+              SASE), and Endpoint Detection and Response (EDR) are some
+              contemporary innovations.
+            </div>
+          </div>
+
+          <div class="qa-pair">
+            <div class="question">
+              5. What are the biggest challenges in maintaining network
+              security?
+            </div>
+            <div class="answer">
+              These key components include: Evolving Cyber Threats, remote
+              working risks, threat of insiders, shortage of qualified
+              Cybersecurity experts, and further complexities from hybrid and
+              multi-cloud environments.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Computer Network Security - Professional Presentation
+    </div>
+
+    <script>
+      // Navigation functionality
+      document.getElementById("topBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      document.getElementById("downBtn").addEventListener("click", function () {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      // Progress bar functionality
+      window.addEventListener("scroll", function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+      });
+
+      // Add fade-in animation to slides when they come into view
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".slide").forEach((slide) => {
+        slide.style.opacity = "0";
+        slide.style.transform = "translateY(20px)";
+        slide.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(slide);
+      });
+    </script>
+  </body>
+</html>
